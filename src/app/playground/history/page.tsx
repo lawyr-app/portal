@@ -27,13 +27,11 @@ import {
 
 const History = () => {
   return (
-    <div className="flex flex-col w-full h-full">
-      <header className="flex h-14 shrink-0 items-center gap-2 px-2 fixed top-0">
+    <div className="flex flex-col w-full h-full relative">
+      <header className="flex flex-col gap-2 p-2 sticky top-0 w-full bg-primary-foreground">
         <SidebarTrigger />
-      </header>
-      <div className="flex w-full h-full flex-col items-center justify-center mt-5 p-3">
-        <div className="my-4">
-          <span className="flex flex-row">
+        <div className="w-full flex flex-row items-center justify-center mb-4">
+          <span className="flex flex-row w-10/12">
             <Input
               type="search"
               placeholder="Searh by description"
@@ -42,9 +40,11 @@ const History = () => {
             <Button className="rounded-tl-none rounded-bl-none">Button</Button>
           </span>
         </div>
-        <div className="flex flex-row w-full h-full flex-wrap items-center justify-center gap-4">
-          {new Array(30).fill("").map((m) => (
-            <HistoryCard />
+      </header>
+      <div className="flex w-full h-full flex-col items-center justify-center mt-5 p-3">
+        <div className="flex flex-col w-full h-full items-center justify-center gap-4">
+          {new Array(30).fill("").map((m, i) => (
+            <HistoryCard key={i} />
           ))}
         </div>
       </div>
@@ -54,7 +54,10 @@ const History = () => {
 
 const HistoryCard = () => {
   return (
-    <Card className="w-full sm:w-[250px] p-4">
+    <Card className="w-full sm:w-10/12 p-4">
+      <CardTitle className="mb-2">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit.
+      </CardTitle>
       <CardDescription>
         Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
         reprehenderit, in ratione facilis nesciunt sunt asperiores earum
@@ -62,37 +65,42 @@ const HistoryCard = () => {
         consequuntur?
       </CardDescription>
 
-      <CardFooter className="p-0 mt-3 gap-2">
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant="outline" size="icon">
-                <Share2 className="h-4 w-4" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Share</TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant="outline" size="icon">
-                <Star className="h-4 w-4" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Favourite</TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
-        <TooltipProvider>
-          <Tooltip>
-            <TooltipTrigger asChild>
-              <Button variant="destructive" size="icon">
-                <Trash2 className="h-4 w-4" />
-              </Button>
-            </TooltipTrigger>
-            <TooltipContent>Delete</TooltipContent>
-          </Tooltip>
-        </TooltipProvider>
+      <CardFooter className="p-0 pt-2 flex flex-row items-center justify-between mt-3 gap-2 border-t">
+        <CardDescription className="text-[12px]">
+          Updated 2 may 2001
+        </CardDescription>
+        <div className="flex flex-row gap-2">
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="outline" size="icon">
+                  <Share2 className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Share</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="outline" size="icon">
+                  <Star className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Favourite</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button variant="destructive" size="icon">
+                  <Trash2 className="h-4 w-4" />
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>Delete</TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
       </CardFooter>
     </Card>
   );

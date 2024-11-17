@@ -1,10 +1,6 @@
-import { Card } from "@/components/ui/card";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import UpgradeButton from "@/components/UpgradeButton";
 import React from "react";
-import { Textarea } from "@/components/ui/textarea";
-import { Button } from "@/components/ui/button";
-import { Paperclip, SendHorizontal } from "lucide-react";
+import ChatInput from "@/components/ChatInput";
 
 const Playground = () => {
   return (
@@ -13,22 +9,7 @@ const Playground = () => {
         <SidebarTrigger />
       </header>
       <div className="flex w-full h-full flex-col items-center justify-center">
-        <UpgradeButton />
-
-        <Card className="p-2 w-3/6 mt-4">
-          <Textarea
-            className="border-none shadow-none focus:outline-none focus-visible:ring-0 resize-none "
-            placeholder="Type your message here."
-          />
-          <div className="flex flex-row items-center justify-between mt-2">
-            <Button variant="outline" size="icon">
-              <Paperclip className="h-4 w-4" />
-            </Button>
-            <Button size="icon">
-              <SendHorizontal className="h-4 w-4" />
-            </Button>
-          </div>
-        </Card>
+        <ChatInput classname="w-3/6 mt-4" />
       </div>
     </div>
   );
