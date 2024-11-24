@@ -1,19 +1,11 @@
-import { Footer } from "@/components/landing/Footer";
-import { Navbar } from "@/components/landing/Navbar";
 export default function PrivacyPolicyPage() {
   return (
     <>
-      {/* <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900">
-        <Navbar />
-        <main className="flex-grow pt-20"> */}
       <section className="container mx-auto px-4 py-16">
         <h1 className="text-4xl font-bold mb-8 text-center text-black dark:text-white">
           Privacy Policy
         </h1>
         <div className="max-w-3xl mx-auto text-gray-800 dark:text-gray-200">
-          <p className="mb-4">
-            Last updated: {new Date().toLocaleDateString()}
-          </p>
           <p className="mb-6">
             At AI Legal Assistant, we take your privacy seriously. This Privacy
             Policy explains how we collect, use, disclose, and safeguard your
@@ -55,11 +47,11 @@ export default function PrivacyPolicyPage() {
             If you have any questions about this Privacy Policy, please contact
             us at privacy@ailegalassistant.com.
           </p>
+          <p className="mb-4">
+            Last updated: {new Date().toLocaleDateString()}
+          </p>
         </div>
       </section>
-      {/* </main>
-        <Footer />
-      </div> */}
     </>
   );
 }

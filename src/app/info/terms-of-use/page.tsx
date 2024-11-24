@@ -5,7 +5,6 @@ export default function TermsOfUsePage() {
         Terms of Use
       </h1>
       <div className="max-w-3xl mx-auto text-gray-800 dark:text-gray-200">
-        <p className="mb-4">Last updated: {new Date().toLocaleDateString()}</p>
         <p className="mb-6">
           Welcome to AI Legal Assistant. By accessing or using our website and
           services, you agree to be bound by these Terms of Use.
@@ -49,6 +48,7 @@ export default function TermsOfUsePage() {
           If you have any questions about these Terms of Use, please contact us
           at terms@ailegalassistant.com.
         </p>
+        <p className="mb-4">Last updated: {new Date().toLocaleDateString()}</p>
       </div>
     </section>
   );

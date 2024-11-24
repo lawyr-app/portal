@@ -61,6 +61,22 @@ export function Footer() {
                   Contact
                 </Link>
               </li>
+              <li>
+                <Link
+                  href="/info/privacy-policy"
+                  className="text-sm hover:text-black dark:hover:text-white transition-colors duration-300"
+                >
+                  Privacy Policy
+                </Link>
+              </li>
+              <li>
+                <Link
+                  href="/info/terms-of-use"
+                  className="text-sm hover:text-black dark:hover:text-white transition-colors duration-300"
+                >
+                  Terms of Use
+                </Link>
+              </li>
             </ul>
           </div>
           <div>
@@ -103,20 +119,6 @@ export function Footer() {
             &copy; {new Date().getFullYear()} AI Legal Assistant. All rights
             reserved.
           </p>
-          <div className="mt-4 space-x-4">
-            <Link
-              href="/info/privacy-policy"
-              className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors duration-300"
-            >
-              Privacy Policy
-            </Link>
-            <Link
-              href="/info/terms-of-use"
-              className="text-gray-600 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors duration-300"
-            >
-              Terms of Use
-            </Link>
-          </div>
         </div>
       </div>
     </footer>
