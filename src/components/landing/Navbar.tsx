@@ -3,11 +3,13 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Moon, Sun } from "lucide-react";
+import { Moon, Sun, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 
 export function Navbar() {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -18,6 +20,17 @@ export function Navbar() {
       root.classList.remove("dark");
     }
   }, [isDarkMode]);
+
+  const toggleDarkMode = () => {
+    setIsDarkMode(!isDarkMode);
+    setIsOpen(false);
+  };
+
+  const navItems = [
+    { href: "/", label: "Home" },
+    { href: "/info/pricing", label: "Pricing" },
+    { href: "/info/contact", label: "Contact" },
+  ];
 
   return (
     <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-11/12 max-w-5xl">
@@ -34,33 +47,24 @@ export function Navbar() {
             </div>
             <div className="hidden md:block">
               <div className="ml-10 flex items-baseline space-x-4">
-                <Link
-                  href="/"
-                  className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  Home
-                </Link>
-                <Link
-                  href="/info/pricing"
-                  className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  Pricing
-                </Link>
-                <Link
-                  href="/info/contact"
-                  className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  Contact
-                </Link>
+                {navItems.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white px-3 py-2 rounded-md text-sm font-medium"
+                  >
+                    {item.label}
+                  </Link>
+                ))}
               </div>
             </div>
-            <div className="flex items-center space-x-4">
+            <div className="hidden md:flex items-center space-x-4">
               <Button
                 variant="ghost"
                 size="icon"
-                onClick={() => setIsDarkMode(!isDarkMode)}
+                onClick={toggleDarkMode}
                 aria-label="Toggle dark mode"
-                className="text-black dark:text-white hover:bg-gray-200 dark:hover:bg-gray-800"
+                className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
               >
                 {isDarkMode ? (
                   <Sun className="h-5 w-5" />
@@ -69,11 +73,60 @@ export function Navbar() {
                 )}
               </Button>
               <Button
-                className="bg-black text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200 rounded-full px-6"
-                onClick={() => router.push("/auth/signup")}
+                className="bg-black rounded-full text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
+                onClick={() => router.push("/pricing")}
               >
                 Get Started
               </Button>
+            </div>
+            <div className="md:hidden">
+              <Sheet open={isOpen} onOpenChange={setIsOpen}>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="icon" aria-label="Open menu">
+                    <Menu className="h-6 w-6" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="bottom" className="h-[80vh] rounded-t-3xl">
+                  <nav className="flex flex-col h-full">
+                    <div className="flex items-center justify-between mb-8">
+                      <span className="text-xl font-bold">LegalAI</span>
+                    </div>
+                    {navItems.map((item) => (
+                      <Link
+                        key={item.href}
+                        href={item.href}
+                        className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white py-2 text-lg"
+                        onClick={() => setIsOpen(false)}
+                      >
+                        {item.label}
+                      </Link>
+                    ))}
+                    <div className="mt-auto space-y-4">
+                      <Button
+                        variant="ghost"
+                        onClick={toggleDarkMode}
+                        className="w-full justify-start text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+                      >
+                        {isDarkMode ? (
+                          <Sun className="h-5 w-5 mr-2" />
+                        ) : (
+                          <Moon className="h-5 w-5 mr-2" />
+                        )}
+                        {isDarkMode ? "Light Mode" : "Dark Mode"}
+                      </Button>
+                      <Button
+                        className="w-full bg-black rounded-full text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
+                        onClick={() => {
+                          router.push("/pricing");
+                          setIsOpen(false);
+                        }}
+                      >
+                        Get Started
+                      </Button>
+                    </div>
+                  </nav>
+                </SheetContent>
+              </Sheet>
             </div>
           </div>
         </div>
