@@ -1,11 +1,23 @@
-import React from "react";
+import { BackgroundGradientAnimation } from "@/components/ui/background-gradient-animation";
+import { Vortex } from "@/components/ui/vortex";
+import Image from "next/image";
 
-type AuthLayoutProps = Readonly<{
+export default function AuthLayout({
+  children,
+}: {
   children: React.ReactNode;
-}>;
+}) {
+  return (
+    <div className="grid min-h-screen grid-cols-1 md:grid-cols-2">
+      <div className="relative hidden bg-muted md:block bg-red-100 overflow-hidden">
+        <Vortex backgroundColor="black" className="flex ">
+          &nbsp;
+        </Vortex>
+      </div>
 
-const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
-  return <div>AuthLayout</div>;
-};
-
-export default AuthLayout;
+      <div className="flex items-center justify-center px-8">
+        <div className="mx-auto w-full max-w-md space-y-8">{children}</div>
+      </div>
+    </div>
+  );
+}
