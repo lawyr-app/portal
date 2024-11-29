@@ -63,15 +63,15 @@ export function Testimonials() {
   return (
     <section
       ref={ref}
-      className="py-24 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 overflow-hidden"
+      className="py-24 bg-gray-50 dark:bg-black overflow-hidden"
     >
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-4xl font-bold text-center mb-16 text-black dark:text-white">
           What Our Users Say
         </h2>
         <div className="relative">
-          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-gray-50 to-transparent dark:from-gray-900 z-10"></div>
-          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-gray-50 to-transparent dark:from-gray-900 z-10"></div>
+          <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-gray-50 to-transparent dark:from-stone-950 z-10"></div>
+          <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-gray-50 to-transparent dark:from-stone-950 z-10"></div>
           <motion.div
             animate={controls}
             initial="hidden"
@@ -102,12 +102,12 @@ export function Testimonials() {
             >
               {[...testimonials, ...testimonials].map((testimonial, index) => (
                 <div key={index} className="w-[350px] flex-shrink-0 mx-4">
-                  <div className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden h-full">
+                  <div className="bg-card rounded-lg shadow-lg overflow-hidden h-full">
                     <div className="p-8">
                       <div className="flex items-center mb-6">
                         <div className="relative w-16 h-16 mr-4">
                           <Image
-                            src={testimonial.image}
+                            src="https://banner2.cleanpng.com/20240216/erb/transparent-google-maps-logo-google-maps-icon-with-red-pinpoint-indicating-1710875694855.webp"
                             alt={testimonial.name}
                             layout="fill"
                             objectFit="cover"

@@ -95,7 +95,7 @@ export default function Pricing() {
   const [isAnnual, setIsAnnual] = useState(false);
 
   return (
-    <section className="py-20 bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-black">
+    <section className="py-20 ">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <h2 className="text-4xl font-extrabold text-center mb-4 text-black dark:text-white">
           Choose Your Plan
@@ -137,7 +137,7 @@ export default function Pricing() {
           {plans.map((plan, index) => (
             <div
               key={index}
-              className={`bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 ${
+              className={`bg-card rounded-2xl shadow-xl overflow-hidden transform transition-all duration-300 hover:scale-105 ${
                 plan.featured
                   ? "ring-4 ring-black dark:ring-white md:scale-105"
                   : ""
@@ -189,7 +189,7 @@ export default function Pricing() {
         </h3>
         <div className="overflow-x-auto">
           <table className="w-full max-w-4xl mx-auto bg-white dark:bg-gray-800 shadow-lg rounded-lg overflow-hidden">
-            <thead className="bg-gray-100 dark:bg-gray-700">
+            <thead className="bg-card">
               <tr>
                 <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase tracking-wider">
                   Feature
@@ -205,15 +205,16 @@ export default function Pricing() {
                 </th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-200 dark:divide-gray-600">
+            <tbody className="divide-y ">
               {featureComparison.map((row, index) => (
                 <tr
                   key={index}
-                  className={
-                    index % 2 === 0
-                      ? "bg-gray-50 dark:bg-gray-900"
-                      : "bg-white dark:bg-gray-800"
-                  }
+                  className="bg-card"
+                  // className={
+                  //   index % 2 === 0
+                  //     ? "bg-gray-50 dark:bg-stone-900"
+                  //     : "bg-white dark:bg-stone-950"
+                  // }
                 >
                   <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">
                     {row.feature}

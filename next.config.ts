@@ -8,6 +8,11 @@ const nextConfig: NextConfig = {
         hostname: "assets.aceternity.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "banner2.cleanpng.com",
+        port: "",
+      },
     ],
   },
 };
