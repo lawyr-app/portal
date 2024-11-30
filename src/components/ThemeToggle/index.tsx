@@ -1,37 +1,26 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Button } from "../ui/button";
 import { Moon, Sun } from "lucide-react";
-import { useTheme } from "next-themes";
+import { useTheme } from "./Provider";
 
 type ThemeToggleProps = React.FC<{
   className?: string;
 }>;
 
 const ThemeToggle: ThemeToggleProps = ({ className = "" }) => {
-  const [mounted, setMounted] = useState(false);
-  const { resolvedTheme, setTheme } = useTheme();
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  if (!mounted) {
-    return null;
-  }
+  const { theme, toggleTheme } = useTheme();
 
   return (
     <Button
       variant="ghost"
       size="icon"
-      onClick={() => {
-        setTheme(resolvedTheme === "dark" ? "light" : "dark");
-      }}
+      onClick={toggleTheme}
       aria-label="Toggle dark mode"
       className={className}
     >
-      {resolvedTheme === "dark" ? (
+      {theme === "dark" ? (
         <Sun className="h-5 w-5" />
       ) : (
         <Moon className="h-5 w-5" />
