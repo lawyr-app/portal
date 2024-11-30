@@ -15,8 +15,10 @@ import {
   Scale,
   UserCheck,
 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 export default function OnboardingPage() {
+  const router = useRouter();
   const [source, setSource] = useState<string | null>(null);
   const [otherSource, setOtherSource] = useState<string>("");
   const [userType, setUserType] = useState<"lawyer" | "non-lawyer" | null>(
@@ -127,7 +129,13 @@ export default function OnboardingPage() {
           </div>
         </div>
 
-        <Button type="submit" className="w-full text-lg py-6">
+        <Button
+          type="button"
+          onClick={() => {
+            router.push("/playground");
+          }}
+          className="w-full text-lg py-6"
+        >
           Create Your Account
         </Button>
       </form>
