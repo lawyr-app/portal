@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { Moon, Sun, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import ThemeToggle from "../ThemeToggle";
 
 export function Navbar() {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -59,22 +60,10 @@ export function Navbar() {
               </div>
             </div>
             <div className="hidden md:flex items-center space-x-4">
-              <Button
-                variant="ghost"
-                size="icon"
-                onClick={toggleDarkMode}
-                aria-label="Toggle dark mode"
-                className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
-              >
-                {isDarkMode ? (
-                  <Sun className="h-5 w-5" />
-                ) : (
-                  <Moon className="h-5 w-5" />
-                )}
-              </Button>
+              <ThemeToggle className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white" />
               <Button
                 className="bg-black rounded-full text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
-                onClick={() => router.push("/pricing")}
+                onClick={() => router.push("/auth/signin")}
               >
                 Get Started
               </Button>
@@ -102,18 +91,7 @@ export function Navbar() {
                       </Link>
                     ))}
                     <div className="mt-auto space-y-4">
-                      <Button
-                        variant="ghost"
-                        onClick={toggleDarkMode}
-                        className="w-full justify-start text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
-                      >
-                        {isDarkMode ? (
-                          <Sun className="h-5 w-5 mr-2" />
-                        ) : (
-                          <Moon className="h-5 w-5 mr-2" />
-                        )}
-                        {isDarkMode ? "Light Mode" : "Dark Mode"}
-                      </Button>
+                      <ThemeToggle className="w-full justify-start text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white" />
                       <Button
                         className="w-full bg-black rounded-full text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
                         onClick={() => {
