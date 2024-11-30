@@ -19,22 +19,30 @@ import {
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
+import ThemeToggle from "../ThemeToggle";
+import { Button } from "../ui/button";
+import { cn } from "@/lib/utils";
 
 type ProfileDropdownProps = React.FC<{
   children: React.ReactNode;
   isMobile: boolean;
   user: any;
+  className: any;
 }>;
 const ProfileDropdown: ProfileDropdownProps = ({
   children,
   isMobile,
   user,
+  className,
 }) => {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
       <DropdownMenuContent
-        className="w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg"
+        className={cn(
+          "w-[--radix-dropdown-menu-trigger-width] min-w-56 rounded-lg bg-card ",
+          className
+        )}
         side={isMobile ? "bottom" : "right"}
         align="end"
         sideOffset={4}
@@ -51,6 +59,13 @@ const ProfileDropdown: ProfileDropdownProps = ({
             </div>
           </div>
         </DropdownMenuLabel>
+        <DropdownMenuSeparator />
+        <DropdownMenuItem>
+          <DropdownMenuItem className="flex flex-row items-center justify-between w-full p-0">
+            <span>Theme</span>
+            <ThemeToggle className="h-3 w-3" />
+          </DropdownMenuItem>
+        </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <Link href="/profile/billing">

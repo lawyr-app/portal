@@ -24,7 +24,9 @@ const ProfileLayout: React.FC<ProfileLayoutProps> = ({ children }) => {
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset>
-        <div className="flex flex-col h-full w-full">{children}</div>
+        <div className="flex flex-col h-full w-full text-primary">
+          {children}
+        </div>
       </SidebarInset>
     </SidebarProvider>
   );

@@ -24,11 +24,12 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import Link from "next/link";
 
 const History = () => {
   return (
     <div className="flex flex-col w-full h-full relative">
-      <header className="flex flex-col gap-2 p-2 sticky top-0 w-full bg-primary-foreground">
+      <header className="flex flex-col gap-2 p-2 sticky top-0 w-full bg-card">
         <SidebarTrigger />
         <div className="w-full flex flex-row items-center justify-center mb-4">
           <span className="flex flex-row w-10/12">
@@ -55,15 +56,17 @@ const History = () => {
 const HistoryCard = () => {
   return (
     <Card className="w-full sm:w-10/12 p-4">
-      <CardTitle className="mb-2">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit.
-      </CardTitle>
-      <CardDescription>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
-        reprehenderit, in ratione facilis nesciunt sunt asperiores earum
-        delectus ipsum a rem unde! Sunt porro, id illum omnis soluta velit
-        consequuntur?
-      </CardDescription>
+      <Link href="/playground/detail/1746237">
+        <CardTitle className="mb-2">
+          Lorem ipsum dolor sit amet consectetur adipisicing elit.
+        </CardTitle>
+        <CardDescription>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
+          reprehenderit, in ratione facilis nesciunt sunt asperiores earum
+          delectus ipsum a rem unde! Sunt porro, id illum omnis soluta velit
+          consequuntur?
+        </CardDescription>
+      </Link>
 
       <CardFooter className="p-0 pt-2 flex flex-row items-center justify-between mt-3 gap-2 border-t">
         <CardDescription className="text-[12px]">

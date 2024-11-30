@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/sidebar";
 import Link from "next/link";
 import ProfileDropdown from "@/components/ProfileDropdown";
+import { useTheme } from "@/components/ThemeToggle/Provider";
 
 export function NavUser({
   user,
@@ -38,11 +39,16 @@ export function NavUser({
   };
 }) {
   const { isMobile } = useSidebar();
+  const { theme } = useTheme();
 
   return (
     <SidebarMenu>
       <SidebarMenuItem>
-        <ProfileDropdown isMobile={isMobile} user={user}>
+        <ProfileDropdown
+          className={`${theme === "dark" ? "dark" : ""} bg-card`}
+          isMobile={isMobile}
+          user={user}
+        >
           <SidebarMenuButton
             size="lg"
             className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"

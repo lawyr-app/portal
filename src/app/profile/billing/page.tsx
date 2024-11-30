@@ -70,7 +70,7 @@ export default function BillingPage() {
             </div>
             <div className="mt-6 text-center">
               <Link
-                href="/pricing"
+                href="/info/pricing"
                 className="text-sm text-primary hover:underline"
               >
                 View full pricing details

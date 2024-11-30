@@ -20,6 +20,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useTheme } from "@/components/ThemeToggle/Provider";
 
 const user = {
   name: "shadcn",

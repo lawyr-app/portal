@@ -38,7 +38,9 @@ const ThemeProviders = ({ children }: { children: ReactNode }) => {
 
   return (
     <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <main className={`${theme === "light" ? "" : "dark"}`}>{children}</main>
+      <main className={`${theme === "light" ? "" : "dark"} min-h-screen`}>
+        {children}
+      </main>
     </ThemeContext.Provider>
   );
 };

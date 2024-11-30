@@ -25,7 +25,7 @@ const questions = [
 
 const Playground = () => {
   return (
-    <div className="flex flex-col w-full h-full ">
+    <div className="flex flex-col w-full h-full">
       <header className="flex h-14 shrink-0 items-center gap-2 px-2 fixed top-0 z-10">
         <SidebarTrigger />
       </header>
