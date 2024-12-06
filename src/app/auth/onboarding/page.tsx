@@ -16,29 +16,80 @@ import {
   UserCheck,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
+import axios from "@/lib/axios";
+import { toast } from "sonner";
+
+const socialPlatforms = [
+  { name: "Facebook", icon: Facebook },
+  { name: "Twitter", icon: Twitter },
+  { name: "Instagram", icon: Instagram },
+  { name: "LinkedIn", icon: Linkedin },
+  { name: "YouTube", icon: Youtube },
+  { name: "Reddit", icon: Reddit },
+  { name: "Other", icon: User },
+];
+
+const userTypes = [
+  { name: "Lawyer", value: "lawyer", icon: Scale },
+  { name: "Not a Lawyer", value: "non-lawyer", icon: UserCheck },
+];
 
 export default function OnboardingPage() {
   const router = useRouter();
   const [source, setSource] = useState<string | null>(null);
+  const [username, setUsername] = useState<string>("");
   const [otherSource, setOtherSource] = useState<string>("");
   const [userType, setUserType] = useState<"lawyer" | "non-lawyer" | null>(
     null
   );
+  const [isLoading, setIsLoading] = useState(false);
 
-  const socialPlatforms = [
-    { name: "Facebook", icon: Facebook },
-    { name: "Twitter", icon: Twitter },
-    { name: "Instagram", icon: Instagram },
-    { name: "LinkedIn", icon: Linkedin },
-    { name: "YouTube", icon: Youtube },
-    { name: "Reddit", icon: Reddit },
-    { name: "Other", icon: User },
-  ];
+  const getSocial = () => {
+    const src = socialPlatforms.find((f) => f.name === source)?.name;
+    return src ?? otherSource;
+  };
 
-  const userTypes = [
-    { name: "Lawyer", value: "lawyer", icon: Scale },
-    { name: "Not a Lawyer", value: "non-lawyer", icon: UserCheck },
-  ];
+  const createAccount = async () => {
+    try {
+      setIsLoading(true);
+      const signUpInfo = localStorage.getItem("signupInfo");
+      const parsedSignupInfo = signUpInfo ? JSON.parse(signUpInfo) : null;
+      if (parsedSignupInfo) {
+        const payload = {
+          username,
+          social: getSocial(),
+          isLawyer: userType === "lawyer",
+          //we get it from google
+          googleId: parsedSignupInfo.sub,
+          name: parsedSignupInfo.name,
+          googleFirstName: parsedSignupInfo.given_name,
+          googleLastName: parsedSignupInfo.family_name,
+          profileImageUrl: parsedSignupInfo.picture,
+          email: parsedSignupInfo.email,
+          emailVerified: parsedSignupInfo.email_verified,
+          accessToken: parsedSignupInfo.token,
+          tokenExpiresIn: parsedSignupInfo.exp,
+          tokenIssuedAt: parsedSignupInfo.iat,
+          tokenId: parsedSignupInfo.jti,
+          tokenNotValidBefore: parsedSignupInfo.nbf,
+        };
+        const { data } = await axios.post(`/user/signup`, payload);
+        if (data.isError) {
+          toast.error("Something went wrong while creating account");
+        } else {
+          toast.success("Account created successfully");
+          router.push("/playground");
+        }
+      } else {
+        toast.error("Something went wrong while creating account");
+        router.push("/auth/signup");
+      }
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      toast.error("Something went wrong while creating account");
+    }
+  };
 
   return (
     <div className="w-full p-2">
@@ -58,6 +109,11 @@ export default function OnboardingPage() {
               <User className="text-muted-foreground" />
               <Input
                 id="username"
+                value={username}
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setUsername(value);
+                }}
                 placeholder="Enter your username"
                 className="flex-1"
               />
@@ -132,7 +188,7 @@ export default function OnboardingPage() {
         <Button
           type="button"
           onClick={() => {
-            router.push("/playground");
+            createAccount();
           }}
           className="w-full text-lg py-6"
         >
