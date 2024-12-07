@@ -8,10 +8,12 @@ import axios from "@/lib/axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import { useUser } from "@/context/userContext";
 
 export default function SignUpPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { setUser } = useUser();
 
   const handleLogin = async (res: CredentialResponse) => {
     try {

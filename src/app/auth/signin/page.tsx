@@ -8,10 +8,12 @@ import { toast } from "sonner";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useUser } from "@/context/userContext";
 
 export default function SignInPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { storeUser } = useUser();
 
   const handleSignin = async (res: CredentialResponse) => {
     try {
@@ -39,6 +41,7 @@ export default function SignInPage() {
             const { data } = await axios.put(`/user/signin`, payload);
             if (!data.isError) {
               router.push("/playground");
+              storeUser(data.data);
             } else {
               const message = data?.message;
               if (message === "USER_DONT_EXISTS") {

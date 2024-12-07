@@ -18,6 +18,7 @@ import {
 import { useRouter } from "next/navigation";
 import axios from "@/lib/axios";
 import { toast } from "sonner";
+import { useUser } from "@/context/userContext";
 
 const socialPlatforms = [
   { name: "Facebook", icon: Facebook },
@@ -43,6 +44,7 @@ export default function OnboardingPage() {
     null
   );
   const [isLoading, setIsLoading] = useState(false);
+  const { storeUser } = useUser();
 
   const getSocial = () => {
     const src = socialPlatforms.find((f) => f.name === source)?.name;
@@ -77,6 +79,7 @@ export default function OnboardingPage() {
         if (data.isError) {
           toast.error("Something went wrong while creating account");
         } else {
+          storeUser(data.data);
           toast.success("Account created successfully");
           router.push("/playground");
         }

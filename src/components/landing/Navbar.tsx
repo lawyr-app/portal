@@ -7,8 +7,10 @@ import { Moon, Sun, Menu } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import ThemeToggle from "../ThemeToggle";
+import { useUser } from "@/context/userContext";
 
 export function Navbar() {
+  const { user } = useUser();
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
@@ -63,7 +65,9 @@ export function Navbar() {
               <ThemeToggle className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white" />
               <Button
                 className="bg-black rounded-full text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
-                onClick={() => router.push("/auth/signin")}
+                onClick={() =>
+                  router.push(user ? "/playground" : "/auth/signin")
+                }
               >
                 Get Started
               </Button>
