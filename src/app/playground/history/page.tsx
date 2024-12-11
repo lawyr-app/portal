@@ -1,6 +1,8 @@
+"use client";
+
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -25,8 +27,28 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Link from "next/link";
+import axios from "@/lib/axios";
 
 const History = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [historyList, setHistoryList] = useState([]);
+
+  const fetchHistory = async () => {
+    try {
+      setIsLoading(true);
+      const { data } = await axios.get("/chat/chats");
+      setHistoryList(data?.data ?? []);
+      setIsLoading(false);
+    } catch (error) {
+      console.error(`Something went wrong in fetchHistory due to `, error);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchHistory();
+  }, []);
+
   return (
     <div className="flex flex-col w-full h-full relative">
       <header className="flex flex-col gap-2 p-2 sticky top-0 w-full bg-card">
@@ -43,8 +65,8 @@ const History = () => {
         </div>
       </header>
       <div className="flex w-full h-full flex-col items-center justify-center mt-5 p-3">
-        <div className="flex flex-col w-full h-full items-center justify-center gap-4">
-          {new Array(30).fill("").map((m, i) => (
+        <div className="flex flex-col w-full h-full items-center  gap-4">
+          {historyList?.map((m, i) => (
             <HistoryCard key={i} />
           ))}
         </div>
@@ -60,15 +82,9 @@ const HistoryCard = () => {
         <CardTitle className="mb-2">
           Lorem ipsum dolor sit amet consectetur adipisicing elit.
         </CardTitle>
-        <CardDescription>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
-          reprehenderit, in ratione facilis nesciunt sunt asperiores earum
-          delectus ipsum a rem unde! Sunt porro, id illum omnis soluta velit
-          consequuntur?
-        </CardDescription>
       </Link>
 
-      <CardFooter className="p-0 pt-2 flex flex-row items-center justify-between mt-3 gap-2 border-t">
+      <CardFooter className="p-0 pt-2 flex flex-row items-center justify-between mt-3 gap-2 ">
         <CardDescription className="text-[12px]">
           Updated 2 may 2001
         </CardDescription>

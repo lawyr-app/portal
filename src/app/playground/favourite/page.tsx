@@ -1,6 +1,8 @@
+"use client";
+
 import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -25,8 +27,36 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import Link from "next/link";
+import axios from "@/lib/axios";
+import { toast } from "sonner";
 
-const History = () => {
+const Favourite = () => {
+  const [isLoading, setIsLoading] = useState(true);
+  const [favourites, setFavourites] = useState([]);
+
+  const fetchFavourites = async () => {
+    try {
+      setIsLoading(true);
+      const { data } = await axios.get("/favourite/favourites");
+      setFavourites(data?.data ?? []);
+      if (data.isError) {
+        toast.error("Failed to fetch the Favourites", {
+          description: "Please try again",
+        });
+      } else {
+        // toast.success("We need few more details");
+      }
+      setIsLoading(false);
+    } catch (error) {
+      console.error(`Something went wrong in fetchFavourites due to `, error);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchFavourites();
+  }, []);
+
   return (
     <div className="flex flex-col w-full h-full relative">
       <header className="flex flex-col gap-2 p-2 sticky top-0 w-full bg-card">
@@ -44,8 +74,8 @@ const History = () => {
       </header>
       <div className="flex w-full h-full flex-col items-center justify-center mt-5 p-3">
         <div className="flex flex-col w-full h-full items-center justify-center gap-4">
-          {new Array(30).fill("").map((m, i) => (
-            <HistoryCard key={i} />
+          {favourites?.map((m, i) => (
+            <FavouriteCard key={i} />
           ))}
         </div>
       </div>
@@ -53,7 +83,7 @@ const History = () => {
   );
 };
 
-const HistoryCard = () => {
+const FavouriteCard = () => {
   return (
     <Card className="w-full sm:w-10/12 p-4">
       <Link href="/playground/detail/1746237">
@@ -99,4 +129,4 @@ const HistoryCard = () => {
   );
 };
 
-export default History;
+export default Favourite;

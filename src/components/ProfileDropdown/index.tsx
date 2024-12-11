@@ -28,12 +28,14 @@ type ProfileDropdownProps = React.FC<{
   isMobile: boolean;
   user: any;
   className: any;
+  removeUser: () => void;
 }>;
 const ProfileDropdown: ProfileDropdownProps = ({
   children,
   isMobile,
   user,
   className,
+  removeUser,
 }) => {
   return (
     <DropdownMenu>
@@ -50,12 +52,12 @@ const ProfileDropdown: ProfileDropdownProps = ({
         <DropdownMenuLabel className="p-0 font-normal">
           <div className="flex items-center gap-2 px-1 py-1.5 text-left text-sm">
             <Avatar className="h-8 w-8 rounded-lg">
-              <AvatarImage src={user.avatar} alt={user.name} />
+              <AvatarImage src={user?.profileImageUrl} alt={user?.name} />
               <AvatarFallback className="rounded-lg">CN</AvatarFallback>
             </Avatar>
             <div className="grid flex-1 text-left text-sm leading-tight">
-              <span className="truncate font-semibold">{user.name}</span>
-              <span className="truncate text-xs">{user.email}</span>
+              <span className="truncate font-semibold">{user?.name}</span>
+              <span className="truncate text-xs">{user?.email}</span>
             </div>
           </div>
         </DropdownMenuLabel>
@@ -88,7 +90,7 @@ const ProfileDropdown: ProfileDropdownProps = ({
           </Link>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={removeUser}>
           <LogOut />
           Log out
         </DropdownMenuItem>

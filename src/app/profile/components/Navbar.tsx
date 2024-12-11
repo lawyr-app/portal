@@ -7,19 +7,15 @@ import { Button } from "@/components/ui/button";
 import { Scale, User, CreditCard, Gamepad2 } from "lucide-react";
 import ProfileDropdown from "@/components/ProfileDropdown";
 import { useTheme } from "@/components/ThemeToggle/Provider";
+import { useUser } from "@/context/userContext";
 
 const GENERAL_ROUTE = "/profile/general";
 const BILLING_ROUTE = "/profile/billing";
 
-const user = {
-  name: "shadcn",
-  email: "m@example.com",
-  avatar: "/avatars/shadcn.jpg",
-};
-
 export default function Navbar() {
   const pathname = usePathname();
   const { theme } = useTheme();
+  const { removeUser, user } = useUser();
 
   return (
     <nav className="border-b text-primary">
@@ -62,11 +58,12 @@ export default function Navbar() {
           </Link>
           <ProfileDropdown
             isMobile
+            removeUser={removeUser}
             user={user}
             className={`${theme === "dark" ? "dark" : ""} bg-card`}
           >
             <Avatar className="h-8 w-8 rounded-full cursor-pointer">
-              <AvatarImage src={user.avatar} alt={user.name} />
+              <AvatarImage src={user?.profileImageUrl} alt={user?.name} />
               <AvatarFallback className="rounded-lg">CN</AvatarFallback>
             </Avatar>
           </ProfileDropdown>

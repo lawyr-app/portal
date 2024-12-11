@@ -36,7 +36,10 @@ const Playground = () => {
         <h1 className="text-[26px] sm:text-[30px] md:text-[35px] lg:text-[44px] font-bold z-10">
           What can i help you with?
         </h1>
-        <ChatInput classname="w-full sm:w-5/6 md:w-1/2 mt-4 z-10" />
+        <ChatInput
+          classname="w-full sm:w-5/6 md:w-1/2 mt-4 z-10"
+          isPlayground
+        />
         <div className="flex flex-wrap gap-2 mt-4 w-8/12 justify-center">
           {questions.map((m) => (
             <Badge className="cursor-pointer z-10" key={m.id}>

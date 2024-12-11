@@ -8,18 +8,18 @@ import axios from "@/lib/axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import { useUser } from "@/context/userContext";
+import { TOKEN } from "@/constant/localKeys";
 
 export default function SignUpPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
-  const { setUser } = useUser();
 
-  const handleLogin = async (res: CredentialResponse) => {
+  const handleSignup = async (res: CredentialResponse) => {
     try {
       setIsLoading(true);
       const token = res.credential;
       if (token) {
+        localStorage.setItem(TOKEN, token);
         const userInfo = jwtDecode(token);
         const googleId = userInfo?.sub;
         if (googleId) {
@@ -69,7 +69,7 @@ export default function SignUpPage() {
       <div className="space-y-6">
         {!isLoading ? (
           <GoogleLogin
-            onSuccess={(s) => handleLogin(s)}
+            onSuccess={(s) => handleSignup(s)}
             onError={() => {
               console.error(`Somethign went wrong in google login`);
             }}

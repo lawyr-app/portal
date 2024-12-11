@@ -1,6 +1,7 @@
 "use client";
 
 import { USER_DATA } from "@/constant/localKeys";
+import { useRouter } from "next/navigation";
 import React, {
   createContext,
   useContext,
@@ -12,16 +13,24 @@ import React, {
 type UserContextProps = {
   user: any;
   storeUser: (user: any) => void;
+  removeUser: () => void;
 };
 
 const UserContext = createContext<UserContextProps | undefined>(undefined);
 
 export const UserProvider = ({ children }: { children: ReactNode }) => {
+  const router = useRouter();
   const [user, setUser] = useState<any>(null);
 
   const storeUser = (data: any) => {
     localStorage.setItem(USER_DATA, JSON.stringify(data));
     setUser(data);
+  };
+
+  const removeUser = () => {
+    setUser(null);
+    router.replace("/auth/signup");
+    localStorage.clear();
   };
 
   useEffect(() => {
@@ -31,7 +40,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <UserContext.Provider value={{ user, storeUser }}>
+    <UserContext.Provider value={{ user, storeUser, removeUser }}>
       {children}
     </UserContext.Provider>
   );
