@@ -1,5 +1,7 @@
+"use client";
+
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import React from "react";
+import React, { useState } from "react";
 import ChatInput from "@/components/ChatInput";
 import { TextHoverEffect } from "@/components/ui/text-hover-effect";
 import { Badge } from "@/components/ui/badge";
@@ -24,6 +26,8 @@ const questions = [
 ];
 
 const Playground = () => {
+  const [selected, setSelected] = useState("");
+
   return (
     <div className="flex flex-col w-full h-full">
       <header className="flex h-14 shrink-0 items-center gap-2 px-2 fixed top-0 z-10">
@@ -39,10 +43,17 @@ const Playground = () => {
         <ChatInput
           classname="w-full sm:w-5/6 md:w-1/2 mt-4 z-10"
           isPlayground
+          suggestedQuestion={selected}
         />
         <div className="flex flex-wrap gap-2 mt-4 w-8/12 justify-center">
           {questions.map((m) => (
-            <Badge className="cursor-pointer z-10" key={m.id}>
+            <Badge
+              className="cursor-pointer z-10"
+              key={m.id}
+              onClick={() => {
+                setSelected(m.question);
+              }}
+            >
               {m.question}&nbsp;
               <CircleArrowOutUpRight className="h-3 w-3" />
             </Badge>

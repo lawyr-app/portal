@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -13,11 +13,12 @@ import { useRouter } from "next/navigation";
 import { NEW_CHAT } from "@/constant/localKeys";
 
 type ChatInputProps = React.FC<{
-  classname: string;
-  isPlayground: Boolean;
+  classname?: string;
+  suggestedQuestion?: string;
+  isPlayground?: Boolean;
   sendMessage?: () => void;
-  setMessage: React.Dispatch<React.SetStateAction<string>>;
-  message: string;
+  setMessage?: React.Dispatch<React.SetStateAction<string>>;
+  message?: string;
 }>;
 const ChatInput: ChatInputProps = ({
   classname,
@@ -25,10 +26,17 @@ const ChatInput: ChatInputProps = ({
   sendMessage = () => {},
   message,
   setMessage,
+  suggestedQuestion = "",
 }) => {
   const [isCreatingChat, setIsCreatingChat] = useState(false);
   const [question, setQuestion] = useState("");
   const router = useRouter();
+
+  useEffect(() => {
+    if (suggestedQuestion) {
+      setQuestion(suggestedQuestion);
+    }
+  }, [suggestedQuestion]);
 
   const handleCreateChat = async () => {
     try {
