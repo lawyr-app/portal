@@ -4,7 +4,9 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ChromeIcon as Google } from "lucide-react";
+import { Textarea } from "@/components/ui/textarea";
+import { toast } from "sonner";
+import { ChromeIcon as Google, Info } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -22,32 +24,19 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
+import axios from "@/lib/axios";
+import { useUser } from "@/context/userContext";
 
 export default function ProfilePage() {
   const [username, setUsername] = useState("johndoe");
-  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
-  const [deleteConfirmation, setDeleteConfirmation] = useState("");
 
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
   };
 
-  const handleDeleteConfirmationChange = (
-    event: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    setDeleteConfirmation(event.target.value);
-  };
-
   const handleSaveUsername = () => {
     // Implement save username logic here
     console.log("Saving username:", username);
-  };
-
-  const handleDeleteAccount = () => {
-    // Implement delete account logic here
-    console.log("Deleting account");
-    setIsDeleteDialogOpen(false);
-    setDeleteConfirmation("");
   };
 
   return (
@@ -112,55 +101,123 @@ export default function ProfilePage() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Dialog
-            open={isDeleteDialogOpen}
-            onOpenChange={setIsDeleteDialogOpen}
-          >
-            <DialogTrigger asChild>
-              <Button variant="destructive">Delete Account</Button>
-            </DialogTrigger>
-            <DialogContent>
-              <DialogHeader>
-                <DialogTitle>Are you absolutely sure?</DialogTitle>
-                <DialogDescription>
-                  This action cannot be undone. This will permanently delete
-                  your account and remove your data from our servers.
-                </DialogDescription>
-              </DialogHeader>
-              <div className="py-4">
-                <Label
-                  htmlFor="delete-confirmation"
-                  className="text-sm font-medium"
-                >
-                  Type "delete my account" to confirm:
-                </Label>
-                <Input
-                  id="delete-confirmation"
-                  value={deleteConfirmation}
-                  onChange={handleDeleteConfirmationChange}
-                  className="mt-2"
-                  placeholder="delete my account"
-                />
-              </div>
-              <DialogFooter>
-                <Button
-                  variant="secondary"
-                  onClick={() => setIsDeleteDialogOpen(false)}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  variant="destructive"
-                  onClick={handleDeleteAccount}
-                  disabled={deleteConfirmation !== "delete my account"}
-                >
-                  Delete Account
-                </Button>
-              </DialogFooter>
-            </DialogContent>
-          </Dialog>
+          <DeleteUser />
         </CardContent>
       </Card>
     </div>
   );
 }
+
+const DeleteUser = () => {
+  const [reason, setReason] = useState("");
+  const [isDeleteDialogOpen, setIsDeleteDialogOpen] = useState(false);
+  const [deleteConfirmation, setDeleteConfirmation] = useState("");
+  const [isDeleting, setIsDeleting] = useState(false);
+  const { removeUser } = useUser();
+
+  const handleDeleteConfirmationChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setDeleteConfirmation(event.target.value);
+  };
+
+  const showWarning = () => {
+    toast.warning("Failed to delete user", {
+      description: "Please try again",
+    });
+  };
+
+  const handleDeleteAccount = async () => {
+    try {
+      setIsDeleting(true);
+      const { data } = await axios.post(`/user/delete`, {
+        reason,
+      });
+      if (!data?.isError) {
+        removeUser();
+        toast.success("Deleted the user successfully");
+      } else {
+        showWarning();
+      }
+      setIsDeleting(false);
+    } catch (error) {
+      showWarning();
+      setIsDeleting(false);
+    }
+  };
+
+  return (
+    <Dialog open={isDeleteDialogOpen} onOpenChange={setIsDeleteDialogOpen}>
+      <DialogTrigger asChild>
+        <Button variant="destructive">Delete Account</Button>
+      </DialogTrigger>
+      <DialogContent
+        onEscapeKeyDown={(event) => {
+          if (isDeleting) {
+            event.preventDefault();
+          }
+        }}
+      >
+        <DialogHeader>
+          <DialogTitle>Are you absolutely sure?</DialogTitle>
+          <DialogDescription>
+            This action cannot be undone. This will permanently delete your
+            account and remove your data from our servers.
+          </DialogDescription>
+        </DialogHeader>
+        <div className="pt-4">
+          <Label htmlFor="reason" className="text-sm font-medium">
+            Reason
+          </Label>
+          <Textarea
+            id="reason"
+            value={reason}
+            onChange={(e) => {
+              setReason(e.target.value);
+            }}
+            placeholder="Enter reason"
+          />
+          {reason.length < 5 && (
+            <div className="text-red-500 text-[12px] text-end flex flex-row items-center justify-end">
+              <Info className="h-[12px]" /> Enter atleas 5 characters
+            </div>
+          )}
+        </div>
+        {reason.length > 5 && (
+          <div className="pt-2">
+            <Label
+              htmlFor="delete-confirmation"
+              className="text-sm font-medium"
+            >
+              Type "delete my account" to confirm:
+            </Label>
+            <Input
+              id="delete-confirmation"
+              value={deleteConfirmation}
+              onChange={handleDeleteConfirmationChange}
+              className="mt-2"
+              placeholder="delete my account"
+            />
+          </div>
+        )}
+
+        <DialogFooter>
+          <Button
+            disabled={isDeleting}
+            variant="secondary"
+            onClick={() => setIsDeleteDialogOpen(false)}
+          >
+            Cancel
+          </Button>
+          <Button
+            variant="destructive"
+            onClick={handleDeleteAccount}
+            disabled={deleteConfirmation !== "delete my account" || isDeleting}
+          >
+            Delete Account
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
+  );
+};
