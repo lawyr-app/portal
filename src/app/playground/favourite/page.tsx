@@ -29,10 +29,14 @@ import {
 import Link from "next/link";
 import axios from "@/lib/axios";
 import { toast } from "sonner";
+import { MaybeEmptyArray } from "@/types/common";
+import { favouriteType } from "@/types/Favourite";
 
 const Favourite = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [favourites, setFavourites] = useState([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [favourites, setFavourites] = useState<MaybeEmptyArray<favouriteType>>(
+    []
+  );
 
   const fetchFavourites = async () => {
     try {
@@ -73,9 +77,9 @@ const Favourite = () => {
         </div>
       </header>
       <div className="flex w-full h-full flex-col items-center justify-center mt-5 p-3">
-        <div className="flex flex-col w-full h-full items-center justify-center gap-4">
+        <div className="flex flex-col w-full h-full items-center gap-4">
           {favourites?.map((m, i) => (
-            <FavouriteCard key={i} />
+            <FavouriteCard key={String(m._id)} data={m} />
           ))}
         </div>
       </div>
@@ -83,22 +87,28 @@ const Favourite = () => {
   );
 };
 
-const FavouriteCard = () => {
+type FavouriteCardProps = React.FC<{
+  data: favouriteType;
+}>;
+
+const FavouriteCard: FavouriteCardProps = ({ data }) => {
+  const { _id: id, title } = data;
+
+  const deletefavourite = async (favId: String) => {
+    try {
+      const { data } = await axios.delete(`/favourite/${favId}`);
+    } catch (error) {
+      console.error(`Something went wrong in favouriteAction due to `, error);
+    }
+  };
+
   return (
     <Card className="w-full sm:w-10/12 p-4">
       <Link href="/playground/detail/1746237">
-        <CardTitle className="mb-2">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        </CardTitle>
-        <CardDescription>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Laudantium
-          reprehenderit, in ratione facilis nesciunt sunt asperiores earum
-          delectus ipsum a rem unde! Sunt porro, id illum omnis soluta velit
-          consequuntur?
-        </CardDescription>
+        <CardTitle className="mb-2">{title}</CardTitle>
       </Link>
 
-      <CardFooter className="p-0 pt-2 flex flex-row items-center justify-between mt-3 gap-2 border-t">
+      <CardFooter className="p-0 pt-2 flex flex-row items-center justify-between mt-3 gap-2 ">
         <CardDescription className="text-[12px]">
           Created at 2 may 2001
         </CardDescription>
@@ -116,8 +126,21 @@ const FavouriteCard = () => {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="outline" size="icon">
-                  <Star className="h-4 w-4" />
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => {
+                    deletefavourite(id);
+                  }}
+                >
+                  <Star
+                    className="h-4 w-4"
+                    style={{
+                      fill: "gold",
+                      border: "gold",
+                      strokeWidth: 0,
+                    }}
+                  />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>Favourite</TooltipContent>

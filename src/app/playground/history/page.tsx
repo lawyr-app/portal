@@ -28,15 +28,27 @@ import {
 } from "@/components/ui/tooltip";
 import Link from "next/link";
 import axios from "@/lib/axios";
+import { MayBe, MaybeEmptyArray } from "@/types/common";
+import { ChatType, favouritedIdType } from "@/types/Chat";
+
+type HistoryListType = MaybeEmptyArray<ChatType>;
+type setHistoryListType = React.Dispatch<React.SetStateAction<HistoryListType>>;
 
 const History = () => {
-  const [isLoading, setIsLoading] = useState(true);
-  const [historyList, setHistoryList] = useState([]);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [historyList, setHistoryList] = useState<MaybeEmptyArray<ChatType>>([]);
 
   const fetchHistory = async () => {
     try {
       setIsLoading(true);
-      const { data } = await axios.get("/chat/chats");
+      const { data } = await axios.get("/chat/chats", {
+        params: {
+          imit: 10,
+          skip: 0,
+          search: "",
+          needIsFavouritedFlag: true,
+        },
+      });
       setHistoryList(data?.data ?? []);
       setIsLoading(false);
     } catch (error) {
@@ -67,7 +79,12 @@ const History = () => {
       <div className="flex w-full h-full flex-col items-center justify-center mt-5 p-3">
         <div className="flex flex-col w-full h-full items-center  gap-4">
           {historyList?.map((m, i) => (
-            <HistoryCard key={i} />
+            <HistoryCard
+              key={String(m._id)}
+              data={m}
+              setHistoryList={setHistoryList}
+              historyList={historyList}
+            />
           ))}
         </div>
       </div>
@@ -75,13 +92,80 @@ const History = () => {
   );
 };
 
-const HistoryCard = () => {
+const getFavoriteId = (id: MayBe<favouritedIdType>) => {
+  const typeIsString = typeof id === "string";
+  if (!id) {
+    return undefined;
+  }
+  if (typeIsString) {
+    return id;
+  }
+  if (typeof id === "object" && "_id" in id) {
+    return id._id;
+  }
+  return undefined;
+};
+
+type HistoryCardProps = React.FC<{
+  setHistoryList: setHistoryListType;
+  historyList: HistoryListType;
+  data: ChatType;
+}>;
+const HistoryCard: HistoryCardProps = ({
+  data,
+  historyList,
+  setHistoryList,
+}) => {
+  const { _id: chatId, firstQuestion, favouritedId } = data;
+  const [isfavourated, setIsFavourited] =
+    useState<MayBe<favouritedIdType>>(null);
+  const [isDeleting, setIsDeleting] = useState<boolean>(false);
+  const [isFavLoading, setIsFavLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (favouritedId) {
+      setIsFavourited(getFavoriteId(favouritedId));
+    }
+  }, [favouritedId]);
+
+  const makefavourite = async () => {
+    try {
+      setIsFavLoading(true);
+      const { data } = await axios.post(`/favourite/${chatId}`, {
+        title: firstQuestion,
+      });
+      setIsFavLoading(false);
+    } catch (error) {
+      setIsFavLoading(false);
+      console.error(`Something went wrong in favouriteAction due to `, error);
+    }
+  };
+  const deletefavourite = async (id: String) => {
+    try {
+      setIsFavLoading(true);
+      const { data } = await axios.delete(`/favourite/${id}`);
+      setIsFavLoading(false);
+    } catch (error) {
+      setIsFavLoading(false);
+      console.error(`Something went wrong in favouriteAction due to `, error);
+    }
+  };
+
+  const handleDelete = async () => {
+    try {
+      setIsDeleting(true);
+      const { data } = await axios.delete(`/chat/${chatId}`);
+      setIsDeleting(false);
+    } catch (error) {
+      setIsDeleting(false);
+      console.error(`Something went wrong in handleDelete due to `, error);
+    }
+  };
+
   return (
     <Card className="w-full sm:w-10/12 p-4">
       <Link href="/playground/detail/1746237">
-        <CardTitle className="mb-2">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit.
-        </CardTitle>
+        <CardTitle className="mb-2">{firstQuestion}</CardTitle>
       </Link>
 
       <CardFooter className="p-0 pt-2 flex flex-row items-center justify-between mt-3 gap-2 ">
@@ -102,8 +186,26 @@ const HistoryCard = () => {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="outline" size="icon">
-                  <Star className="h-4 w-4" />
+                <Button
+                  variant="outline"
+                  size="icon"
+                  onClick={() => {
+                    const favId = getFavoriteId(isfavourated);
+                    if (favId) {
+                      deletefavourite(favId);
+                    } else {
+                      makefavourite();
+                    }
+                  }}
+                >
+                  <Star
+                    className="h-4 w-4"
+                    style={{
+                      fill: isfavourated ? "gold" : "",
+                      border: isfavourated ? "gold" : "",
+                      strokeWidth: isfavourated ? 0 : 2,
+                    }}
+                  />
                 </Button>
               </TooltipTrigger>
               <TooltipContent>Favourite</TooltipContent>
@@ -112,7 +214,11 @@ const HistoryCard = () => {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button variant="destructive" size="icon">
+                <Button
+                  variant="destructive"
+                  size="icon"
+                  onClick={handleDelete}
+                >
                   <Trash2 className="h-4 w-4" />
                 </Button>
               </TooltipTrigger>
