@@ -80,31 +80,6 @@ const History = () => {
             setValue={setSearch}
             handleSearch={handleSearch}
           />
-          {/* <span className="flex flex-row w-10/12">
-            <Input
-              type="search"
-              value={search}
-              onChange={(e) => {
-                const value = e.target.value;
-                setSearch(value);
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter") {
-                  handleSearch();
-                }
-              }}
-              placeholder="Searh by description"
-              className="rounded-tr-none rounded-br-none"
-            />
-            <Button
-              className="rounded-tl-none rounded-bl-none"
-              onClick={() => {
-                handleSearch();
-              }}
-            >
-              Search
-            </Button>
-          </span> */}
         </div>
       </header>
       <div className="flex w-full h-full flex-col items-center justify-center mt-5 p-3">
