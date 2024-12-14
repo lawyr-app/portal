@@ -30,6 +30,7 @@ import Link from "next/link";
 import axios from "@/lib/axios";
 import { MayBe, MaybeEmptyArray } from "@/types/common";
 import { ChatType, favouritedIdType } from "@/types/Chat";
+import useFavourite from "@/hooks/useFavourite";
 
 type HistoryListType = MaybeEmptyArray<ChatType>;
 type setHistoryListType = React.Dispatch<React.SetStateAction<HistoryListType>>;
@@ -92,20 +93,6 @@ const History = () => {
   );
 };
 
-const getFavoriteId = (id: MayBe<favouritedIdType>) => {
-  const typeIsString = typeof id === "string";
-  if (!id) {
-    return undefined;
-  }
-  if (typeIsString) {
-    return id;
-  }
-  if (typeof id === "object" && "_id" in id) {
-    return id._id;
-  }
-  return undefined;
-};
-
 type HistoryCardProps = React.FC<{
   setHistoryList: setHistoryListType;
   historyList: HistoryListType;
@@ -117,39 +104,13 @@ const HistoryCard: HistoryCardProps = ({
   setHistoryList,
 }) => {
   const { _id: chatId, firstQuestion, favouritedId } = data;
-  const [isfavourated, setIsFavourited] =
-    useState<MayBe<favouritedIdType>>(null);
   const [isDeleting, setIsDeleting] = useState<boolean>(false);
-  const [isFavLoading, setIsFavLoading] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (favouritedId) {
-      setIsFavourited(getFavoriteId(favouritedId));
-    }
-  }, [favouritedId]);
-
-  const makefavourite = async () => {
-    try {
-      setIsFavLoading(true);
-      const { data } = await axios.post(`/favourite/${chatId}`, {
-        title: firstQuestion,
-      });
-      setIsFavLoading(false);
-    } catch (error) {
-      setIsFavLoading(false);
-      console.error(`Something went wrong in favouriteAction due to `, error);
-    }
-  };
-  const deletefavourite = async (id: String) => {
-    try {
-      setIsFavLoading(true);
-      const { data } = await axios.delete(`/favourite/${id}`);
-      setIsFavLoading(false);
-    } catch (error) {
-      setIsFavLoading(false);
-      console.error(`Something went wrong in favouriteAction due to `, error);
-    }
-  };
+  const { handleFavourite, isFavouritedId, isLoading } = useFavourite({
+    firstQuestion,
+    chatId,
+    favouritedId,
+  });
 
   const handleDelete = async () => {
     try {
@@ -189,21 +150,17 @@ const HistoryCard: HistoryCardProps = ({
                 <Button
                   variant="outline"
                   size="icon"
+                  disabled={isLoading}
                   onClick={() => {
-                    const favId = getFavoriteId(isfavourated);
-                    if (favId) {
-                      deletefavourite(favId);
-                    } else {
-                      makefavourite();
-                    }
+                    handleFavourite();
                   }}
                 >
                   <Star
                     className="h-4 w-4"
                     style={{
-                      fill: isfavourated ? "gold" : "",
-                      border: isfavourated ? "gold" : "",
-                      strokeWidth: isfavourated ? 0 : 2,
+                      fill: isFavouritedId ? "gold" : "",
+                      border: isFavouritedId ? "gold" : "",
+                      strokeWidth: isFavouritedId ? 0 : 2,
                     }}
                   />
                 </Button>

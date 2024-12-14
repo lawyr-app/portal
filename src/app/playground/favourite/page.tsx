@@ -31,12 +31,16 @@ import axios from "@/lib/axios";
 import { toast } from "sonner";
 import { MaybeEmptyArray } from "@/types/common";
 import { favouriteType } from "@/types/Favourite";
+import useFavourite from "@/hooks/useFavourite";
+
+type favouritesListType = MaybeEmptyArray<favouriteType>;
+type setFavouritesListType = React.Dispatch<
+  React.SetStateAction<MaybeEmptyArray<favouriteType>>
+>;
 
 const Favourite = () => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [favourites, setFavourites] = useState<MaybeEmptyArray<favouriteType>>(
-    []
-  );
+  const [favourites, setFavourites] = useState<favouritesListType>([]);
 
   const fetchFavourites = async () => {
     try {
@@ -79,7 +83,12 @@ const Favourite = () => {
       <div className="flex w-full h-full flex-col items-center justify-center mt-5 p-3">
         <div className="flex flex-col w-full h-full items-center gap-4">
           {favourites?.map((m, i) => (
-            <FavouriteCard key={String(m._id)} data={m} />
+            <FavouriteCard
+              key={String(m._id)}
+              data={m}
+              favourites={favourites}
+              setFavourites={setFavourites}
+            />
           ))}
         </div>
       </div>
@@ -89,18 +98,23 @@ const Favourite = () => {
 
 type FavouriteCardProps = React.FC<{
   data: favouriteType;
+  favourites: favouritesListType;
+  setFavourites: setFavouritesListType;
 }>;
 
-const FavouriteCard: FavouriteCardProps = ({ data }) => {
+const FavouriteCard: FavouriteCardProps = ({
+  data,
+  favourites,
+  setFavourites,
+}) => {
   const { _id: id, title } = data;
-
-  const deletefavourite = async (favId: String) => {
-    try {
-      const { data } = await axios.delete(`/favourite/${favId}`);
-    } catch (error) {
-      console.error(`Something went wrong in favouriteAction due to `, error);
-    }
-  };
+  const { handleFavourite, isLoading } = useFavourite({
+    favouritedId: id,
+    onDeleteSuccess: () => {
+      const newList = favourites.filter((f) => f._id !== id);
+      setFavourites(newList);
+    },
+  });
 
   return (
     <Card className="w-full sm:w-10/12 p-4">
@@ -127,10 +141,11 @@ const FavouriteCard: FavouriteCardProps = ({ data }) => {
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
+                  disabled={isLoading}
                   variant="outline"
                   size="icon"
                   onClick={() => {
-                    deletefavourite(id);
+                    handleFavourite();
                   }}
                 >
                   <Star
