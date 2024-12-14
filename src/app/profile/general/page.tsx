@@ -1,12 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { ChromeIcon as Google, Info } from "lucide-react";
+import { Info } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -26,17 +26,42 @@ import {
 } from "@/components/ui/dialog";
 import axios from "@/lib/axios";
 import { useUser } from "@/context/userContext";
+import Google from "@/assets/svg/Google";
+import CopyInput from "@/components/CopyInput";
 
 export default function ProfilePage() {
+  const { user, storeUser } = useUser();
   const [username, setUsername] = useState("johndoe");
+  const [isUpdating, setIsUpdating] = useState(false);
+
+  useEffect(() => {
+    if (user) {
+      setUsername(user.username);
+    }
+  }, [user]);
 
   const handleUsernameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setUsername(event.target.value);
   };
 
-  const handleSaveUsername = () => {
-    // Implement save username logic here
-    console.log("Saving username:", username);
+  const handleSaveUsername = async () => {
+    try {
+      setIsUpdating(true);
+      const { data } = await axios.put(`/user/update`, {
+        username,
+      });
+      if (!data?.isError) {
+        if (data.data) {
+          storeUser(data.data);
+        }
+        toast.success("Updated the user successfully");
+      } else {
+        toast.error("Failed to update the user");
+      }
+      setIsUpdating(false);
+    } catch (error) {
+      setIsUpdating(false);
+    }
   };
 
   return (
@@ -45,10 +70,10 @@ export default function ProfilePage() {
 
       <Card>
         <CardContent className="flex items-center space-x-4 py-4">
-          <Google className="h-6 w-6 text-blue-500" />
+          <Google />
           <div className="flex-grow">
             <p className="text-sm font-semibold">Google Account</p>
-            <p className="text-sm text-muted-foreground">johndoe@gmail.com</p>
+            <p className="text-sm text-muted-foreground">{user?.email}</p>
           </div>
           <Button
             variant="outline"
@@ -67,7 +92,7 @@ export default function ProfilePage() {
           <CardDescription>Your unique identifier</CardDescription>
         </CardHeader>
         <CardContent>
-          <Input id="id" value="12345" disabled />
+          <CopyInput value={user?._id} />
         </CardContent>
       </Card>
 
@@ -85,7 +110,12 @@ export default function ProfilePage() {
           />
         </CardContent>
         <CardFooter>
-          <Button onClick={handleSaveUsername}>Save Username</Button>
+          <Button
+            disabled={isUpdating || user?.username === username}
+            onClick={handleSaveUsername}
+          >
+            Save Username
+          </Button>
         </CardFooter>
       </Card>
 
