@@ -34,6 +34,9 @@ import useFavourite from "@/hooks/useFavourite";
 import useDeleteChat from "@/hooks/useDeleteChat";
 import SearchInput from "@/components/SearchInput";
 import { formatDate } from "@/lib/datetime";
+import CardLoading from "../components/CardLoading";
+import EmptyList from "../components/EmptyList";
+import { toast } from "sonner";
 
 type HistoryListType = MaybeEmptyArray<ChatType>;
 type setHistoryListType = React.Dispatch<React.SetStateAction<HistoryListType>>;
@@ -45,6 +48,12 @@ const History = () => {
   const [historyList, setHistoryList] = useState<MaybeEmptyArray<ChatType>>([]);
 
   const fetchHistory = async () => {
+    const showErrorToast = () => {
+      toast.error("Failed to fetch the chat history", {
+        description: "Please try again",
+      });
+    };
+
     try {
       setIsLoading(true);
       const { data } = await axios.get("/chat/chats", {
@@ -55,11 +64,16 @@ const History = () => {
           needIsFavouritedFlag: true,
         },
       });
-      setHistoryList(data?.data ?? []);
+      if (data.isError) {
+        showErrorToast();
+      } else {
+        setHistoryList(data?.data ?? []);
+      }
       setIsLoading(false);
     } catch (error) {
       console.error(`Something went wrong in fetchHistory due to `, error);
       setIsLoading(false);
+      showErrorToast();
     }
   };
 
@@ -85,14 +99,31 @@ const History = () => {
       </header>
       <div className="flex w-full h-full flex-col items-center justify-center mt-5 p-3">
         <div className="flex flex-col w-full h-full items-center  gap-4">
-          {historyList?.map((m, i) => (
-            <HistoryCard
-              key={String(m._id)}
-              data={m}
-              setHistoryList={setHistoryList}
-              historyList={historyList}
-            />
-          ))}
+          {isLoading ? (
+            <>
+              {new Array(5).fill("").map((m) => (
+                <CardLoading />
+              ))}
+            </>
+          ) : (
+            <>
+              {historyList.length === 0 ? (
+                <EmptyList
+                  title="No chat history found"
+                  description="Please create new chat"
+                />
+              ) : (
+                historyList?.map((m, i) => (
+                  <HistoryCard
+                    key={String(m._id)}
+                    data={m}
+                    setHistoryList={setHistoryList}
+                    historyList={historyList}
+                  />
+                ))
+              )}
+            </>
+          )}
         </div>
       </div>
     </div>

@@ -34,6 +34,8 @@ import { favouriteType } from "@/types/Favourite";
 import useFavourite from "@/hooks/useFavourite";
 import SearchInput from "@/components/SearchInput";
 import { formatDate } from "@/lib/datetime";
+import CardLoading from "../components/CardLoading";
+import EmptyList from "../components/EmptyList";
 
 type favouritesListType = MaybeEmptyArray<favouriteType>;
 type setFavouritesListType = React.Dispatch<
@@ -47,14 +49,18 @@ const Favourite = () => {
   const [favourites, setFavourites] = useState<favouritesListType>([]);
 
   const fetchFavourites = async () => {
+    const showErrorToast = () => {
+      toast.error("Failed to fetch the Favourites", {
+        description: "Please try again",
+      });
+    };
+
     try {
       setIsLoading(true);
       const { data } = await axios.get("/favourite/favourites");
       setFavourites(data?.data ?? []);
       if (data.isError) {
-        toast.error("Failed to fetch the Favourites", {
-          description: "Please try again",
-        });
+        showErrorToast();
       } else {
         // toast.success("We need few more details");
       }
@@ -62,6 +68,7 @@ const Favourite = () => {
     } catch (error) {
       console.error(`Something went wrong in fetchFavourites due to `, error);
       setIsLoading(false);
+      showErrorToast();
     }
   };
 
@@ -87,14 +94,31 @@ const Favourite = () => {
       </header>
       <div className="flex w-full h-full flex-col items-center justify-center mt-5 p-3">
         <div className="flex flex-col w-full h-full items-center gap-4">
-          {favourites?.map((m, i) => (
-            <FavouriteCard
-              key={String(m._id)}
-              data={m}
-              favourites={favourites}
-              setFavourites={setFavourites}
-            />
-          ))}
+          {isLoading ? (
+            <>
+              {new Array(5).fill("").map((m) => (
+                <CardLoading />
+              ))}
+            </>
+          ) : (
+            <>
+              {favourites.length === 0 ? (
+                <EmptyList
+                  title="No Favourites Found"
+                  description="You can favourite chat in chat detail or in history"
+                />
+              ) : (
+                favourites?.map((m, i) => (
+                  <FavouriteCard
+                    key={String(m._id)}
+                    data={m}
+                    favourites={favourites}
+                    setFavourites={setFavourites}
+                  />
+                ))
+              )}
+            </>
+          )}
         </div>
       </div>
     </div>
