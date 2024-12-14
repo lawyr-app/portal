@@ -32,6 +32,7 @@ import { MayBe, MaybeEmptyArray } from "@/types/common";
 import { ChatType, favouritedIdType } from "@/types/Chat";
 import useFavourite from "@/hooks/useFavourite";
 import useDeleteChat from "@/hooks/useDeleteChat";
+import SearchInput from "@/components/SearchInput";
 
 type HistoryListType = MaybeEmptyArray<ChatType>;
 type setHistoryListType = React.Dispatch<React.SetStateAction<HistoryListType>>;
@@ -74,7 +75,12 @@ const History = () => {
       <header className="flex flex-col gap-2 p-2 sticky top-0 w-full bg-card">
         <SidebarTrigger />
         <div className="w-full flex flex-row items-center justify-center mb-4">
-          <span className="flex flex-row w-10/12">
+          <SearchInput
+            value={search}
+            setValue={setSearch}
+            handleSearch={handleSearch}
+          />
+          {/* <span className="flex flex-row w-10/12">
             <Input
               type="search"
               value={search}
@@ -98,7 +104,7 @@ const History = () => {
             >
               Search
             </Button>
-          </span>
+          </span> */}
         </div>
       </header>
       <div className="flex w-full h-full flex-col items-center justify-center mt-5 p-3">

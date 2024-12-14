@@ -32,6 +32,7 @@ import { toast } from "sonner";
 import { MaybeEmptyArray } from "@/types/common";
 import { favouriteType } from "@/types/Favourite";
 import useFavourite from "@/hooks/useFavourite";
+import SearchInput from "@/components/SearchInput";
 
 type favouritesListType = MaybeEmptyArray<favouriteType>;
 type setFavouritesListType = React.Dispatch<
@@ -39,6 +40,8 @@ type setFavouritesListType = React.Dispatch<
 >;
 
 const Favourite = () => {
+  const [searchInput, setSearchInput] = useState("");
+  const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [favourites, setFavourites] = useState<favouritesListType>([]);
 
@@ -61,23 +64,24 @@ const Favourite = () => {
     }
   };
 
+  const handleSearch = () => {
+    setSearchInput(search);
+  };
+
   useEffect(() => {
     fetchFavourites();
-  }, []);
+  }, [searchInput]);
 
   return (
     <div className="flex flex-col w-full h-full relative">
       <header className="flex flex-col gap-2 p-2 sticky top-0 w-full bg-card">
         <SidebarTrigger />
         <div className="w-full flex flex-row items-center justify-center mb-4">
-          <span className="flex flex-row w-10/12">
-            <Input
-              type="search"
-              placeholder="Searh by description"
-              className="rounded-tr-none rounded-br-none"
-            />
-            <Button className="rounded-tl-none rounded-bl-none">Button</Button>
-          </span>
+          <SearchInput
+            value={search}
+            setValue={setSearch}
+            handleSearch={handleSearch}
+          />
         </div>
       </header>
       <div className="flex w-full h-full flex-col items-center justify-center mt-5 p-3">
