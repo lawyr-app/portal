@@ -33,6 +33,7 @@ import { ChatType, favouritedIdType } from "@/types/Chat";
 import useFavourite from "@/hooks/useFavourite";
 import useDeleteChat from "@/hooks/useDeleteChat";
 import SearchInput from "@/components/SearchInput";
+import { formatDate } from "@/lib/datetime";
 
 type HistoryListType = MaybeEmptyArray<ChatType>;
 type setHistoryListType = React.Dispatch<React.SetStateAction<HistoryListType>>;
@@ -131,7 +132,7 @@ const HistoryCard: HistoryCardProps = ({
 
       <CardFooter className="p-0 pt-2 flex flex-row items-center justify-between mt-3 gap-2 ">
         <CardDescription className="text-[12px]">
-          Updated 2 may 2001
+          Updated {formatDate(data.createdAt)}
         </CardDescription>
         <div className="flex flex-row gap-2">
           <TooltipProvider>

@@ -33,6 +33,7 @@ import { MaybeEmptyArray } from "@/types/common";
 import { favouriteType } from "@/types/Favourite";
 import useFavourite from "@/hooks/useFavourite";
 import SearchInput from "@/components/SearchInput";
+import { formatDate } from "@/lib/datetime";
 
 type favouritesListType = MaybeEmptyArray<favouriteType>;
 type setFavouritesListType = React.Dispatch<
@@ -128,7 +129,7 @@ const FavouriteCard: FavouriteCardProps = ({
 
       <CardFooter className="p-0 pt-2 flex flex-row items-center justify-between mt-3 gap-2 ">
         <CardDescription className="text-[12px]">
-          Created at 2 may 2001
+          Created at {formatDate(data.createdAt)}
         </CardDescription>
         <div className="flex flex-row gap-2">
           <TooltipProvider>
