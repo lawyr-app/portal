@@ -29,7 +29,7 @@ export default function BillingPage() {
   const currentPlan = "Basic";
 
   return (
-    <div className="max-w-4xl mx-auto pb-10">
+    <div>
       <h1 className="text-3xl font-bold mb-6">Billing</h1>
 
       <div className="space-y-6">
