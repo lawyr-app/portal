@@ -31,11 +31,14 @@ import axios from "@/lib/axios";
 import { MayBe, MaybeEmptyArray } from "@/types/common";
 import { ChatType, favouritedIdType } from "@/types/Chat";
 import useFavourite from "@/hooks/useFavourite";
+import useDeleteChat from "@/hooks/useDeleteChat";
 
 type HistoryListType = MaybeEmptyArray<ChatType>;
 type setHistoryListType = React.Dispatch<React.SetStateAction<HistoryListType>>;
 
 const History = () => {
+  const [searchInput, setSearchInput] = useState("");
+  const [search, setSearch] = useState("");
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [historyList, setHistoryList] = useState<MaybeEmptyArray<ChatType>>([]);
 
@@ -46,7 +49,7 @@ const History = () => {
         params: {
           imit: 10,
           skip: 0,
-          search: "",
+          search: searchInput,
           needIsFavouritedFlag: true,
         },
       });
@@ -58,9 +61,13 @@ const History = () => {
     }
   };
 
+  const handleSearch = () => {
+    setSearchInput(search);
+  };
+
   useEffect(() => {
     fetchHistory();
-  }, []);
+  }, [searchInput]);
 
   return (
     <div className="flex flex-col w-full h-full relative">
@@ -70,10 +77,27 @@ const History = () => {
           <span className="flex flex-row w-10/12">
             <Input
               type="search"
+              value={search}
+              onChange={(e) => {
+                const value = e.target.value;
+                setSearch(value);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  handleSearch();
+                }
+              }}
               placeholder="Searh by description"
               className="rounded-tr-none rounded-br-none"
             />
-            <Button className="rounded-tl-none rounded-bl-none">Button</Button>
+            <Button
+              className="rounded-tl-none rounded-bl-none"
+              onClick={() => {
+                handleSearch();
+              }}
+            >
+              Search
+            </Button>
           </span>
         </div>
       </header>
@@ -104,24 +128,19 @@ const HistoryCard: HistoryCardProps = ({
   setHistoryList,
 }) => {
   const { _id: chatId, firstQuestion, favouritedId } = data;
-  const [isDeleting, setIsDeleting] = useState<boolean>(false);
 
   const { handleFavourite, isFavouritedId, isLoading } = useFavourite({
     firstQuestion,
     chatId,
     favouritedId,
   });
-
-  const handleDelete = async () => {
-    try {
-      setIsDeleting(true);
-      const { data } = await axios.delete(`/chat/${chatId}`);
-      setIsDeleting(false);
-    } catch (error) {
-      setIsDeleting(false);
-      console.error(`Something went wrong in handleDelete due to `, error);
-    }
-  };
+  const { handleDelete, isDeleting } = useDeleteChat({
+    chatId,
+    onSuccess: () => {
+      const newList = historyList.filter((f) => f._id !== chatId);
+      setHistoryList(newList);
+    },
+  });
 
   return (
     <Card className="w-full sm:w-10/12 p-4">
@@ -172,6 +191,7 @@ const HistoryCard: HistoryCardProps = ({
             <Tooltip>
               <TooltipTrigger asChild>
                 <Button
+                  disabled={isDeleting}
                   variant="destructive"
                   size="icon"
                   onClick={handleDelete}
