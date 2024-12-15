@@ -1,37 +1,12 @@
 "use client";
-
-import { Separator } from "@/components/ui/separator";
-import { SidebarTrigger } from "@/components/ui/sidebar";
 import React, { useEffect, useRef, useState } from "react";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbList,
-  BreadcrumbPage,
-} from "@/components/ui/breadcrumb";
-import { NavActions } from "@/components/nav-actions";
-import { Button } from "@/components/ui/button";
-import {
-  Clipboard,
-  Share,
-  Share2,
-  Star,
-  ThumbsDown,
-  ThumbsUp,
-  Trash2,
-} from "lucide-react";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Card } from "@/components/ui/card";
-import PopoverButton from "@/components/PopoverButton";
 import ChatInput from "@/components/ChatInput";
 import { useParams, useRouter } from "next/navigation";
 import { NEW_CHAT } from "@/constant/localKeys";
 import axios from "@/lib/axios";
 import { toast } from "sonner";
-import useFavourite from "@/hooks/useFavourite";
 import { MayBe } from "@/types/common";
 import { ChatType } from "@/types/Chat";
-import useDeleteChat from "@/hooks/useDeleteChat";
 import UserChat from "./components/UserChat";
 import ChatResponse from "./components/ChatResponse";
 import ChatLoading from "./components/ChatLoading";
@@ -46,7 +21,6 @@ const Detail = () => {
   const { id } = useParams<{ id: string }>();
   const footerRef = useRef<HTMLDivElement>(null);
   const [containerHeight, setContainerHeight] = useState("100%");
-  const [footerHeight, setFooterHeight] = useState(100);
   const [isLoading, setIsLoading] = useState(false);
   const [chatData, setChatData] = useState<MayBe<ChatType>>(null);
   const router = useRouter();
@@ -57,28 +31,10 @@ const Detail = () => {
   const limit = 10;
   const [skip, setSkip] = useState(0);
 
-  const {
-    handleFavourite,
-    isFavouritedId,
-    isLoading: isFavouriteLoading,
-  } = useFavourite({
-    favouritedId: chatData?.favouritedId,
-    chatId: chatData?._id,
-    firstQuestion: chatData?.firstQuestion,
-  });
-
-  const { handleDelete, isDeleting } = useDeleteChat({
-    chatId: id,
-    onSuccess: () => {
-      router.push("/playground");
-    },
-  });
-
   useEffect(() => {
     const updateContainerHeight = () => {
       if (footerRef.current) {
         const footerHeight = footerRef.current.offsetHeight;
-        setFooterHeight(footerHeight);
         setContainerHeight(`calc(100% - ${footerHeight}px)`);
       }
     };
