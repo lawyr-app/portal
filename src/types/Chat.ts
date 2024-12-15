@@ -1,8 +1,9 @@
+import { MayBe } from "@/types/common";
 import { favouriteType } from "./Favourite";
 import { UserType } from "./User";
 import { CommonMongoTypes } from "./common";
 
-export type favouritedIdType = String | favouriteType;
+export type favouritedIdType = MayBe<String | favouriteType>;
 
 type favObject = {
   favouritedId: favouritedIdType;

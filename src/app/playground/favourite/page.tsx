@@ -147,7 +147,7 @@ const FavouriteCard: FavouriteCardProps = ({
 
   return (
     <Card className="w-full sm:w-10/12 p-4">
-      <Link href="/playground/detail/1746237">
+      <Link href={`/playground/detail/${data.chatId}`}>
         <CardTitle className="mb-2">{title}</CardTitle>
       </Link>
 

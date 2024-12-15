@@ -11,7 +11,15 @@ import {
 } from "@/components/ui/breadcrumb";
 import { NavActions } from "@/components/nav-actions";
 import { Button } from "@/components/ui/button";
-import { Clipboard, Share, Star, ThumbsDown, ThumbsUp } from "lucide-react";
+import {
+  Clipboard,
+  Share,
+  Share2,
+  Star,
+  ThumbsDown,
+  ThumbsUp,
+  Trash2,
+} from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import PopoverButton from "@/components/PopoverButton";
@@ -20,6 +28,17 @@ import { useParams, useRouter } from "next/navigation";
 import { NEW_CHAT } from "@/constant/localKeys";
 import axios from "@/lib/axios";
 import { toast } from "sonner";
+import useFavourite from "@/hooks/useFavourite";
+import { MayBe } from "@/types/common";
+import { ChatType } from "@/types/Chat";
+import useDeleteChat from "@/hooks/useDeleteChat";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipProvider,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
+import TooltipChildren from "@/components/TooltipChildren";
 
 type sendMessageProps = {
   question: string;
@@ -28,11 +47,11 @@ type sendMessageProps = {
 
 const Detail = () => {
   const { id } = useParams<{ id: string }>();
-  const footerRef = useRef(null);
+  const footerRef = useRef<HTMLDivElement>(null);
   const [containerHeight, setContainerHeight] = useState("100%");
   const [footerHeight, setFooterHeight] = useState(100);
   const [isLoading, setIsLoading] = useState(false);
-  const [chatData, setChatData] = useState(null);
+  const [chatData, setChatData] = useState<MayBe<ChatType>>(null);
   const router = useRouter();
   const [isMessageLoading, setIsMessageLoading] = useState(false);
   const [allMessages, setAllMessages] = useState<any[]>([]);
@@ -40,6 +59,23 @@ const Detail = () => {
   const [fetchingOlderMessages, setFetchingOlderMessages] = useState(false);
   const limit = 10;
   const [skip, setSkip] = useState(0);
+
+  const {
+    handleFavourite,
+    isFavouritedId,
+    isLoading: isFavouriteLoading,
+  } = useFavourite({
+    favouritedId: chatData?.favouritedId,
+    chatId: chatData?._id,
+    firstQuestion: chatData?.firstQuestion,
+  });
+
+  const { handleDelete, isDeleting } = useDeleteChat({
+    chatId: id,
+    onSuccess: () => {
+      router.push("/playground");
+    },
+  });
 
   useEffect(() => {
     const updateContainerHeight = () => {
@@ -63,7 +99,12 @@ const Detail = () => {
   const getChatById = async (id: string) => {
     try {
       setIsLoading(true);
-      const { data } = await axios.get(`/chat/${id}?fetchMessages=true`);
+      const { data } = await axios.get(`/chat/${id}`, {
+        params: {
+          fetchFavouriteId: true,
+          fetchMessages: true,
+        },
+      });
       if (data.isError) {
         toast("Looks like Chat doesnt exists.");
         router.back();
@@ -124,6 +165,7 @@ const Detail = () => {
           });
           return changedMessage;
         });
+        localStorage.removeItem(NEW_CHAT);
       }
       setIsMessageLoading(false);
     } catch (error) {
@@ -137,10 +179,18 @@ const Detail = () => {
       setIsLoading(true);
       const checkLocal = localStorage.getItem(NEW_CHAT);
       const parsedLocal = checkLocal ? JSON.parse(checkLocal) : null;
-      if (parsedLocal && parsedLocal?._id === id && parsedLocal?.question) {
+      console.log({
+        checkLocal,
+        parsedLocal,
+      });
+      if (
+        parsedLocal &&
+        parsedLocal?._id === id &&
+        parsedLocal?.firstQuestion
+      ) {
         setChatData(parsedLocal);
         sendMessage({
-          question: parsedLocal?.question,
+          question: parsedLocal?.firstQuestion,
           chatId: parsedLocal?._id,
         });
         setIsLoading(false);
@@ -159,7 +209,9 @@ const Detail = () => {
     <div className="w-full h-screen">
       <header className="flex h-14 shrink-0 items-center gap-2 sticky top-0 z-10 w-full bg-card">
         <div className="flex flex-1 items-center gap-2 px-3">
-          <SidebarTrigger />
+          <TooltipChildren text="Toggles the sidebar">
+            <SidebarTrigger />
+          </TooltipChildren>
           <Separator orientation="vertical" className="mr-2 h-4" />
           <Breadcrumb>
             <BreadcrumbList>
@@ -173,15 +225,41 @@ const Detail = () => {
         </div>
         <div className="ml-auto px-3">
           <div className="flex items-center gap-2 text-sm">
-            <div className="hidden font-medium text-muted-foreground md:inline-block">
-              Edit Oct 08
-            </div>
-            <Button variant="ghost" size="icon" className="h-7 w-7">
-              <Star />
-            </Button>
-            <Button variant="ghost" size="icon" className="h-7 w-7">
-              <Share />
-            </Button>
+            <TooltipChildren text="Favourite">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7"
+                disabled={isFavouriteLoading}
+                onClick={() => {
+                  handleFavourite();
+                }}
+              >
+                <Star
+                  style={{
+                    fill: isFavouritedId ? "gold" : "",
+                    border: isFavouritedId ? "gold" : "",
+                    strokeWidth: isFavouritedId ? 0 : 2,
+                  }}
+                />
+              </Button>
+            </TooltipChildren>
+            <TooltipChildren text="Share">
+              <Button variant="ghost" size="icon" className="h-7 w-7">
+                <Share2 />
+              </Button>
+            </TooltipChildren>
+            <TooltipChildren text="Delete">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7"
+                disabled={isDeleting}
+                onClick={handleDelete}
+              >
+                <Trash2 />
+              </Button>
+            </TooltipChildren>
           </div>
         </div>
       </header>
@@ -194,10 +272,10 @@ const Detail = () => {
               height: containerHeight,
             }}
           >
-            {allMessages?.map((m) => {
+            {allMessages?.map((m, i) => {
               return (
                 <>
-                  <UserChat question={m?.question} key={Date.now()} />
+                  <UserChat question={m?.question} key={`chat-${i}`} />
                   <ChatResponse
                     // isLoading
                     message={m?.answer ?? ""}
@@ -233,8 +311,8 @@ type UserChatProps = React.FC<{
 }>;
 const UserChat: UserChatProps = ({ question }) => {
   return (
-    <div className="flex flex-row justify-end mb-4">
-      <Card className="flex flex-row gap-2 shadow-none p-2 text-md w-10/12">
+    <div className="flex flex-row justify-end mb-4 mt-3 ">
+      <Card className="max-w-fit flex flex-row gap-2 shadow-none p-2 text-md w-10/12">
         {question}
       </Card>
     </div>

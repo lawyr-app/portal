@@ -86,7 +86,7 @@ export default function SignInPage() {
             onError={() => {
               console.error(`Somethign went wrong in google login`);
             }}
-            text="signup_with"
+            text="signin_with"
           />
         ) : (
           <Button variant="outline" className="w-full" size="lg" disabled>

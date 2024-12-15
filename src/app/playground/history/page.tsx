@@ -157,7 +157,7 @@ const HistoryCard: HistoryCardProps = ({
 
   return (
     <Card className="w-full sm:w-10/12 p-4">
-      <Link href="/playground/detail/1746237">
+      <Link href={`/playground/detail/${chatId}`}>
         <CardTitle className="mb-2">{firstQuestion}</CardTitle>
       </Link>
 
