@@ -4,6 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Clipboard, ThumbsDown, ThumbsUp } from "lucide-react";
 import React from "react";
 import MessageLoading from "./MessageLoading";
+import Markdown from "react-markdown";
 
 type ChatResponseProps = React.FC<{
   isLoading?: boolean;
@@ -18,7 +19,7 @@ const ChatResponse: ChatResponseProps = ({ isLoading, message, id }) => {
           <MessageLoading />
         ) : (
           <>
-            <p>{message}</p>
+            <Markdown>{message}</Markdown>
             <Card className="flex shadow-sm flex-row items-center justify-end gap-1 mt-2 absolute bottom-[-10px] right-[10px]">
               <PopoverButton text="Copy">
                 <Button variant="ghost" size="icon" className="h-7 w-7">

@@ -57,7 +57,13 @@ const Favourite = () => {
 
     try {
       setIsLoading(true);
-      const { data } = await axios.get("/favourite/favourites");
+      const { data } = await axios.get("/favourite/favourites", {
+        params: {
+          skip: 0,
+          limit: 10,
+          search: searchInput,
+        },
+      });
       setFavourites(data?.data ?? []);
       if (data.isError) {
         showErrorToast();
@@ -79,6 +85,11 @@ const Favourite = () => {
   useEffect(() => {
     fetchFavourites();
   }, [searchInput]);
+
+  const emptyMessage =
+    searchInput.length > 0
+      ? `No favourites found with ${searchInput} keyword`
+      : "You can favourite chat in chat detail or in history";
 
   return (
     <div className="flex flex-col w-full h-full relative">
@@ -105,7 +116,7 @@ const Favourite = () => {
               {favourites.length === 0 ? (
                 <EmptyList
                   title="No Favourites Found"
-                  description="You can favourite chat in chat detail or in history"
+                  description={emptyMessage}
                 />
               ) : (
                 favourites?.map((m, i) => (

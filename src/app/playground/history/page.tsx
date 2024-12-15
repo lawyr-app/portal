@@ -85,6 +85,11 @@ const History = () => {
     fetchHistory();
   }, [searchInput]);
 
+  const emptyMessage =
+    searchInput.length > 0
+      ? `No history found with ${searchInput} keyword`
+      : "Please create new chat";
+
   return (
     <div className="flex flex-col w-full h-full relative">
       <header className="flex flex-col gap-2 p-2 sticky top-0 w-full bg-card">
@@ -110,7 +115,7 @@ const History = () => {
               {historyList.length === 0 ? (
                 <EmptyList
                   title="No chat history found"
-                  description="Please create new chat"
+                  description={emptyMessage}
                 />
               ) : (
                 historyList?.map((m, i) => (
