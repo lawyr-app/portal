@@ -32,13 +32,10 @@ import useFavourite from "@/hooks/useFavourite";
 import { MayBe } from "@/types/common";
 import { ChatType } from "@/types/Chat";
 import useDeleteChat from "@/hooks/useDeleteChat";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
-import TooltipChildren from "@/components/TooltipChildren";
+import UserChat from "./components/UserChat";
+import ChatResponse from "./components/ChatResponse";
+import ChatLoading from "./components/ChatLoading";
+import ChatHeader from "./components/ChatHeader";
 
 type sendMessageProps = {
   question: string;
@@ -202,67 +199,12 @@ const Detail = () => {
   }, [id]);
 
   if (isLoading) {
-    return <p>Loading....</p>;
+    return <ChatLoading />;
   }
 
   return (
     <div className="w-full h-screen">
-      <header className="flex h-14 shrink-0 items-center gap-2 sticky top-0 z-10 w-full bg-card">
-        <div className="flex flex-1 items-center gap-2 px-3">
-          <TooltipChildren text="Toggles the sidebar">
-            <SidebarTrigger />
-          </TooltipChildren>
-          <Separator orientation="vertical" className="mr-2 h-4" />
-          <Breadcrumb>
-            <BreadcrumbList>
-              <BreadcrumbItem>
-                <BreadcrumbPage className="line-clamp-1">
-                  {chatData?.firstQuestion}
-                </BreadcrumbPage>
-              </BreadcrumbItem>
-            </BreadcrumbList>
-          </Breadcrumb>
-        </div>
-        <div className="ml-auto px-3">
-          <div className="flex items-center gap-2 text-sm">
-            <TooltipChildren text="Favourite">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-7 w-7"
-                disabled={isFavouriteLoading}
-                onClick={() => {
-                  handleFavourite();
-                }}
-              >
-                <Star
-                  style={{
-                    fill: isFavouritedId ? "gold" : "",
-                    border: isFavouritedId ? "gold" : "",
-                    strokeWidth: isFavouritedId ? 0 : 2,
-                  }}
-                />
-              </Button>
-            </TooltipChildren>
-            <TooltipChildren text="Share">
-              <Button variant="ghost" size="icon" className="h-7 w-7">
-                <Share2 />
-              </Button>
-            </TooltipChildren>
-            <TooltipChildren text="Delete">
-              <Button
-                variant="ghost"
-                size="icon"
-                className="h-7 w-7"
-                disabled={isDeleting}
-                onClick={handleDelete}
-              >
-                <Trash2 />
-              </Button>
-            </TooltipChildren>
-          </div>
-        </div>
-      </header>
+      <ChatHeader chatData={chatData} router={router} />
 
       <div className="flex h-[calc(100%-3.5rem)] flex-col gap-4 px-4 ">
         <div className="mx-auto h-full w-full max-w-3xl relative">
@@ -302,57 +244,6 @@ const Detail = () => {
           </footer>
         </div>
       </div>
-    </div>
-  );
-};
-
-type UserChatProps = React.FC<{
-  question: string;
-}>;
-const UserChat: UserChatProps = ({ question }) => {
-  return (
-    <div className="flex flex-row justify-end mb-4 mt-3 ">
-      <Card className="max-w-fit flex flex-row gap-2 shadow-none p-2 text-md w-10/12">
-        {question}
-      </Card>
-    </div>
-  );
-};
-
-type ChatResponseProps = React.FC<{
-  isLoading?: boolean;
-  message: string;
-  id: string;
-}>;
-const ChatResponse: ChatResponseProps = ({ isLoading, message, id }) => {
-  return (
-    <div className="w-full flex flex-col">
-      <Card className="shadow-none mb-4 p-2 text-md relative">
-        {isLoading ? (
-          <p>loading..</p>
-        ) : (
-          <>
-            <p>{message}</p>
-            <Card className="flex shadow-sm flex-row items-center justify-end gap-1 mt-2 absolute bottom-[-10px] right-[10px]">
-              <PopoverButton text="Copy">
-                <Button variant="ghost" size="icon" className="h-7 w-7">
-                  <Clipboard />
-                </Button>
-              </PopoverButton>
-              <PopoverButton text="Like">
-                <Button variant="ghost" size="icon" className="h-7 w-7">
-                  <ThumbsUp />
-                </Button>
-              </PopoverButton>
-              <PopoverButton text="Dislike">
-                <Button variant="ghost" size="icon" className="h-7 w-7">
-                  <ThumbsDown />
-                </Button>
-              </PopoverButton>
-            </Card>
-          </>
-        )}
-      </Card>
     </div>
   );
 };
