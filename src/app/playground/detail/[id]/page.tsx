@@ -7,10 +7,10 @@ import axios from "@/lib/axios";
 import { toast } from "sonner";
 import { MayBe } from "@/types/common";
 import { ChatType } from "@/types/Chat";
-import UserChat from "./components/UserChat";
-import ChatResponse from "./components/ChatResponse";
-import ChatLoading from "./components/ChatLoading";
-import ChatHeader from "./components/ChatHeader";
+import UserChat from "../../components/UserChat";
+import ChatResponse from "../../components/ChatResponse";
+import ChatLoading from "../../components/ChatLoading";
+import ChatHeader from "../../components/ChatHeader";
 
 type sendMessageProps = {
   question: string;
