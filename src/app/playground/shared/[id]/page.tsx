@@ -7,13 +7,14 @@ import ChatResponse from "../../components/ChatResponse";
 import ChatHeader from "../../components/ChatHeader";
 import { ChatType } from "@/types/Chat";
 import { MayBe } from "@/types/common";
-import axios from "axios";
+import axios from "@/lib/axios";
 
 const SharedDetail = () => {
   const { id } = useParams<{ id: string }>();
   const router = useRouter();
   const footerRef = useRef<HTMLDivElement>(null);
   const [containerHeight, setContainerHeight] = useState("100%");
+  const [sharedData, setSharedData] = useState(null);
   const [chatData, setChatData] = useState<MayBe<ChatType>>(null);
   const [allMessages, setAllMessages] = useState<any[]>([]);
 
@@ -23,6 +24,11 @@ const SharedDetail = () => {
     try {
       setIsLoading(true);
       const { data } = await axios.get(`/share/${id}`);
+      if (data.isError) {
+      } else {
+        setSharedData(data.data);
+        setAllMessages(data.data.sharedMessages);
+      }
       console.log("data", data);
       setIsLoading(false);
     } catch (error) {
@@ -37,9 +43,13 @@ const SharedDetail = () => {
     }
   }, [id]);
 
+  if (isLoading) {
+    return <div>loading</div>;
+  }
+
   return (
     <div className="w-full h-screen">
-      <ChatHeader chatData={chatData} router={router} />
+      <ChatHeader isShared chatData={sharedData} router={router} />
 
       <div className="flex h-[calc(100%-3.5rem)] flex-col gap-4 px-4 ">
         <div className="mx-auto h-full w-full max-w-3xl relative">
@@ -49,7 +59,7 @@ const SharedDetail = () => {
               height: containerHeight,
             }}
           >
-            {/* {allMessages?.map((m, i) => {
+            {allMessages?.map((m, i) => {
               return (
                 <>
                   <UserChat question={m?.question} key={`chat-${i}`} />
@@ -61,7 +71,7 @@ const SharedDetail = () => {
                   />
                 </>
               );
-            })} */}
+            })}
           </div>
           <footer ref={footerRef} className="absolute bottom-0 w-full">
             <div className="flex flex-row w-full items-center justify-center">

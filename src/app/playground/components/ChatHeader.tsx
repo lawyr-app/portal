@@ -19,8 +19,13 @@ import React from "react";
 type ChatHeaderProps = React.FC<{
   chatData: MayBe<ChatType>;
   router: AppRouterInstance;
+  isShared: boolean;
 }>;
-const ChatHeader: ChatHeaderProps = ({ chatData, router }) => {
+const ChatHeader: ChatHeaderProps = ({
+  chatData,
+  router,
+  isShared = false,
+}) => {
   const {
     handleFavourite,
     isFavouritedId,
@@ -49,50 +54,52 @@ const ChatHeader: ChatHeaderProps = ({ chatData, router }) => {
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbPage className="line-clamp-1">
-                {chatData?.firstQuestion}
+                {chatData?.firstQuestion ?? chatData?.title}
               </BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
         </Breadcrumb>
       </div>
       <div className="ml-auto px-3">
-        <div className="flex items-center gap-2 text-sm">
-          <PopoverButton text="Favourite">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-7 w-7"
-              disabled={isFavouriteLoading}
-              onClick={() => {
-                handleFavourite();
-              }}
-            >
-              <Star
-                style={{
-                  fill: isFavouritedId ? "gold" : "",
-                  border: isFavouritedId ? "gold" : "",
-                  strokeWidth: isFavouritedId ? 0 : 2,
+        {!isShared && (
+          <div className="flex items-center gap-2 text-sm">
+            <PopoverButton text="Favourite">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7"
+                disabled={isFavouriteLoading}
+                onClick={() => {
+                  handleFavourite();
                 }}
-              />
-            </Button>
-          </PopoverButton>
-          <PopoverButton text="Share">
-            <Button variant="ghost" size="icon" className="h-7 w-7">
-              <Share2 />
-            </Button>
-          </PopoverButton>
-          <PopoverButton text="Delete">
-            <Button
-              variant="ghost"
-              size="icon"
-              className="h-7 w-7"
-              disabled={isDeleting}
-              onClick={handleDelete}
-            >
-              <Trash2 />
-            </Button>
-          </PopoverButton>
-        </div>
+              >
+                <Star
+                  style={{
+                    fill: isFavouritedId ? "gold" : "",
+                    border: isFavouritedId ? "gold" : "",
+                    strokeWidth: isFavouritedId ? 0 : 2,
+                  }}
+                />
+              </Button>
+            </PopoverButton>
+            <PopoverButton text="Share">
+              <Button variant="ghost" size="icon" className="h-7 w-7">
+                <Share2 />
+              </Button>
+            </PopoverButton>
+            <PopoverButton text="Delete">
+              <Button
+                variant="ghost"
+                size="icon"
+                className="h-7 w-7"
+                disabled={isDeleting}
+                onClick={handleDelete}
+              >
+                <Trash2 />
+              </Button>
+            </PopoverButton>
+          </div>
+        )}
       </div>
     </header>
   );

@@ -3,15 +3,15 @@ import { favouriteType } from "./Favourite";
 import { UserType } from "./User";
 import { CommonMongoTypes } from "./common";
 
-export type favouritedIdType = MayBe<String | favouriteType>;
+export type favouritedIdType = MayBe<string | favouriteType>;
 
 type favObject = {
   favouritedId: favouritedIdType;
 };
 
 export type ChatType = {
-  firstQuestion: String;
-  isDeleted: Boolean;
-  createdBy: String | UserType;
+  firstQuestion: string;
+  isDeleted: boolean;
+  createdBy: string | UserType;
 } & CommonMongoTypes &
   favObject;

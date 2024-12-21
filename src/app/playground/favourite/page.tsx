@@ -36,6 +36,7 @@ import SearchInput from "@/components/SearchInput";
 import { formatDate } from "@/lib/datetime";
 import CardLoading from "../components/CardLoading";
 import EmptyList from "../components/EmptyList";
+import ShareButton from "../components/ShareButton";
 
 type favouritesListType = MaybeEmptyArray<favouriteType>;
 type setFavouritesListType = React.Dispatch<
@@ -167,16 +168,7 @@ const FavouriteCard: FavouriteCardProps = ({
           Created at {formatDate(data.createdAt)}
         </CardDescription>
         <div className="flex flex-row gap-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="outline" size="icon">
-                  <Share2 className="h-4 w-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Share</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <ShareButton chatId={data.chatId} title={data.title} />
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>

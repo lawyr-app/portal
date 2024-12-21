@@ -1,4 +1,4 @@
-import { History, Plus, Star } from "lucide-react";
+import { History, Plus, Share2, Star } from "lucide-react";
 
 export const navMain = [
   {
@@ -15,5 +15,10 @@ export const navMain = [
     title: "Favourites",
     url: "/playground/favourite",
     icon: Star,
+  },
+  {
+    title: "Shared",
+    url: "/playground/shared/list",
+    icon: Share2,
   },
 ];

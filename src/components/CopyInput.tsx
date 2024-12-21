@@ -3,11 +3,14 @@ import React from "react";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 type CopyInputProps = React.FC<{
-  value: String;
+  value: string;
+  className: string;
+  disabled?: boolean;
 }>;
-const CopyInput: CopyInputProps = ({ value }) => {
+const CopyInput: CopyInputProps = ({ value, className, disabled = true }) => {
   const handleCopy = () => {
     navigator.clipboard.writeText(String(value)).then(
       () => {
@@ -22,11 +25,11 @@ const CopyInput: CopyInputProps = ({ value }) => {
   };
 
   return (
-    <div className="flex flex-row ">
+    <div className={cn("flex flex-row ", className)}>
       <Input
-        className="border-r-0 rounded-r-none"
+        className="rounded-r-none focus-visible:outline-none focus-visible:ring-0"
         value={String(value)}
-        disabled
+        disabled={disabled}
       />
       <Button
         onClick={handleCopy}

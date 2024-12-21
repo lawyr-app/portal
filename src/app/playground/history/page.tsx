@@ -1,15 +1,7 @@
 "use client";
 
-import { Separator } from "@/components/ui/separator";
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import React, { useEffect, useState } from "react";
-import {
-  Breadcrumb,
-  BreadcrumbItem,
-  BreadcrumbList,
-  BreadcrumbPage,
-} from "@/components/ui/breadcrumb";
-import { NavActions } from "@/components/nav-actions";
 import {
   Card,
   CardContent,
@@ -19,13 +11,6 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Share2, Star, Trash2 } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
 import Link from "next/link";
 import axios from "@/lib/axios";
 import { MayBe, MaybeEmptyArray } from "@/types/common";
@@ -37,6 +22,8 @@ import { formatDate } from "@/lib/datetime";
 import CardLoading from "../components/CardLoading";
 import EmptyList from "../components/EmptyList";
 import { toast } from "sonner";
+import PopoverButton from "@/components/PopoverButton";
+import ShareButton from "../components/ShareButton";
 
 type HistoryListType = MaybeEmptyArray<ChatType>;
 type setHistoryListType = React.Dispatch<React.SetStateAction<HistoryListType>>;
@@ -106,8 +93,8 @@ const History = () => {
         <div className="flex flex-col w-full h-full items-center  gap-4">
           {isLoading ? (
             <>
-              {new Array(5).fill("").map((m) => (
-                <CardLoading />
+              {new Array(5).fill("").map((m, i) => (
+                <CardLoading key={`card-loading-${i}`} />
               ))}
             </>
           ) : (
@@ -118,7 +105,7 @@ const History = () => {
                   description={emptyMessage}
                 />
               ) : (
-                historyList?.map((m, i) => (
+                historyList?.map((m) => (
                   <HistoryCard
                     key={String(m._id)}
                     data={m}
@@ -171,55 +158,36 @@ const HistoryCard: HistoryCardProps = ({
           Updated {formatDate(data.createdAt)}
         </CardDescription>
         <div className="flex flex-row gap-2">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button variant="outline" size="icon">
-                  <Share2 className="h-4 w-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Share</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="outline"
-                  size="icon"
-                  disabled={isLoading}
-                  onClick={() => {
-                    handleFavourite();
-                  }}
-                >
-                  <Star
-                    className="h-4 w-4"
-                    style={{
-                      fill: isFavouritedId ? "gold" : "",
-                      border: isFavouritedId ? "gold" : "",
-                      strokeWidth: isFavouritedId ? 0 : 2,
-                    }}
-                  />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Favourite</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  disabled={isDeleting}
-                  variant="destructive"
-                  size="icon"
-                  onClick={handleDelete}
-                >
-                  <Trash2 className="h-4 w-4" />
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent>Delete</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <ShareButton chatId={chatId} title={firstQuestion} />
+          <PopoverButton text="Favourite">
+            <Button
+              variant="outline"
+              size="icon"
+              disabled={isLoading}
+              onClick={() => {
+                handleFavourite();
+              }}
+            >
+              <Star
+                className="h-4 w-4"
+                style={{
+                  fill: isFavouritedId ? "gold" : "",
+                  border: isFavouritedId ? "gold" : "",
+                  strokeWidth: isFavouritedId ? 0 : 2,
+                }}
+              />
+            </Button>
+          </PopoverButton>
+          <PopoverButton text="Delete">
+            <Button
+              disabled={isDeleting}
+              variant="destructive"
+              size="icon"
+              onClick={handleDelete}
+            >
+              <Trash2 className="h-4 w-4" />
+            </Button>
+          </PopoverButton>
         </div>
       </CardFooter>
     </Card>
