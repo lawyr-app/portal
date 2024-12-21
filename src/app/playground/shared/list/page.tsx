@@ -38,7 +38,13 @@ const SharedList = () => {
     };
     try {
       setIsLoading(true);
-      const { data } = await axios.get("/share/shared");
+      const { data } = await axios.get("/share/shared", {
+        params: {
+          limit: 10,
+          skip: 0,
+          search,
+        },
+      });
       if (data.isError) {
         showErrorToast();
       } else {
