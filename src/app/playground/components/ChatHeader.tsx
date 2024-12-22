@@ -15,6 +15,7 @@ import { MayBe } from "@/types/common";
 import { Share2, Star, Trash2 } from "lucide-react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import React from "react";
+import ShareButton from "./ShareButton";
 
 type ChatHeaderProps = React.FC<{
   chatData: MayBe<ChatType>;
@@ -82,11 +83,11 @@ const ChatHeader: ChatHeaderProps = ({
                 />
               </Button>
             </PopoverButton>
-            <PopoverButton text="Share">
-              <Button variant="ghost" size="icon" className="h-7 w-7">
-                <Share2 />
-              </Button>
-            </PopoverButton>
+            <ShareButton
+              isHeader
+              chatId={chatData?._id}
+              title={chatData?.title}
+            />
             <PopoverButton text="Delete">
               <Button
                 variant="ghost"

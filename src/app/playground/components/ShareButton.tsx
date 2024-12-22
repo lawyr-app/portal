@@ -9,14 +9,15 @@ import ShareModal from "./ShareModal";
 type ShareButtonProps = React.FC<{
   chatId: string;
   title: string;
+  isHeader: boolean;
 }>;
-const ShareButton: ShareButtonProps = ({ chatId, title }) => {
+const ShareButton: ShareButtonProps = ({ chatId, title, isHeader = false }) => {
   const [isSharedModalOpen, setIsSharedModalOpen] = useState(false);
   return (
     <>
       <PopoverButton text="Share">
         <Button
-          variant="outline"
+          variant={isHeader ? "ghost" : "outline"}
           size="icon"
           onClick={() => {
             setIsSharedModalOpen(true);
