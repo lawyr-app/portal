@@ -160,7 +160,7 @@ const Detail = () => {
 
   return (
     <div className="w-full h-screen">
-      <ChatHeader chatData={chatData} router={router} />
+      <ChatHeader chatData={chatData} router={router} isShared={false} />
 
       <div className="flex h-[calc(100%-3.5rem)] flex-col gap-4 px-4 ">
         <div className="mx-auto h-full w-full max-w-3xl relative">

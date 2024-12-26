@@ -1,8 +1,10 @@
+"use client";
+
 import PopoverButton from "@/components/PopoverButton";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Clipboard, ThumbsDown, ThumbsUp } from "lucide-react";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import MessageLoading from "./MessageLoading";
 import Markdown from "react-markdown";
 
@@ -12,6 +14,30 @@ type ChatResponseProps = React.FC<{
   id: string;
 }>;
 const ChatResponse: ChatResponseProps = ({ isLoading, message, id }) => {
+  const [localMessage, setLocalMessage] = useState(message);
+
+  useEffect(() => {
+    setLocalMessage(message);
+  }, [message]);
+
+  useEffect(() => {
+    if (id && !localMessage) {
+      console.log("id fetched", id);
+      const eventSource = new EventSource(
+        `http://localhost:8000/api/message/get/${id}`
+      );
+      eventSource.onmessage = (e) => {
+        console.log("e", e);
+        const serverText = e.data;
+        setLocalMessage((p) => `${p} ${serverText}`);
+      };
+
+      return () => {
+        eventSource.close();
+      };
+    }
+  }, [id, localMessage]);
+
   return (
     <div className="w-full flex flex-col">
       <Card className="shadow-none mb-4 p-2 text-md relative">
@@ -19,7 +45,7 @@ const ChatResponse: ChatResponseProps = ({ isLoading, message, id }) => {
           <MessageLoading />
         ) : (
           <>
-            <Markdown>{message}</Markdown>
+            <Markdown>{localMessage}</Markdown>
             <Card className="flex shadow-sm flex-row items-center justify-end gap-1 mt-2 absolute bottom-[-10px] right-[10px]">
               <PopoverButton text="Copy">
                 <Button variant="ghost" size="icon" className="h-7 w-7">
