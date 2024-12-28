@@ -8,20 +8,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import {
-  BadgeCheck,
-  Bell,
-  ChevronsUpDown,
-  CreditCard,
-  LogOut,
-  Sparkles,
-} from "lucide-react";
-
+import { BadgeCheck, CreditCard, LogOut } from "lucide-react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Link from "next/link";
-import ThemeToggle from "../ThemeToggle";
-import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
+import ThemeMenu from "./ThemeMenu";
 
 type ProfileDropdownProps = React.FC<{
   children: React.ReactNode;
@@ -62,12 +53,7 @@ const ProfileDropdown: ProfileDropdownProps = ({
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
-          <DropdownMenuItem className="flex flex-row items-center justify-between w-full p-0">
-            <span>Theme</span>
-            <ThemeToggle className="h-3 w-3" />
-          </DropdownMenuItem>
-        </DropdownMenuItem>
+        <ThemeMenu />
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <Link href="/profile/billing">
