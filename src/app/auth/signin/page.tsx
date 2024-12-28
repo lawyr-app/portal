@@ -9,7 +9,6 @@ import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/context/userContext";
-import { TOKEN } from "@/constant/localKeys";
 
 export default function SignInPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -21,7 +20,6 @@ export default function SignInPage() {
       setIsLoading(true);
       const token = res.credential;
       if (token) {
-        localStorage.setItem(TOKEN, token);
         const userInfo = jwtDecode(token);
         const googleId = userInfo?.sub;
         if (googleId) {

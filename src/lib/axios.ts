@@ -1,4 +1,5 @@
 // lib/axios.js
+import { USER_DATA } from "@/constant/localKeys";
 import axios from "axios";
 
 const axiosInstance = axios.create({
@@ -9,9 +10,11 @@ const axiosInstance = axios.create({
 // Request Interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem("token");
+    const token = localStorage.getItem(USER_DATA);
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`;
+      const parsed = JSON.parse(token);
+      const foundToken = parsed?.tokenDetails?.token;
+      config.headers.Authorization = `Bearer ${foundToken}`;
     }
     return config;
   },

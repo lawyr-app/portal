@@ -8,7 +8,6 @@ import axios from "@/lib/axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
-import { TOKEN } from "@/constant/localKeys";
 
 export default function SignUpPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,11 +18,12 @@ export default function SignUpPage() {
       setIsLoading(true);
       const token = res.credential;
       if (token) {
-        localStorage.setItem(TOKEN, token);
         const userInfo = jwtDecode(token);
         const googleId = userInfo?.sub;
         if (googleId) {
-          const { data } = await axios.get(`/user/exists/${googleId}`);
+          const { data } = await axios.post(`/user/exists`, {
+            email: userInfo?.email,
+          });
           if (!data.isError) {
             const userExists = data.data;
             if (userExists) {
