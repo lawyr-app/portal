@@ -3,22 +3,24 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
-import { jwtDecode } from "jwt-decode";
 import axios from "@/lib/axios";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
+import { getDecodedvalues } from "@/lib/google-auth";
+import { useUser } from "@/context/userContext";
 
 export default function SignUpPage() {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { storeUser } = useUser();
 
   const handleSignup = async (res: CredentialResponse) => {
     try {
       setIsLoading(true);
       const token = res.credential;
       if (token) {
-        const userInfo = jwtDecode(token);
+        const userInfo = getDecodedvalues(token);
         const googleId = userInfo?.sub;
         if (googleId) {
           const { data } = await axios.post(`/user/exists`, {
@@ -26,11 +28,9 @@ export default function SignUpPage() {
           });
           if (!data.isError) {
             const userExists = data.data;
-            if (userExists) {
-              toast("User already exists", {
-                description: "Please signin using the same account",
-              });
-              router.push("/auth/signin");
+            if (userExists?._id) {
+              router.push("/playground");
+              storeUser(userExists);
             } else {
               const payload = {
                 ...userInfo,

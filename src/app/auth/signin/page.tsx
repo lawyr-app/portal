@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
-import { jwtDecode } from "jwt-decode";
 import axios from "@/lib/axios";
 import { toast } from "sonner";
 import { CredentialResponse, GoogleLogin } from "@react-oauth/google";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/context/userContext";
+import { getDecodedvalues } from "@/lib/google-auth";
 
 export default function SignInPage() {
   const [isLoading, setIsLoading] = useState(false);
@@ -20,7 +20,7 @@ export default function SignInPage() {
       setIsLoading(true);
       const token = res.credential;
       if (token) {
-        const userInfo = jwtDecode(token);
+        const userInfo = getDecodedvalues(token);
         const googleId = userInfo?.sub;
         if (googleId) {
           const payload = {
@@ -45,8 +45,15 @@ export default function SignInPage() {
             } else {
               const message = data?.message;
               if (message === "USER_DONT_EXISTS") {
-                toast.warning("No such user exists. Please signup");
-                router.push("/auth/signup");
+                toast.warning("No such user exists. Creating Account");
+                const payload = {
+                  ...userInfo,
+                  token,
+                };
+                localStorage.setItem("signupInfo", JSON.stringify(payload));
+                router.push("/auth/onboarding");
+                toast("We need few more details");
+                // router.push("/auth/signup");
               } else {
                 toast.error(
                   message ?? "Something went wrong. Please try again"
@@ -63,7 +70,8 @@ export default function SignInPage() {
         toast.error("Something went wrong while signing up");
       }
       setIsLoading(false);
-    } catch (error) {
+    } catch (error: unknown) {
+      console.error(error);
       setIsLoading(false);
     }
   };
@@ -112,7 +120,7 @@ export default function SignInPage() {
       </div>
 
       <div className="text-center text-sm">
-        Don't have an account?{" "}
+        Don&apos;t have an account?{" "}
         <Link
           href="/auth/signup"
           className="font-medium text-primary underline underline-offset-4 hover:text-primary/80"
