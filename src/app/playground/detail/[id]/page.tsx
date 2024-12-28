@@ -152,6 +152,7 @@ const Detail = () => {
         getChatById(id);
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   if (isLoading) {
@@ -176,6 +177,8 @@ const Detail = () => {
                   <UserChat question={m?.question} key={`chat-${i}`} />
                   <ChatResponse
                     // isLoading
+                    allMessages={allMessages}
+                    setAllMessages={setAllMessages}
                     message={m?.answer ?? ""}
                     id={m?._id}
                     key={Date.now()}

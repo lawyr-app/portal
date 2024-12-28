@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
 import PopoverButton from "@/components/PopoverButton";
@@ -12,12 +13,24 @@ type ChatResponseProps = React.FC<{
   isLoading?: boolean;
   message: string;
   id: string;
+  allMessages: any;
+  setAllMessages: any;
 }>;
-const ChatResponse: ChatResponseProps = ({ isLoading, message, id }) => {
+const ChatResponse: ChatResponseProps = ({
+  isLoading,
+  message,
+  id,
+  allMessages,
+  setAllMessages,
+}) => {
+  const [showOptions, setOptions] = useState(false);
   const [localMessage, setLocalMessage] = useState(message);
 
   useEffect(() => {
     setLocalMessage(message);
+    if (message) {
+      setOptions(true);
+    }
   }, [message]);
 
   useEffect(() => {
@@ -27,15 +40,37 @@ const ChatResponse: ChatResponseProps = ({ isLoading, message, id }) => {
         `http://localhost:8000/api/message/get/${id}`
       );
       eventSource.onmessage = (e) => {
-        console.log("e", e);
         const serverText = e.data;
-        setLocalMessage((p) => `${p} ${serverText}`);
-      };
-
-      return () => {
-        eventSource.close();
+        const parsedData = JSON.parse(serverText);
+        const { data, isError, message } = parsedData;
+        if (isError) {
+          // NO_CONTEXT
+          // STARTED
+          // IN_PROGRESS
+          // COMPLETED
+          // INTERNAL_SERVER_ERROR
+          if (message === "NO_CONTEXT" || message === "INTERNAL_SERVER_ERROR") {
+            eventSource.close();
+          }
+        } else {
+          if (message === "COMPLETED") {
+            eventSource.close();
+            setAllMessages((prev) => {
+              const changedList = prev.map((m) => {
+                if (m._id === id) {
+                  return data;
+                }
+                return m;
+              });
+              return changedList;
+            });
+          } else if (message === "IN_PROGRESS") {
+            setLocalMessage((p) => `${p} ${data}`);
+          }
+        }
       };
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, localMessage]);
 
   return (
@@ -46,23 +81,25 @@ const ChatResponse: ChatResponseProps = ({ isLoading, message, id }) => {
         ) : (
           <>
             <Markdown>{localMessage}</Markdown>
-            <Card className="flex shadow-sm flex-row items-center justify-end gap-1 mt-2 absolute bottom-[-10px] right-[10px]">
-              <PopoverButton text="Copy">
-                <Button variant="ghost" size="icon" className="h-7 w-7">
-                  <Clipboard />
-                </Button>
-              </PopoverButton>
-              <PopoverButton text="Like">
-                <Button variant="ghost" size="icon" className="h-7 w-7">
-                  <ThumbsUp />
-                </Button>
-              </PopoverButton>
-              <PopoverButton text="Dislike">
-                <Button variant="ghost" size="icon" className="h-7 w-7">
-                  <ThumbsDown />
-                </Button>
-              </PopoverButton>
-            </Card>
+            {showOptions && (
+              <Card className="flex shadow-sm flex-row items-center justify-end gap-1 mt-2 absolute bottom-[-20px] right-[10px]">
+                <PopoverButton text="Copy">
+                  <Button variant="ghost" size="icon" className="h-7 w-7">
+                    <Clipboard />
+                  </Button>
+                </PopoverButton>
+                <PopoverButton text="Like">
+                  <Button variant="ghost" size="icon" className="h-7 w-7">
+                    <ThumbsUp />
+                  </Button>
+                </PopoverButton>
+                <PopoverButton text="Dislike">
+                  <Button variant="ghost" size="icon" className="h-7 w-7">
+                    <ThumbsDown />
+                  </Button>
+                </PopoverButton>
+              </Card>
+            )}
           </>
         )}
       </Card>
