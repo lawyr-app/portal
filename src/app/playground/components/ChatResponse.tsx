@@ -76,7 +76,7 @@ const ChatResponse: ChatResponseProps = ({
   return (
     <div className="w-full flex flex-col">
       <Card className="shadow-none mb-4 p-2 text-md relative">
-        {isLoading ? (
+        {isLoading || !localMessage ? (
           <MessageLoading />
         ) : (
           <>
