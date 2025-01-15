@@ -155,8 +155,6 @@ const Detail = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
-  return <ChatLoading />;
-
   if (isLoading) {
     return <ChatLoading />;
   }
