@@ -80,7 +80,7 @@ const ChatResponse: ChatResponseProps = ({
           <MessageLoading />
         ) : (
           <>
-            <Markdown>{localMessage}</Markdown>
+            <Markdown className="markdown-control">{localMessage}</Markdown>
             {showOptions && (
               <Card className="flex shadow-sm flex-row items-center justify-end gap-1 mt-2 absolute bottom-[-20px] right-[10px]">
                 <PopoverButton text="Copy">
