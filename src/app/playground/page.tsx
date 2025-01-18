@@ -48,7 +48,7 @@ const Playground = () => {
         <div className="flex flex-wrap gap-2 mt-4 w-8/12 justify-center">
           {questions.map((m) => (
             <Badge
-              className="cursor-pointer z-10"
+              className="cursor-pointer z-10 "
               key={m.id}
               onClick={() => {
                 setSelected(m.question);

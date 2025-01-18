@@ -6,7 +6,7 @@ import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
 import { Paperclip, SendHorizontal } from "lucide-react";
-import { SelectTerrortory } from "@/components/SelectStates";
+import SelectRegion from "@/components/SelectRegion";
 import { cn } from "@/lib/utils";
 import axios from "@/lib/axios";
 import { toast } from "sonner";
@@ -34,16 +34,10 @@ const ChatInput: ChatInputProps = ({
   const [isCreatingChat, setIsCreatingChat] = useState(false);
   const [question, setQuestion] = useState("");
   const router = useRouter();
+  const [region, setRegion] = useState("");
 
   const value = isPlayground ? question : message;
   const setValue = isPlayground ? setQuestion : setMessage;
-
-  console.log({
-    value,
-    isPlayground,
-    question,
-    message,
-  });
 
   useEffect(() => {
     if (suggestedQuestion) {
@@ -84,7 +78,7 @@ const ChatInput: ChatInputProps = ({
   };
 
   return (
-    <Card className={cn("border border-slate-300 shadow-none p-2", classname)}>
+    <Card className={cn("border shadow-none p-2", classname)}>
       <CustomRichTextEditor
         handleClick={handleClick}
         value={value}
@@ -95,10 +89,12 @@ const ChatInput: ChatInputProps = ({
         aria-disabled={isCreatingChat}
       >
         <div className="flex flex-row gap-2">
-          <Button variant="outline" size="icon">
+          {/* <Button variant="outline" size="icon">
             <Paperclip className="h-4 w-4" />
-          </Button>
-          <SelectTerrortory />
+          </Button> */}
+          {isPlayground && (
+            <SelectRegion region={region} setRegion={setRegion} />
+          )}
         </div>
         <Button size="icon" onClick={handleClick}>
           <SendHorizontal className="h-4 w-4" />
