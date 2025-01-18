@@ -93,7 +93,7 @@ export function Footer() {
                   info@ailegalassistant.com
                 </a>
               </li>
-              <li className="flex items-center">
+              {/* <li className="flex items-center">
                 <Phone size={16} className="mr-2 text-black dark:text-white" />
                 <a
                   href="tel:+911234567890"
@@ -101,15 +101,13 @@ export function Footer() {
                 >
                   +91 123 456 7890
                 </a>
-              </li>
+              </li> */}
               <li className="flex items-start">
                 <MapPin
                   size={16}
                   className="mr-2 mt-1 text-black dark:text-white"
                 />
-                <span className="text-sm">
-                  123 Legal Street, New Delhi, India
-                </span>
+                <span className="text-sm">Goa India</span>
               </li>
             </ul>
           </div>

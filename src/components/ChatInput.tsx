@@ -1,6 +1,7 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Textarea } from "@/components/ui/textarea";
 import { Button } from "@/components/ui/button";
@@ -11,11 +12,13 @@ import axios from "@/lib/axios";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 import { NEW_CHAT } from "@/constant/localKeys";
+import { useEditor, EditorContent } from "@tiptap/react";
+import StarterKit from "@tiptap/starter-kit";
 
 type ChatInputProps = React.FC<{
   classname?: string;
   suggestedQuestion?: string;
-  isPlayground?: Boolean;
+  isPlayground?: boolean;
   sendMessage?: () => void;
   setMessage?: React.Dispatch<React.SetStateAction<string>>;
   message?: string;
@@ -24,13 +27,23 @@ const ChatInput: ChatInputProps = ({
   classname,
   isPlayground = true,
   sendMessage = () => {},
-  message,
+  message = "",
   setMessage,
   suggestedQuestion = "",
 }) => {
   const [isCreatingChat, setIsCreatingChat] = useState(false);
   const [question, setQuestion] = useState("");
   const router = useRouter();
+
+  const value = isPlayground ? question : message;
+  const setValue = isPlayground ? setQuestion : setMessage;
+
+  console.log({
+    value,
+    isPlayground,
+    question,
+    message,
+  });
 
   useEffect(() => {
     if (suggestedQuestion) {
@@ -62,18 +75,20 @@ const ChatInput: ChatInputProps = ({
     }
   };
 
-  const value = isPlayground ? question : message;
-  const setValue = isPlayground ? setQuestion : setMessage;
+  const handleClick = () => {
+    if (isPlayground) {
+      handleCreateChat();
+    } else {
+      sendMessage();
+    }
+  };
 
   return (
     <Card className={cn("border border-slate-300 shadow-none p-2", classname)}>
-      <Textarea
+      <CustomRichTextEditor
+        handleClick={handleClick}
         value={value}
-        onChange={(e) => {
-          setValue(e.target.value);
-        }}
-        className="border-none shadow-none focus:outline-none focus-visible:ring-0 resize-none "
-        placeholder="Type your message here."
+        setValue={setValue!}
       />
       <div
         className="flex flex-row items-center justify-between mt-2"
@@ -85,20 +100,70 @@ const ChatInput: ChatInputProps = ({
           </Button>
           <SelectTerrortory />
         </div>
-        <Button
-          size="icon"
-          onClick={() => {
-            if (isPlayground) {
-              handleCreateChat();
-            } else {
-              sendMessage();
-            }
-          }}
-        >
+        <Button size="icon" onClick={handleClick}>
           <SendHorizontal className="h-4 w-4" />
         </Button>
       </div>
     </Card>
+  );
+};
+
+type CustomRichTextEditorProps = React.FC<{
+  handleClick: () => void;
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
+}>;
+const CustomRichTextEditor: CustomRichTextEditorProps = ({
+  handleClick,
+  value,
+  setValue,
+}) => {
+  const editorRef = useRef(null);
+
+  console.log("value", value);
+
+  const editor = useEditor({
+    extensions: [StarterKit],
+    content: value,
+    editorProps: {
+      handleKeyDown(_, event) {
+        if (event.key === "Enter") {
+          handleClick();
+          return true;
+        }
+        return false;
+      },
+    },
+    autofocus: true,
+    onUpdate: ({ editor }) => {
+      setValue!(editor.getText());
+    },
+  });
+
+  useEffect(() => {
+    if (editor && value !== editor.getText()) {
+      editor.commands.setContent(value);
+    }
+  }, [value, editor]);
+
+  return (
+    <div
+      ref={editorRef}
+      className="border-none rounded p-2 resize-none overflow-auto max-h-[8rem] " // Styling for max and min height
+      style={{
+        lineHeight: "1.5rem",
+      }}
+    >
+      <EditorContent
+        editor={editor}
+        style={{
+          border: "none",
+          outline: "none",
+          boxShadow: "none",
+        }}
+        className="focus:outline-none active:outline-none"
+      />
+    </div>
   );
 };
 
