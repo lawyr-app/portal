@@ -82,7 +82,7 @@ const SharedDetail = () => {
 
   return (
     <div className="w-full h-screen">
-      <ChatHeader isShared chatData={sharedData} router={router} />
+      <ChatHeader isShared shareData={sharedData} router={router} />
 
       <div className="flex h-[calc(100%-3.5rem)] flex-col gap-4 px-4 ">
         <div className="mx-auto h-full w-full max-w-3xl relative">

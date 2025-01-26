@@ -158,7 +158,7 @@ const HistoryCard: HistoryCardProps = ({
           Updated {formatDate(data.createdAt)}
         </CardDescription>
         <div className="flex flex-row gap-2">
-          <ShareButton chatId={chatId} title={firstQuestion} />
+          <ShareButton chatId={String(chatId)} title={firstQuestion} />
           <PopoverButton text="Favourite">
             <Button
               variant="outline"

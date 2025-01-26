@@ -9,7 +9,7 @@ import ShareModal from "./ShareModal";
 type ShareButtonProps = React.FC<{
   chatId: string;
   title: string;
-  isHeader: boolean;
+  isHeader?: boolean;
 }>;
 const ShareButton: ShareButtonProps = ({ chatId, title, isHeader = false }) => {
   const [isSharedModalOpen, setIsSharedModalOpen] = useState(false);

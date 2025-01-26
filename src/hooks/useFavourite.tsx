@@ -46,7 +46,7 @@ const useFavourite = ({
 
   useEffect(() => {
     const favId = getFavoriteId(favouritedId);
-    setIsFavouritedId(favId);
+    setIsFavouritedId(String(favId));
   }, [favouritedId]);
 
   const makefavourite = async () => {

@@ -13,8 +13,8 @@ type ChatResponseProps = React.FC<{
   isLoading?: boolean;
   message: string;
   id: string;
-  allMessages: any;
-  setAllMessages: any;
+  allMessages?: any;
+  setAllMessages?: any;
 }>;
 const ChatResponse: ChatResponseProps = ({
   isLoading,
@@ -55,7 +55,7 @@ const ChatResponse: ChatResponseProps = ({
         } else {
           if (message === "COMPLETED") {
             eventSource.close();
-            setAllMessages((prev) => {
+            setAllMessages((prev: any[]) => {
               const changedList = prev.map((m) => {
                 if (m._id === id) {
                   return data;

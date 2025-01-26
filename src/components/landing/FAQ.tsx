@@ -65,7 +65,10 @@ export function FAQ() {
                 />
               </button>
               <div
-                ref={(el) => (answerRefs.current[index] = el)}
+                // ref={(el) => (answerRefs.current[index] = el)}
+                ref={(el) => {
+                  answerRefs.current[index] = el; // Store the reference
+                }}
                 className="overflow-hidden transition-all duration-300 ease-in-out"
                 style={{
                   maxHeight:

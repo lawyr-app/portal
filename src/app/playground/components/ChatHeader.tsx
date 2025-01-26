@@ -16,9 +16,11 @@ import { Share2, Star, Trash2 } from "lucide-react";
 import { AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime";
 import React from "react";
 import ShareButton from "./ShareButton";
+import { ShareType } from "@/types/Share";
 
 type ChatHeaderProps = React.FC<{
-  chatData: MayBe<ChatType>;
+  chatData?: MayBe<ChatType>;
+  shareData?: MayBe<ShareType>;
   router: AppRouterInstance;
   isShared: boolean;
 }>;
@@ -26,6 +28,7 @@ const ChatHeader: ChatHeaderProps = ({
   chatData,
   router,
   isShared = false,
+  shareData,
 }) => {
   const {
     handleFavourite,
@@ -55,7 +58,7 @@ const ChatHeader: ChatHeaderProps = ({
           <BreadcrumbList>
             <BreadcrumbItem>
               <BreadcrumbPage className="line-clamp-1">
-                {chatData?.firstQuestion ?? chatData?.title}
+                {chatData?.firstQuestion ?? shareData?.title}
               </BreadcrumbPage>
             </BreadcrumbItem>
           </BreadcrumbList>
@@ -85,8 +88,8 @@ const ChatHeader: ChatHeaderProps = ({
             </PopoverButton>
             <ShareButton
               isHeader
-              chatId={chatData?._id}
-              title={chatData?.title}
+              chatId={isShared ? String(shareData?._id) : String(chatData?._id)}
+              title={String(shareData?.title ?? "")}
             />
             <PopoverButton text="Delete">
               <Button

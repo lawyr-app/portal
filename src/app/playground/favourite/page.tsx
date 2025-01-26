@@ -108,8 +108,8 @@ const Favourite = () => {
         <div className="flex flex-col w-full h-full items-center gap-4">
           {isLoading ? (
             <>
-              {new Array(5).fill("").map((m) => (
-                <CardLoading />
+              {new Array(5).fill("").map((m, i) => (
+                <CardLoading key={i} />
               ))}
             </>
           ) : (
@@ -150,7 +150,7 @@ const FavouriteCard: FavouriteCardProps = ({
 }) => {
   const { _id: id, title } = data;
   const { handleFavourite, isLoading } = useFavourite({
-    favouritedId: id,
+    favouritedId: String(id),
     onDeleteSuccess: () => {
       const newList = favourites.filter((f) => f._id !== id);
       setFavourites(newList);
@@ -168,7 +168,10 @@ const FavouriteCard: FavouriteCardProps = ({
           Created at {formatDate(data.createdAt)}
         </CardDescription>
         <div className="flex flex-row gap-2">
-          <ShareButton chatId={data.chatId} title={data.title} />
+          <ShareButton
+            chatId={String(data.chatId)}
+            title={String(data.title)}
+          />
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>

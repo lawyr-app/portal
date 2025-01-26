@@ -92,7 +92,7 @@ export default function ProfilePage() {
           <CardDescription>Your unique identifier</CardDescription>
         </CardHeader>
         <CardContent>
-          <CopyInput value={user?._id} />
+          <CopyInput value={String(user?._id)} />
         </CardContent>
       </Card>
 

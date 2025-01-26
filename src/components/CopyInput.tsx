@@ -7,10 +7,14 @@ import { cn } from "@/lib/utils";
 
 type CopyInputProps = React.FC<{
   value: string;
-  className: string;
+  className?: string;
   disabled?: boolean;
 }>;
-const CopyInput: CopyInputProps = ({ value, className, disabled = true }) => {
+const CopyInput: CopyInputProps = ({
+  value,
+  className = "",
+  disabled = true,
+}) => {
   const handleCopy = () => {
     navigator.clipboard.writeText(String(value)).then(
       () => {
