@@ -5,19 +5,35 @@ import { Hero } from "@/components/landing/Hero";
 import { HowItWorks } from "@/components/landing/Howitworks";
 import { Navbar } from "@/components/landing/Navbar";
 import { Testimonials } from "@/components/landing/Testimonials";
+import { Particles } from "@/components/ui/particles";
 
 export default function Home() {
+  // return (
+  //   <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900">
+  //     <Navbar />
+  //     <Hero />
+  //     <main className="flex-grow">
+  //       <Features />
+  //       <HowItWorks />
+  //       <Testimonials />
+  //       <FAQ />
+  //     </main>
+  //     <Footer />
+  //   </div>
+  // );
+
   return (
-    <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900">
-      <Navbar />
-      <Hero />
-      <main className="flex-grow">
-        <Features />
-        <HowItWorks />
-        <Testimonials />
-        <FAQ />
-      </main>
-      <Footer />
+    <div className="relative flex h-screen bg-black w-full flex-col items-center justify-center overflow-hidden bg-background md:shadow-xl">
+      <span className="pointer-events-none whitespace-pre-wrap bg-gradient-to-b from-black to-gray-300/80 bg-clip-text text-center text-8xl font-semibold leading-none text-transparent dark:from-white dark:to-slate-900/10">
+        Comming Soon
+      </span>
+      <Particles
+        className="absolute inset-0"
+        quantity={100}
+        ease={80}
+        color="#fff"
+        refresh
+      />
     </div>
   );
 }
