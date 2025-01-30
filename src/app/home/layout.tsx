@@ -1,6 +1,7 @@
 import { Footer } from "@/components/landing/Footer";
 import React from "react";
 import Navbar from "./components/Navbar";
+import AppContainer from "@/components/AppContainer";
 
 type HomeLayoutProps = Readonly<{
   children: React.ReactNode;
@@ -8,11 +9,11 @@ type HomeLayoutProps = Readonly<{
 
 const HomeLayout: React.FC<HomeLayoutProps> = ({ children }) => {
   return (
-    <div className="min-h-screen flex flex-col bg-white dark:bg-black">
+    <AppContainer>
       <Navbar />
-      <main className="flex-grow pt-20">{children}</main>
-      <Footer />
-    </div>
+      {children}
+      <Footer className="px-0 sm:px-0 lg:px-0 py-12" />
+    </AppContainer>
   );
 };
 

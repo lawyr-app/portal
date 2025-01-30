@@ -2,9 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+html,
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background: #000;
 }
 
 @layer base {
@@ -84,6 +84,7 @@ body {
   * {
     @apply border-border;
   }
+  html,
   body {
     @apply bg-background text-foreground;
   }

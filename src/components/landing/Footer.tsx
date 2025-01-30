@@ -1,11 +1,17 @@
 import Link from "next/link";
 import { Linkedin, Mail, Phone, MapPin } from "lucide-react";
 import { X } from "lucide-react";
+import { cn } from "@/lib/utils";
 
-export function Footer() {
+export function Footer({ className = "" }) {
   return (
     <footer className="bg-gray-100 dark:bg-black text-gray-600 dark:text-gray-300">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div
+        className={cn(
+          "container mx-auto px-4 sm:px-6 lg:px-8 py-12",
+          className
+        )}
+      >
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div className="col-span-1 md:col-span-2">
             <h3 className="text-2xl font-bold text-black dark:text-white mb-4">
