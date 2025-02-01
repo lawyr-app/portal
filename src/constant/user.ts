@@ -1,0 +1,87 @@
+enum UserGender {
+  MALE = 1,
+  FEMALE = 2,
+  OTHERS = 3,
+}
+
+const genderList = [
+  {
+    id: UserGender.MALE,
+    name: "male",
+  },
+  {
+    id: UserGender.FEMALE,
+    name: "female",
+  },
+  {
+    id: UserGender.OTHERS,
+    name: "others",
+  },
+];
+
+const experienceList = [
+  { id: 0, name: "0" },
+  { id: 1, name: "1+" },
+  { id: 3, name: "3+" },
+  { id: 5, name: "5+" },
+  { id: 10, name: "10+" },
+  { id: 15, name: "15+" },
+  { id: 20, name: "20+" },
+  { id: 25, name: "25+" },
+  { id: 30, name: "30+" },
+  { id: 35, name: "35+" },
+  { id: 40, name: "40+" },
+  { id: 45, name: "45+" },
+  { id: 50, name: "50+" },
+];
+
+const langaugesList = [
+  "Assamese",
+  "Bengali",
+  "Bodo",
+  "Dogri",
+  "Gujarati",
+  "Hindi",
+  "Kannada",
+  "Kashmiri",
+  "Konkani",
+  "Maithili",
+  "Malayalam",
+  "Manipuri",
+  "Marathi",
+  "Nepali",
+  "Odia",
+  "Punjabi",
+  "Sanskrit",
+  "Santali",
+  "Sindhi",
+  "Tamil",
+  "Telugu",
+  "Urdu",
+  "Tulu",
+  "Bhili",
+  "Garo",
+  "Mizo",
+  "Khasi",
+  "Mundari",
+  "Ho",
+  "Lepcha",
+  "Ladakhi",
+  "Sikkimese",
+  "Bishnupriya Manipuri",
+  "Kodava",
+  "Angika",
+  "Marwari",
+  "Sherpa",
+  "Haryanvi",
+  "Magahi",
+  "Bhojpuri",
+  "Chhattisgarhi",
+  "Awadhi",
+  "Bagheli",
+  "Garhwali",
+  "Kumaoni",
+  "Rajasthani",
+];
+
+export { UserGender, genderList, experienceList, langaugesList };
