@@ -25,8 +25,8 @@ const Home = () => {
   const handleSearch = () => {};
 
   return (
-    <div className="flex flex-col">
-      <div className="flex flex-col w-full items-center">
+    <div className="flex flex-col mt-[70px]">
+      <div className="flex flex-col w-full items-center my-4">
         <div className="flex flex-row w-3/5 items-center justify-center gap-1">
           <SearchInput
             handleSearch={handleSearch}

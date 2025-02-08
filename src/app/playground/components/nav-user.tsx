@@ -9,19 +9,16 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import ProfileDropdown from "@/components/ProfileDropdown";
-import { useTheme } from "@/components/ThemeToggle/Provider";
 import { useUser } from "@/context/userContext";
 
 export function NavUser() {
   const { isMobile } = useSidebar();
-  const { theme } = useTheme();
   const { removeUser, user } = useUser();
 
   return (
     <SidebarMenu>
       <SidebarMenuItem>
         <ProfileDropdown
-          className={`${theme === "dark" ? "dark" : ""} bg-card`}
           isMobile={isMobile}
           user={user}
           removeUser={removeUser}

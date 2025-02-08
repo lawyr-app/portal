@@ -18,14 +18,14 @@ type ProfileDropdownProps = React.FC<{
   children: React.ReactNode;
   isMobile: boolean;
   user: any;
-  className: any;
+  className?: string;
   removeUser: () => void;
 }>;
 const ProfileDropdown: ProfileDropdownProps = ({
   children,
   isMobile,
   user,
-  className,
+  className = "",
   removeUser,
 }) => {
   return (

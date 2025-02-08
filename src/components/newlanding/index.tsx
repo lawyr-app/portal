@@ -1,8 +1,8 @@
 import React from "react";
-import FeaturesSectionWithHoverEffects from "./feature-section-with-hover-effects";
-import { Footerdemo } from "./footer-section";
+import FeaturesSectionWithHoverEffects from "../landing/feature-section-with-hover-effects";
+import { Footerdemo } from "../landing/Footer";
 import { HowItWorks } from "../landing/Howitworks";
-import { HeroSection } from "./hero-section";
+import { HeroSection } from "../landing/hero-section";
 import { FAQ } from "../landing/FAQ";
 import { Navbar } from "../landing/Navbar";
 import { Hero } from "../landing/Hero";

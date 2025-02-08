@@ -1,11 +1,11 @@
 "use client";
 
 import PopoverButton from "@/components/PopoverButton";
-import { useTheme } from "@/components/ThemeToggle/Provider";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card, CardFooter, CardHeader } from "@/components/ui/card";
 import { UserGender } from "@/constant/user";
+import { useTheme } from "@/context/themeContext";
 import { MapPin, MessageSquare, Share2 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -76,8 +76,8 @@ const UserCard = () => {
 };
 
 const GenderIcon = ({ type = UserGender.MALE }) => {
-  const { theme } = useTheme();
-  const color = theme === "dark" ? "#fff" : "#000";
+  const { isDarkMode } = useTheme();
+  const color = isDarkMode ? "#fff" : "#000";
   const size = {
     height: 20,
     width: 20,

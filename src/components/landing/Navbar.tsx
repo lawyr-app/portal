@@ -11,23 +11,8 @@ import { useUser } from "@/context/userContext";
 
 export function Navbar() {
   const { user } = useUser();
-  const [isDarkMode, setIsDarkMode] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const router = useRouter();
-
-  useEffect(() => {
-    const root = window.document.documentElement;
-    if (isDarkMode) {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-  }, [isDarkMode]);
-
-  const toggleDarkMode = () => {
-    setIsDarkMode(!isDarkMode);
-    setIsOpen(false);
-  };
 
   const navItems = [
     { href: "/", label: "Home" },

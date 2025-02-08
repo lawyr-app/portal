@@ -1,5 +1,7 @@
 export type MayBe<T> = T | undefined | null;
 
+export type ValueOf<T> = T[keyof T];
+
 export type MongoTimeStampTypes = {
   createdAt: Date;
   updatedAt: Date;

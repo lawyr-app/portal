@@ -11,7 +11,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { regions } from "@/constant/states";
-import { useTheme } from "./ThemeToggle/Provider";
 
 type SelectRegionProps = React.FC<{
   region: string;
@@ -19,12 +18,6 @@ type SelectRegionProps = React.FC<{
 }>;
 
 const SelectRegion: SelectRegionProps = ({ region, setRegion }) => {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-  const selectContClassName = isDark
-    ? "bg-black text-white"
-    : "bg-card text-popover-foreground";
-
   return (
     <>
       <Select
@@ -36,7 +29,7 @@ const SelectRegion: SelectRegionProps = ({ region, setRegion }) => {
         <SelectTrigger className="w-[150px] dark:bg-background dark:text-foreground dark:border-border">
           <SelectValue placeholder="Select Region" />
         </SelectTrigger>
-        <SelectContent className={` ${selectContClassName} border-neutral-800`}>
+        <SelectContent className={`  border-neutral-800`}>
           <SelectGroup>
             <SelectItem key={0} value={String(0)}>
               Select Region

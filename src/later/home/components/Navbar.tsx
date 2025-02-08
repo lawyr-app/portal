@@ -1,7 +1,6 @@
 "use client";
 
 import ProfileDropdown from "@/components/ProfileDropdown";
-import { useTheme } from "@/components/ThemeToggle/Provider";
 import { COMPANY_NAME } from "@/constant/util";
 import { useUser } from "@/context/userContext";
 import {
@@ -24,42 +23,41 @@ const links = [
     isCommingSoon: false,
     icon: House,
   },
-  {
-    id: 2,
-    name: "Jobs",
-    href: "/jobs",
-    isCommingSoon: true,
-    icon: BriefcaseBusiness,
-  },
-  {
-    id: 3,
-    name: "Forum",
-    href: "/forum",
-    isCommingSoon: true,
-    icon: Speech,
-  },
+  // {
+  //   id: 2,
+  //   name: "Jobs",
+  //   href: "/home/jobs",
+  //   isCommingSoon: true,
+  //   icon: BriefcaseBusiness,
+  // },
+  // {
+  //   id: 3,
+  //   name: "Forum",
+  //   href: "/home/forum",
+  //   isCommingSoon: true,
+  //   icon: Speech,
+  // },
   {
     id: 4,
-    name: "Messaging",
-    href: "/messaging",
+    name: "Messages",
+    href: "/home/messages",
     isCommingSoon: false,
     icon: MessageSquare,
   },
   {
     id: 5,
     name: "Notifications",
-    href: "/notification",
+    href: "/home/notification",
     isCommingSoon: false,
     icon: Bell,
   },
 ];
 
 const Navbar = () => {
-  const { theme } = useTheme();
   const { removeUser, user } = useUser();
 
   return (
-    <div className="flex flex-row items-center justify-between py-2">
+    <div className="flex flex-row items-center justify-between border-b px-4 bg-white dark:bg-black w-full z-10 h-[70px]">
       <div>
         <b className="text-[18px]">{COMPANY_NAME}</b>
       </div>
@@ -79,12 +77,7 @@ const Navbar = () => {
           );
         })}
       </div>
-      <ProfileDropdown
-        isMobile
-        removeUser={removeUser}
-        user={user}
-        className={`${theme === "dark" ? "dark" : ""} bg-card`}
-      >
+      <ProfileDropdown isMobile removeUser={removeUser} user={user}>
         <Avatar className="h-8 w-8 rounded-full cursor-pointer">
           <AvatarImage src={user?.profileImageUrl} alt={user?.name} />
           <AvatarFallback className="rounded-lg">CN</AvatarFallback>

@@ -3,14 +3,14 @@
 import React from "react";
 import { Button } from "../ui/button";
 import { Moon, Sun } from "lucide-react";
-import { useTheme } from "./Provider";
+import { useTheme } from "@/context/themeContext";
 
 type ThemeToggleProps = React.FC<{
   className?: string;
 }>;
 
 const ThemeToggle: ThemeToggleProps = ({ className = "" }) => {
-  const { theme, toggleTheme } = useTheme();
+  const { isDarkMode, toggleTheme } = useTheme();
 
   return (
     <Button
@@ -20,11 +20,7 @@ const ThemeToggle: ThemeToggleProps = ({ className = "" }) => {
       aria-label="Toggle dark mode"
       className={className}
     >
-      {theme === "dark" ? (
-        <Sun className="h-5 w-5" />
-      ) : (
-        <Moon className="h-5 w-5" />
-      )}
+      {!isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
     </Button>
   );
 };

@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
-import { ThemeProviders } from "@/components/ThemeToggle/Provider";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Toaster } from "@/components/ui/sonner";
 import { UserProvider } from "@/context/userContext";
+import { ThemeProviders } from "@/context/themeContext";
 
 const geistSans = localFont({
   src: "../assets/fonts/GeistVF.woff",
@@ -30,7 +30,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen bg-gray-100 dark:bg-black text-gray-600 dark:text-gray-300 overflow-y-scroll`}
+        className={`${geistSans.variable} ${geistMono.variable} overflow-y-scroll antialiased min-h-screen bg-background text-foreground transition-colors duration-300`}
       >
         <GoogleOAuthProvider
           clientId={process.env.NEXT_PUBLIC_GOOGLE_AUTH ?? ""}
