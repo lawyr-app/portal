@@ -33,6 +33,7 @@ const Home = () => {
             setValue={setSearch}
             value={search}
           />
+
           <Button variant="ghost" onClick={() => setShowFilters(!showFilters)}>
             <ListFilter
               className={`transition-transform duration-300 ease-in-out ${
@@ -144,6 +145,7 @@ const CourtFilter = () => {
           onChange={(e) => setSearch(e.target.value)}
           className="p-2 w-full border-b mb-2"
         />
+
         {filteredCourts.length === 0 && (
           <SelectItem value="NO_VALUE">No court found</SelectItem>
         )}

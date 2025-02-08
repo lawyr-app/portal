@@ -1,3 +1,4 @@
+import FeaturesSectionWithHoverEffects from "@/components/newlanding/feature-section-with-hover-effects";
 import { FAQ } from "@/components/landing/FAQ";
 import { Features } from "@/components/landing/Features";
 import { Footer } from "@/components/landing/Footer";
@@ -6,21 +7,25 @@ import { HowItWorks } from "@/components/landing/Howitworks";
 import { Navbar } from "@/components/landing/Navbar";
 import { Testimonials } from "@/components/landing/Testimonials";
 import { Particles } from "@/components/ui/particles";
+import NewLanding from "@/components/newlanding";
 
 export default function Home() {
-  // return (
-  //   <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900">
-  //     <Navbar />
-  //     <Hero />
-  //     <main className="flex-grow">
-  //       <Features />
-  //       <HowItWorks />
-  //       <Testimonials />
-  //       <FAQ />
-  //     </main>
-  //     <Footer />
-  //   </div>
-  // );
+  return <NewLanding />;
+
+  return (
+    <div className="min-h-screen flex flex-col bg-white dark:bg-gray-900">
+      <Navbar />
+      <Hero />
+      <main className="flex-grow">
+        <Features />
+        <HowItWorks />
+        <FeaturesSectionWithHoverEffects />
+        <Testimonials />
+        <FAQ />
+      </main>
+      <Footer />
+    </div>
+  );
 
   return (
     <div className="relative flex h-screen bg-black w-full flex-col items-center justify-center overflow-hidden bg-background md:shadow-xl">

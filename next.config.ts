@@ -13,6 +13,11 @@ const nextConfig: NextConfig = {
         hostname: "banner2.cleanpng.com",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "www.launchuicomponents.com",
+        port: "",
+      },
     ],
   },
   reactStrictMode: false,

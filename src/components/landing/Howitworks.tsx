@@ -26,13 +26,13 @@ const steps = [
     description:
       "Receive a clear, concise answer based on the latest Indian legal information, complete with relevant citations.",
   },
-  {
-    icon: MessageCircle,
-    title: "Follow-up",
-    img: "https://assets.aceternity.com/templates/startup-1.webp",
-    description:
-      "If you need more clarity, you can ask follow-up questions to dive deeper into the topic.",
-  },
+  // {
+  //   icon: MessageCircle,
+  //   title: "Follow-up",
+  //   img: "https://assets.aceternity.com/templates/startup-1.webp",
+  //   description:
+  //     "If you need more clarity, you can ask follow-up questions to dive deeper into the topic.",
+  // },
 ];
 
 export function HowItWorks() {

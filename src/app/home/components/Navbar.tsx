@@ -59,11 +59,11 @@ const Navbar = () => {
   const { removeUser, user } = useUser();
 
   return (
-    <div className="flex flex-row items-center justify-between py-2 ">
+    <div className="flex flex-row items-center justify-between py-2">
       <div>
         <b className="text-[18px]">{COMPANY_NAME}</b>
       </div>
-      {/* <div className="flex flex-row gap-8 list-none">
+      <div className="flex flex-row gap-8 list-none">
         {links.map((link) => {
           const Icon = link.icon;
           return (
@@ -78,7 +78,7 @@ const Navbar = () => {
             </li>
           );
         })}
-      </div> */}
+      </div>
       <ProfileDropdown
         isMobile
         removeUser={removeUser}

@@ -42,10 +42,10 @@ export function FAQ() {
   return (
     <section id="faq" className="py-24 bg-gray-50 dark:bg-black">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
-        <h2 className="text-3xl font-bold text-center mb-12 text-black dark:text-white">
+        <h2 className="text-4xl font-bold text-center mb-16 text-black dark:text-white">
           Frequently Asked Questions
         </h2>
-        <div className="max-w-3xl mx-auto space-y-6">
+        <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-12 space-y-6">
           {faqItems.map((item, index) => (
             <div
               key={index}

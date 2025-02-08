@@ -24,7 +24,7 @@ const userDetails = {
 
 const UserCard = () => {
   return (
-    <Link href="/home/uiwwoe">
+    <Link href="/home/detail/uiwwoe">
       <Card className="w-full sm:w-[300px] p-3 relative">
         <div
           className="relative w-full rounded-lg overflow-hidden mb-2"
@@ -94,6 +94,7 @@ const GenderIcon = ({ type = UserGender.MALE }) => {
           cy="19"
           r="8"
         />
+
         <path
           d="m19 13 8-8m0 10V5H17"
           fill="none"
@@ -117,6 +118,7 @@ const GenderIcon = ({ type = UserGender.MALE }) => {
           stroke={color}
           stroke-width="1.909"
         />
+
         <path
           d="M11.5 15.5V21"
           stroke={color}
@@ -124,6 +126,7 @@ const GenderIcon = ({ type = UserGender.MALE }) => {
           stroke-linecap="round"
           stroke-linejoin="round"
         />
+
         <path
           d="M14 19H9"
           stroke={color}
@@ -153,6 +156,7 @@ const GenderIcon = ({ type = UserGender.MALE }) => {
         stroke={color}
         stroke-width="6"
       />
+
       <line
         x1="85"
         y1="140"

@@ -41,7 +41,7 @@ export default function OnboardingPage() {
   const [username, setUsername] = useState<string>("");
   const [otherSource, setOtherSource] = useState<string>("");
   const [userType, setUserType] = useState<"lawyer" | "non-lawyer" | null>(
-    null
+    null,
   );
   const [isLoading, setIsLoading] = useState(false);
   const { storeUser } = useUser();
