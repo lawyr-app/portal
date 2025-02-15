@@ -13,13 +13,7 @@ import {
   SidebarRail,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { navMain } from "@/constant/menu";
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from "@/components/ui/tooltip";
+import PopoverButton from "@/components/PopoverButton";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
@@ -32,14 +26,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       </SidebarContent>
       <SidebarFooter>
         <div className="flex flex-row items-center justify-end">
-          <TooltipProvider>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <SidebarTrigger />
-              </TooltipTrigger>
-              <TooltipContent>Toggles the sidebar</TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          <PopoverButton text="Toggles the sidebar">
+            <SidebarTrigger />
+          </PopoverButton>
         </div>
         <NavUser />
       </SidebarFooter>

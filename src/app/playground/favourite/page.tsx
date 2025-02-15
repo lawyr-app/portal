@@ -160,10 +160,10 @@ const FavouriteCard: FavouriteCardProps = ({
   return (
     <Card className="w-full sm:w-10/12 p-4">
       <Link href={`/playground/detail/${data.chatId}`}>
-        <CardTitle className="mb-2">{title}</CardTitle>
+        <CardTitle className="mb-2 text-[1rem]">{title}</CardTitle>
       </Link>
 
-      <CardFooter className="p-0 pt-2 flex flex-row items-center justify-between mt-3 gap-2 ">
+      <CardFooter className="p-0 pt-2 flex flex-row items-center justify-between mt-0 gap-2 ">
         <CardDescription className="text-[12px]">
           Created at {formatDate(data.createdAt)}
         </CardDescription>

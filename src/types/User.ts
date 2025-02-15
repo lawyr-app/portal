@@ -1,19 +1,29 @@
 import { CommonMongoTypes } from "./common";
 
 export type UserType = {
-  username: String;
-  social: String;
-  isLawyer: Boolean;
-  googleId: String;
-  name: String;
-  googleFirstName: String;
-  googleLastName: String;
-  profileImageUrl: String;
-  email: String;
-  emailVerified: Boolean;
-  accessToken: String;
-  tokenExpiresIn: Number;
-  tokenIssuedAt: Number;
-  tokenId: String;
-  tokenNotValidBefore: Number;
+  username: string;
+  social: string;
+  isLawyer: boolean;
+  email: string;
+  profileImageUrl: string;
+  isDeleted: {
+    type: boolean;
+    default: false;
+  };
+  tokenDetails: {
+    token: { type: string };
+    expiresAt: { type: Date };
+  };
+  googleMetadata: {
+    googleId: string;
+    name: string;
+    googleFirstName: string;
+    googleLastName: string;
+    emailVerified: boolean;
+    accessToken: string;
+    tokenExpiresIn: number;
+    tokenIssuedAt: number;
+    tokenId: string;
+    tokenNotValidBefore: number;
+  };
 } & CommonMongoTypes;

@@ -45,7 +45,7 @@ const History = () => {
       setIsLoading(true);
       const { data } = await axios.get("/chat/chats", {
         params: {
-          imit: 10,
+          limit: 10,
           skip: 0,
           search: searchInput,
           needIsFavouritedFlag: true,
@@ -150,10 +150,10 @@ const HistoryCard: HistoryCardProps = ({
   return (
     <Card className="w-full sm:w-10/12 p-4">
       <Link href={`/playground/detail/${chatId}`}>
-        <CardTitle className="mb-2">{firstQuestion}</CardTitle>
+        <CardTitle className="mb-0 text-[1rem]">{firstQuestion}</CardTitle>
       </Link>
 
-      <CardFooter className="p-0 pt-2 flex flex-row items-center justify-between mt-3 gap-2 ">
+      <CardFooter className="p-0 pt-2 flex flex-row items-center justify-between mt-0 gap-2 ">
         <CardDescription className="text-[12px]">
           Updated {formatDate(data.createdAt)}
         </CardDescription>
