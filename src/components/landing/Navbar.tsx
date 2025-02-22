@@ -48,14 +48,14 @@ export function Navbar() {
             </div>
             <div className="hidden md:flex items-center space-x-4">
               <ThemeToggle className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white" />
-              <Button
+              {/* <Button
                 className="bg-black rounded-full text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
                 onClick={() =>
                   router.push(user ? "/playground" : "/auth/signin")
                 }
               >
                 Get Started
-              </Button>
+              </Button> */}
             </div>
             <div className="md:hidden">
               <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -81,7 +81,7 @@ export function Navbar() {
                     ))}
                     <div className="mt-auto space-y-4">
                       <ThemeToggle className="w-full justify-start text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white" />
-                      <Button
+                      {/* <Button
                         className="w-full bg-black rounded-full text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
                         onClick={() => {
                           router.push("/pricing");
@@ -89,7 +89,7 @@ export function Navbar() {
                         }}
                       >
                         Get Started
-                      </Button>
+                      </Button> */}
                     </div>
                   </nav>
                 </SheetContent>

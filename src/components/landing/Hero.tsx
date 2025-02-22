@@ -25,12 +25,12 @@ export function Hero() {
             Navigating the complex terrain of Indian law
           </p>
           <div className="flex justify-center">
-            <Button
+            {/* <Button
               size="lg"
               className="text-lg px-8 py-3 bg-black text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
             >
               Get Started
-            </Button>
+            </Button> */}
           </div>
         </div>
       </div>
