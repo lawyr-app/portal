@@ -22,7 +22,7 @@ const userDetails = {
   expertise: ["criminal", "civil", "personal"],
 };
 
-const UserCard = () => {
+const lawyerCard = () => {
   return (
     <Link href="/home/detail/uiwwoe">
       <Card className="w-full sm:w-[300px] p-3 relative">
@@ -45,13 +45,13 @@ const UserCard = () => {
             <div className="flex flex-row gap-2 justify-end w-2/10">
               <PopoverButton text="Share">
                 <Button size="icon" className="h-7 w-7">
-                  <Share2 />
+                  <Share2 className="h-4 w-4" />
                 </Button>
               </PopoverButton>
 
               <PopoverButton text="Message">
                 <Button size="icon" className="h-7 w-7">
-                  <MessageSquare />
+                  <MessageSquare className="h-4 w-4" />
                 </Button>
               </PopoverButton>
             </div>
@@ -175,4 +175,4 @@ const GenderIcon = ({ type = UserGender.MALE }) => {
   );
 };
 
-export default UserCard;
+export default lawyerCard;
