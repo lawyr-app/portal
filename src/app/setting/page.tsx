@@ -29,7 +29,7 @@ import { useUser } from "@/context/userContext";
 import Google from "@/assets/svg/Google";
 import CopyInput from "@/components/CopyInput";
 
-export default function ProfilePage() {
+export default function GeneralSetting() {
   const { user, storeUser } = useUser();
   const [username, setUsername] = useState("johndoe");
   const [isUpdating, setIsUpdating] = useState(false);

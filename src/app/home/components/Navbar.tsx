@@ -55,7 +55,7 @@ const links = [
   },
 ];
 
-const Navbar = () => {
+const Navbar = ({ className = "" }) => {
   const { removeUser, user } = useUser();
 
   return (
@@ -64,7 +64,8 @@ const Navbar = () => {
         height: navbarHeight,
       }}
       className={cn(
-        "border-b flex flex-row items-center justify-center bg-white dark:bg-black w-full z-10"
+        "border-b flex flex-row items-center justify-center bg-white dark:bg-black w-full z-10",
+        className
       )}
     >
       <div className="container px-2  flex flex-row items-center justify-between">
