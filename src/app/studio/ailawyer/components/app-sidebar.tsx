@@ -3,8 +3,6 @@
 import * as React from "react";
 import { History, Plus, Scale, Star } from "lucide-react";
 
-import { NavMain } from "@/app/playground/components/nav-main";
-import { NavUser } from "@/app/playground/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -14,6 +12,8 @@ import {
   SidebarTrigger,
 } from "@/components/ui/sidebar";
 import PopoverButton from "@/components/PopoverButton";
+import { NavMain } from "./nav-main";
+import { NavUser } from "./nav-user";
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (

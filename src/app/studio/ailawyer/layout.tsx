@@ -1,5 +1,4 @@
 import React from "react";
-import { AppSidebar } from "@/app/playground/components/app-sidebar";
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -14,6 +13,7 @@ import {
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
+import { AppSidebar } from "./components/app-sidebar";
 
 type ProfileLayoutProps = Readonly<{
   children: React.ReactNode;
