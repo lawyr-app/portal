@@ -60,13 +60,15 @@ const NavIcon: NavIconProps = ({ href, icon, id, name, currentPathName }) => {
       key={id}
       className={cn(
         "text-[14px] relative flex flex-row gap-2 h-[40px] px-1 justify-center items-center",
-        isActive ? "text-gray-100" : "text-gray-400"
+        isActive
+          ? "dark:text-gray-100 text-gray-900"
+          : "dark:text-gray-400 text-gray-400"
       )}
     >
       <Icon className="h-4 w-4" />
       {name}
       {isActive && (
-        <span className="absolute w-full bottom-0 h-[2px] bg-white" />
+        <span className="absolute w-full bottom-0 h-[2px] dark:bg-white bg-black" />
       )}
     </Link>
   );
@@ -81,7 +83,7 @@ const SettingNavbar = () => {
         "border-b flex flex-row items-center justify-center  bg-white dark:bg-black w-full z-10"
       )}
     >
-      <div className="container px-1 flex flex-row items-center justify-start gap-8">
+      <div className="container px-1 flex flex-row items-center justify-start gap-8 scroll-auto overflow-x-scroll scrollbar-hide">
         {list.map((m) => {
           return <NavIcon currentPathName={pathname} key={m.id} {...m} />;
         })}
