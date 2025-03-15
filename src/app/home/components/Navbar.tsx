@@ -8,6 +8,7 @@ import {
   BriefcaseBusiness,
   House,
   MessageSquare,
+  School,
   Speech,
 } from "lucide-react";
 import Link from "next/link";
@@ -52,6 +53,13 @@ const links = [
     href: "/home/notification",
     isCommingSoon: false,
     icon: Bell,
+  },
+  {
+    id: 6,
+    name: "Studio",
+    href: "/studio",
+    isCommingSoon: false,
+    icon: School,
   },
 ];
 

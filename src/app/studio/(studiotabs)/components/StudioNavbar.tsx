@@ -3,16 +3,16 @@
 import { cn } from "@/lib/utils";
 import {
   BadgeInfo,
-  Bell,
+  ChartPie,
+  ChartSpline,
   DollarSign,
   LucideProps,
-  MessageSquare,
 } from "lucide-react";
 import Link from "next/link";
-import React from "react";
 import { usePathname } from "next/navigation";
+import React from "react";
 
-const baseUrl = "/setting";
+const baseUrl = "/studio";
 
 type SingleListItemProps = {
   id: number;
@@ -26,26 +26,32 @@ type SingleListItemProps = {
 const list: SingleListItemProps[] = [
   {
     id: 1,
-    name: "General",
+    name: "subscription",
     icon: BadgeInfo,
     href: `${baseUrl}`,
   },
   {
-    id: 3,
-    name: "Chat",
-    icon: MessageSquare,
-    href: `${baseUrl}/chat`,
+    id: 2,
+    name: "Billing",
+    icon: DollarSign,
+    href: `${baseUrl}/billing`,
   },
   {
-    id: 4,
-    name: "Notification",
-    icon: Bell,
-    href: `${baseUrl}/notification`,
+    id: 3,
+    name: "Usage detail",
+    icon: ChartPie,
+    href: `${baseUrl}/usage`,
+  },
+  {
+    id: 3,
+    name: "Analytics",
+    icon: ChartSpline,
+    href: `${baseUrl}/analytics`,
   },
 ];
 
-type NavIconProps = React.FC<SingleListItemProps & { currentPathName: string }>;
-const NavIcon: NavIconProps = ({ href, icon, id, name, currentPathName }) => {
+type NavItemProps = React.FC<SingleListItemProps & { currentPathName: string }>;
+const NavItem: NavItemProps = ({ href, icon, id, name, currentPathName }) => {
   const isActive = currentPathName === href;
   const Icon = icon;
   return (
@@ -68,22 +74,16 @@ const NavIcon: NavIconProps = ({ href, icon, id, name, currentPathName }) => {
   );
 };
 
-const SettingNavbar = () => {
+const StudioNavbar = () => {
   const pathname = usePathname();
   console.log("pathname", pathname);
   return (
-    <div
-      className={cn(
-        "border-b flex flex-row items-center justify-center  bg-white dark:bg-black w-full z-10"
-      )}
-    >
-      <div className="container px-1 flex flex-row items-center justify-start gap-8 scroll-auto overflow-x-scroll scrollbar-hide">
-        {list.map((m) => {
-          return <NavIcon currentPathName={pathname} key={m.id} {...m} />;
-        })}
-      </div>
+    <div className="border w-fit flex px-8 rounded-full flex-row items-center justify-start bg-white dark:bg-black gap-8 scroll-auto overflow-x-scroll scrollbar-hide">
+      {list.map((m) => {
+        return <NavItem currentPathName={pathname} key={m.id} {...m} />;
+      })}
     </div>
   );
 };
 
-export default SettingNavbar;
+export default StudioNavbar;
