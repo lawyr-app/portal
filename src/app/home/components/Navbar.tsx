@@ -36,7 +36,7 @@ const links = [
   // {
   //   id: 3,
   //   name: "Forum",
-  //   href: "/home/forum",
+  //   href: "/forum",
   //   isCommingSoon: true,
   //   icon: Speech,
   // },

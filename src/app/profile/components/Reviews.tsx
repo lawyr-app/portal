@@ -4,7 +4,7 @@ import React from "react";
 
 const Reviews = () => {
   return (
-    <Card className="shadow-xl mb-8">
+    <Card className="mb-8">
       <CardContent className="p-8">
         <h2 className="text-2xl font-semibold mb-6">Student Reviews</h2>
         <div className="space-y-6">

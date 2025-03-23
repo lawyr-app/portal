@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 
 const Similar = () => {
   return (
-    <Card className="shadow-xl sticky top-4">
+    <Card className="sticky top-4">
       <CardContent className="p-6">
         <h2 className="text-xl font-semibold mb-4">Similar Teachers</h2>
         <div className="space-y-4">

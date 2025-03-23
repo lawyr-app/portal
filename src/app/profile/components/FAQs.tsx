@@ -9,7 +9,7 @@ import { Card, CardContent } from "@/components/ui/card";
 
 const FAQs = () => {
   return (
-    <Card className="shadow-xl">
+    <Card className="">
       <CardContent className="p-8">
         <h2 className="text-2xl font-semibold mb-6">
           Frequently Asked Questions

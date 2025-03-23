@@ -24,7 +24,7 @@ const userDetails = {
 
 const lawyerCard = () => {
   return (
-    <Link href="/home/detail/uiwwoe">
+    <Link href="/lawyer/uiwwoe">
       <Card className="w-full sm:w-[300px] p-3 relative">
         <div
           className="relative w-full rounded-lg overflow-hidden mb-2"
