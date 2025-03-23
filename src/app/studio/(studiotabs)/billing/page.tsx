@@ -18,14 +18,6 @@ const tokenPlans = [
   { name: "Enterprise", tokens: 2000000, price: 199.99 },
 ];
 
-const paymentHistory = [
-  { date: "2023-11-01", amount: 9.99, plan: "Basic", status: "Paid" },
-  { date: "2023-10-01", amount: 9.99, plan: "Basic", status: "Paid" },
-  { date: "2023-09-01", amount: 9.99, plan: "Basic", status: "Paid" },
-  { date: "2023-08-01", amount: 9.99, plan: "Basic", status: "Paid" },
-  { date: "2023-07-01", amount: 9.99, plan: "Basic", status: "Paid" },
-];
-
 const currentPlan = "Basic";
 
 const StudioBillingTab = () => {
@@ -74,36 +66,6 @@ const StudioBillingTab = () => {
               View full pricing details
             </Link>
           </div>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-sm font-semibold">
-            Payment History
-          </CardTitle>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Date</TableHead>
-                <TableHead>Amount</TableHead>
-                <TableHead>Plan</TableHead>
-                <TableHead>Status</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {paymentHistory.map((payment, index) => (
-                <TableRow key={index}>
-                  <TableCell>{payment.date}</TableCell>
-                  <TableCell>${payment.amount.toFixed(2)}</TableCell>
-                  <TableCell>{payment.plan}</TableCell>
-                  <TableCell>{payment.status}</TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
         </CardContent>
       </Card>
     </div>

@@ -5,6 +5,7 @@ import {
   BadgeInfo,
   ChartPie,
   ChartSpline,
+  CreditCard,
   DollarSign,
   LucideProps,
 } from "lucide-react";
@@ -26,27 +27,21 @@ type SingleListItemProps = {
 const list: SingleListItemProps[] = [
   {
     id: 1,
-    name: "subscription",
-    icon: BadgeInfo,
+    name: "Billing",
+    icon: DollarSign,
     href: `${baseUrl}`,
   },
   {
     id: 2,
-    name: "Billing",
-    icon: DollarSign,
-    href: `${baseUrl}/billing`,
-  },
-  {
-    id: 3,
     name: "Usage detail",
     icon: ChartPie,
     href: `${baseUrl}/usage`,
   },
   {
     id: 3,
-    name: "Analytics",
-    icon: ChartSpline,
-    href: `${baseUrl}/analytics`,
+    name: "Payment History",
+    icon: CreditCard,
+    href: `${baseUrl}/paymenthistory`,
   },
 ];
 
