@@ -2,11 +2,19 @@
 
 import Navbar from "@/components/app/Navbar";
 import SettingNavbar from "@/components/app/SettingNavbar";
-import { BadgeInfo } from "lucide-react";
+import {
+  BadgeInfo,
+  Bell,
+  DollarSign,
+  LucideProps,
+  MessageSquare,
+  CreditCard,
+  ChartPie,
+} from "lucide-react";
 
-const baseUrl = "/setting";
+const baseUrl = "/billing";
 
-export default function ProfileLayout({
+export default function BillingLayout({
   children,
 }: {
   children: React.ReactNode;
@@ -23,10 +31,16 @@ export default function ProfileLayout({
             href: `${baseUrl}`,
           },
           {
-            id: 1,
-            name: "Advanced",
-            icon: BadgeInfo,
-            href: `${baseUrl}/advanced`,
+            id: 2,
+            name: "Usage detail",
+            icon: ChartPie,
+            href: `${baseUrl}/usage-detail`,
+          },
+          {
+            id: 3,
+            name: "Payment History",
+            icon: CreditCard,
+            href: `${baseUrl}/payment-history`,
           },
         ]}
       />

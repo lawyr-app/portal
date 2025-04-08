@@ -19,13 +19,13 @@ import { cn } from "@/lib/utils";
 import { navbarHeight } from "@/constant/style";
 
 const links = [
-  {
-    id: 1,
-    name: "Home",
-    href: "/home",
-    isCommingSoon: false,
-    icon: House,
-  },
+  // {
+  //   id: 1,
+  //   name: "Home",
+  //   href: "/home",
+  //   isCommingSoon: false,
+  //   icon: House,
+  // },
   // {
   //   id: 2,
   //   name: "Jobs",
@@ -40,26 +40,40 @@ const links = [
   //   isCommingSoon: true,
   //   icon: Speech,
   // },
-  {
-    id: 4,
-    name: "Messages",
-    href: "/home/messages",
-    isCommingSoon: false,
-    icon: MessageSquare,
-  },
-  {
-    id: 5,
-    name: "Notifications",
-    href: "/home/notification",
-    isCommingSoon: false,
-    icon: Bell,
-  },
+  // {
+  //   id: 4,
+  //   name: "Messages",
+  //   href: "/home/messages",
+  //   isCommingSoon: false,
+  //   icon: MessageSquare,
+  // },
+  // {
+  //   id: 5,
+  //   name: "Notifications",
+  //   href: "/home/notification",
+  //   isCommingSoon: false,
+  //   icon: Bell,
+  // },
   {
     id: 6,
-    name: "Studio",
-    href: "/studio",
+    name: "Home",
+    href: "/home",
     isCommingSoon: false,
-    icon: School,
+    icon: House,
+  },
+  {
+    id: 7,
+    name: "Billing",
+    href: "/billing",
+    isCommingSoon: false,
+    icon: House,
+  },
+  {
+    id: 8,
+    name: "Setting",
+    href: "/setting",
+    isCommingSoon: false,
+    icon: House,
   },
 ];
 

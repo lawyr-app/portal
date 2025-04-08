@@ -1,18 +1,10 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import {
-  BadgeInfo,
-  Bell,
-  DollarSign,
-  LucideProps,
-  MessageSquare,
-} from "lucide-react";
+import { LucideProps } from "lucide-react";
 import Link from "next/link";
 import React from "react";
 import { usePathname } from "next/navigation";
-
-const baseUrl = "/setting";
 
 type SingleListItemProps = {
   id: number;
@@ -22,27 +14,6 @@ type SingleListItemProps = {
   >;
   href: string;
 };
-
-const list: SingleListItemProps[] = [
-  {
-    id: 1,
-    name: "General",
-    icon: BadgeInfo,
-    href: `${baseUrl}`,
-  },
-  {
-    id: 3,
-    name: "Chat",
-    icon: MessageSquare,
-    href: `${baseUrl}/chat`,
-  },
-  {
-    id: 4,
-    name: "Notification",
-    icon: Bell,
-    href: `${baseUrl}/notification`,
-  },
-];
 
 type NavIconProps = React.FC<SingleListItemProps & { currentPathName: string }>;
 const NavIcon: NavIconProps = ({ href, icon, id, name, currentPathName }) => {
@@ -68,9 +39,11 @@ const NavIcon: NavIconProps = ({ href, icon, id, name, currentPathName }) => {
   );
 };
 
-const SettingNavbar = () => {
+type SettingNavbarProps = React.FC<{
+  list: SingleListItemProps[];
+}>;
+const SettingNavbar: SettingNavbarProps = ({ list }) => {
   const pathname = usePathname();
-  console.log("pathname", pathname);
   return (
     <div
       className={cn(

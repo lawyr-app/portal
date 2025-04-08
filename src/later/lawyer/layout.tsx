@@ -1,7 +1,7 @@
 import React from "react";
 import { cn } from "@/lib/utils";
 import { navbarHeight } from "@/constant/style";
-import Navbar from "../home/components/Navbar";
+import Navbar from "@/components/app/Navbar";
 
 type ProfileLayoutProps = Readonly<{
   children: React.ReactNode;

@@ -1,8 +1,8 @@
-import Navbar from "@/app/home/components/Navbar";
 import { cn } from "@/lib/utils";
 import React from "react";
 import QuickActions from "./components/QuickActions";
 import StudioNavbar from "./components/StudioNavbar";
+import Navbar from "@/components/app/Navbar";
 
 type StudioLayoutProps = React.FC<{
   children: React.ReactNode;
