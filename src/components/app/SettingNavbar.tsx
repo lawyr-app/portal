@@ -27,7 +27,7 @@ const NavIcon: NavIconProps = ({ href, icon, id, name, currentPathName }) => {
         "text-[14px] relative flex flex-row gap-2 h-[40px] px-1 justify-center items-center",
         isActive
           ? "dark:text-gray-100 text-gray-900"
-          : "dark:text-gray-400 text-gray-400"
+          : "dark:text-gray-400 text-gray-600"
       )}
     >
       <Icon className="h-4 w-4" />
@@ -47,7 +47,7 @@ const SettingNavbar: SettingNavbarProps = ({ list }) => {
   return (
     <div
       className={cn(
-        "border-b flex flex-row items-center justify-center  bg-white dark:bg-black w-full z-10"
+        "border-b flex flex-row items-center justify-center sticky top-0  bg-white dark:bg-black w-full z-10"
       )}
     >
       <div className="container px-1 flex flex-row items-center justify-start gap-8 scroll-auto overflow-x-scroll scrollbar-hide">

@@ -6,9 +6,11 @@ import { useUser } from "@/context/userContext";
 import {
   Bell,
   BriefcaseBusiness,
+  Coins,
   House,
   MessageSquare,
   School,
+  Settings,
   Speech,
 } from "lucide-react";
 import Link from "next/link";
@@ -66,14 +68,14 @@ const links = [
     name: "Billing",
     href: "/billing",
     isCommingSoon: false,
-    icon: House,
+    icon: Coins,
   },
   {
     id: 8,
     name: "Setting",
     href: "/setting",
     isCommingSoon: false,
-    icon: House,
+    icon: Settings,
   },
 ];
 

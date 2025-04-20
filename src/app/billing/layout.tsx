@@ -2,15 +2,7 @@
 
 import Navbar from "@/components/app/Navbar";
 import SettingNavbar from "@/components/app/SettingNavbar";
-import {
-  BadgeInfo,
-  Bell,
-  DollarSign,
-  LucideProps,
-  MessageSquare,
-  CreditCard,
-  ChartPie,
-} from "lucide-react";
+import { BadgeInfo, CreditCard, ChartPie } from "lucide-react";
 
 const baseUrl = "/billing";
 
@@ -41,6 +33,12 @@ export default function BillingLayout({
             name: "Payment History",
             icon: CreditCard,
             href: `${baseUrl}/payment-history`,
+          },
+          {
+            id: 4,
+            name: "Buy Tokens",
+            icon: CreditCard,
+            href: `${baseUrl}/buy-tokens`,
           },
         ]}
       />
