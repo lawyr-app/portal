@@ -90,20 +90,6 @@ const BuyTokens = () => {
                   {((Number(pkg.price) / pkg.token) * 1000).toFixed(2)} &#8377;
                   per 1000 tokens
                 </p>
-                <ul className="text-sm space-y-2 text-left">
-                  <li className="flex items-start">
-                    <Check className="h-4 w-4 mr-2 text-green-500 mt-0.5" />
-                    <span>Use across all AI services</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="h-4 w-4 mr-2 text-green-500 mt-0.5" />
-                    <span>No expiration date</span>
-                  </li>
-                  <li className="flex items-start">
-                    <Check className="h-4 w-4 mr-2 text-green-500 mt-0.5" />
-                    <span>One-time purchase</span>
-                  </li>
-                </ul>
               </CardContent>
               <CardFooter>
                 <Button

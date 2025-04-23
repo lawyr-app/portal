@@ -1,11 +1,48 @@
-import { cn } from "@/lib/utils";
-import React from "react";
-import Navbar from "@/components/app/Navbar";
+"use client";
 
-type StudioLayoutProps = React.FC<{
+import { cn } from "@/lib/utils";
+import Navbar from "@/components/app/Navbar";
+import React, { useEffect, useState } from "react";
+import { useUser } from "@/context/userContext";
+import { toast } from "sonner";
+import HomeLoading from "./components/HomePageLoading";
+import axiosInstance from "@/lib/axios";
+
+type HomeLayoutProps = React.FC<{
   children: React.ReactNode;
 }>;
-const StudioLayout: StudioLayoutProps = ({ children }) => {
+const HomeLayout: HomeLayoutProps = ({ children }) => {
+  const { user, storeUser } = useUser();
+  const [isLoading, setIsLoading] = useState(true);
+  const userId = user?._id;
+
+  const fetchUserDetails = async () => {
+    try {
+      setIsLoading(true);
+      const { data } = await axiosInstance.get(`/user/${userId}`);
+      console.log("data", data);
+      if (data.isError) {
+        toast.error("Something went wrong. Please refresh the page");
+      } else {
+        storeUser(data.data);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      setIsLoading(false);
+      console.error("Something went wrong in fetchUserDetails  due to ", error);
+    }
+  };
+
+  useEffect(() => {
+    if (userId) {
+      fetchUserDetails();
+    }
+  }, [userId]);
+
+  if (isLoading) {
+    return <HomeLoading />;
+  }
+
   return (
     <div className="min-h-screen flex flex-col overflow-y-auto">
       <Navbar />
@@ -16,4 +53,4 @@ const StudioLayout: StudioLayoutProps = ({ children }) => {
   );
 };
 
-export default StudioLayout;
+export default HomeLayout;
