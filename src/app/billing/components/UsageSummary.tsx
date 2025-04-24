@@ -1,6 +1,9 @@
+"use client";
+
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import React from "react";
 import { Zap, Info } from "lucide-react";
+import { useUser } from "@/context/userContext";
 
 const tokenData = {
   balance: 32450,
@@ -35,6 +38,15 @@ const tokenData = {
 };
 
 const UsageSummary = () => {
+  const { user } = useUser();
+
+  // tokensBought: 17000;
+  // tokensRemaining: 17000;
+
+  const tokensBought = user?.tokensBought ?? 0;
+  const tokensRemaining = user?.tokensRemaining ?? 0;
+  const used = tokensBought - tokensRemaining;
+
   return (
     <div>
       <div className="grid md:grid-cols-3 gap-6">
@@ -47,7 +59,7 @@ const UsageSummary = () => {
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold">
-              {tokenData.balance.toLocaleString()}
+              {tokensRemaining.toLocaleString()}
             </div>
             <p className="text-sm text-muted-foreground">Never expire</p>
           </CardContent>
@@ -59,7 +71,7 @@ const UsageSummary = () => {
           </CardHeader>
           <CardContent>
             <div className="text-3xl font-bold">
-              {tokenData.totalPurchased.toLocaleString()}
+              {tokensBought.toLocaleString()}
             </div>
             <p className="text-sm text-muted-foreground">All time</p>
           </CardContent>
@@ -70,14 +82,9 @@ const UsageSummary = () => {
             <CardTitle className="text-base">Total Used</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="text-3xl font-bold">
-              {tokenData.totalUsed.toLocaleString()}
-            </div>
+            <div className="text-3xl font-bold">{used.toLocaleString()}</div>
             <p className="text-sm text-muted-foreground">
-              {((tokenData.totalUsed / tokenData.totalPurchased) * 100).toFixed(
-                1
-              )}
-              % of purchased
+              {((used / tokensBought) * 100).toFixed(1)}% of purchased
             </p>
           </CardContent>
         </Card>

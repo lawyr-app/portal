@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -15,75 +17,65 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { Download, Filter, Zap, Calendar } from "lucide-react";
+import { CircleArrowOutUpRight, Download, Filter } from "lucide-react";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useEffect, useState } from "react";
+import axiosInstance from "@/lib/axios";
+import { formatDate } from "@/lib/datetime";
+import { PAYMENT_STATUS, ValueOf } from "@/types/common";
 
 export default function BillingPaymentHistory() {
-  // This would come from your payment history data
-  const payments = [
-    {
-      id: "TKN-001",
-      date: "Apr 15, 2025",
-      amount: "$49.99",
-      tokens: 50000,
-      status: "completed",
-      paymentMethod: "Visa ending in 4242",
-    },
-    {
-      id: "TKN-002",
-      date: "Mar 22, 2025",
-      amount: "$29.99",
-      tokens: 25000,
-      status: "completed",
-      paymentMethod: "Visa ending in 4242",
-    },
-    {
-      id: "TKN-003",
-      date: "Feb 12, 2025",
-      amount: "$14.99",
-      tokens: 10000,
-      status: "completed",
-      paymentMethod: "Visa ending in 4242",
-    },
-    {
-      id: "TKN-004",
-      date: "Jan 05, 2025",
-      amount: "$89.99",
-      tokens: 100000,
-      status: "completed",
-      paymentMethod: "PayPal",
-    },
-    {
-      id: "TKN-005",
-      date: "Dec 10, 2024",
-      amount: "$29.99",
-      tokens: 25000,
-      status: "completed",
-      paymentMethod: "Visa ending in 4242",
-    },
-    {
-      id: "TKN-006",
-      date: "Nov 18, 2024",
-      amount: "$14.99",
-      tokens: 10000,
-      status: "completed",
-      paymentMethod: "Visa ending in 4242",
-    },
-  ];
+  const [isLoading, setIsLoading] = useState(false);
+  const [data, setData] = useState<any[]>([]);
+
+  const fetchData = async () => {
+    try {
+      setIsLoading(true);
+      const { data: response } = await axiosInstance.get(`payment/payments`);
+      if (!response.isError && response?.data) {
+        setData(response.data);
+      } else {
+        setData([]);
+      }
+      setIsLoading(false);
+    } catch (error) {
+      console.error(`Something went wrong in fetchData: ${error}`);
+      setData([]);
+      setIsLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const getVariant = (status: ValueOf<typeof PAYMENT_STATUS>) => {
+    if (status === PAYMENT_STATUS.SUCCESS) {
+      return "secondary";
+    }
+    if (
+      status === PAYMENT_STATUS.FAILED ||
+      status === PAYMENT_STATUS.EXPIRED ||
+      status === PAYMENT_STATUS.CANCELLED
+    ) {
+      return "destructive";
+    }
+    return "default";
+  };
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
-        <h2 className="text-2xl font-bold"></h2>
+        <h2 className="text-2xl font-bold">Payment History</h2>
         <div className="flex space-x-2">
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
-              <Button variant="outline" size="sm">
+              <Button variant="outline" size="sm" disabled={isLoading}>
                 <Filter className="h-4 w-4 mr-2" />
                 Filter
               </Button>
@@ -95,10 +87,10 @@ export default function BillingPaymentHistory() {
               <DropdownMenuItem>Last Year</DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Button variant="outline" size="sm">
+          {/* <Button variant="outline" size="sm" disabled={isLoading}>
             <Download className="h-4 w-4 mr-2" />
             Export
-          </Button>
+          </Button> */}
         </div>
       </div>
 
@@ -118,35 +110,27 @@ export default function BillingPaymentHistory() {
                 <TableHead>Amount</TableHead>
                 <TableHead>Tokens</TableHead>
                 <TableHead>Status</TableHead>
-                <TableHead>Payment Method</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
+                {/* <TableHead className="text-right">View</TableHead> */}
               </TableRow>
             </TableHeader>
             <TableBody>
-              {payments.map((payment) => (
-                <TableRow key={payment.id}>
-                  <TableCell className="font-medium">{payment.id}</TableCell>
-                  <TableCell>{payment.date}</TableCell>
+              {data.map((payment) => (
+                <TableRow key={payment._id || payment.id}>
+                  <TableCell className="font-medium">{payment._id}</TableCell>
+                  <TableCell>{formatDate(payment.createdAt)}</TableCell>
                   <TableCell>{payment.amount}</TableCell>
-                  <TableCell className="flex items-center">
-                    <Zap className="h-4 w-4 mr-1 text-amber-500" />
-                    {payment.tokens.toLocaleString()}
-                  </TableCell>
+                  <TableCell>{payment.tokens.toLocaleString()}</TableCell>
                   <TableCell>
-                    <Badge
-                      variant="outline"
-                      className="bg-green-50 text-green-700 border-green-200"
-                    >
+                    <Badge variant={getVariant(payment.status)}>
                       {payment.status}
                     </Badge>
                   </TableCell>
-                  <TableCell>{payment.paymentMethod}</TableCell>
-                  <TableCell className="text-right">
-                    <Button variant="ghost" size="sm">
-                      <Download className="h-4 w-4" />
-                      <span className="sr-only">Download</span>
+                  {/* <TableCell className="text-right">
+                    <Button variant="ghost" size="sm" disabled={isLoading}>
+                      <p>View</p>
+                      <CircleArrowOutUpRight style={{ height: 12 }} />
                     </Button>
-                  </TableCell>
+                  </TableCell> */}
                 </TableRow>
               ))}
             </TableBody>
