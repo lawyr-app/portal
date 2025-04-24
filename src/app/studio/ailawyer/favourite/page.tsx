@@ -159,7 +159,7 @@ const FavouriteCard: FavouriteCardProps = ({
 
   return (
     <Card className="w-full sm:w-10/12 p-4">
-      <Link href={`/playground/detail/${data.chatId}`}>
+      <Link href={`/studio/ailawyer/detail/${data.chatId}`}>
         <CardTitle className="mb-2 text-[1rem]">{title}</CardTitle>
       </Link>
 

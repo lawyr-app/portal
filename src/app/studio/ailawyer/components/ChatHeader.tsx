@@ -43,7 +43,7 @@ const ChatHeader: ChatHeaderProps = ({
   const { handleDelete, isDeleting } = useDeleteChat({
     chatId: String(chatData?._id),
     onSuccess: () => {
-      router.push("/playground");
+      router.push("/studio/ailawyer/");
     },
   });
 

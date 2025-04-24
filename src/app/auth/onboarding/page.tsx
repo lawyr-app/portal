@@ -41,7 +41,7 @@ export default function OnboardingPage() {
   const [username, setUsername] = useState<string>("");
   const [otherSource, setOtherSource] = useState<string>("");
   const [userType, setUserType] = useState<"lawyer" | "non-lawyer" | null>(
-    null,
+    null
   );
   const [isLoading, setIsLoading] = useState(false);
   const { storeUser } = useUser();
@@ -81,7 +81,7 @@ export default function OnboardingPage() {
         } else {
           storeUser(data.data);
           toast.success("Account created successfully");
-          router.push("/playground");
+          router.push("/studio/ailawyer/");
         }
       } else {
         toast.error("Something went wrong while creating account");

@@ -149,7 +149,7 @@ const HistoryCard: HistoryCardProps = ({
 
   return (
     <Card className="w-full sm:w-10/12 p-4">
-      <Link href={`/playground/detail/${chatId}`}>
+      <Link href={`/studio/ailawyer/detail/${chatId}`}>
         <CardTitle className="mb-0 text-[1rem]">{firstQuestion}</CardTitle>
       </Link>
 

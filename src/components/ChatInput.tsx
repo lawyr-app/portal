@@ -60,7 +60,7 @@ const ChatInput: ChatInputProps = ({
         });
       } else {
         localStorage.setItem(NEW_CHAT, JSON.stringify(data?.data));
-        router.push(`/playground/detail/${chatId}`);
+        router.push(`/studio/ailawyer/detail/${chatId}`);
       }
       setIsCreatingChat(false);
     } catch (error) {

@@ -51,7 +51,7 @@ export function Navbar() {
               {/* <Button
                 className="bg-black rounded-full text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
                 onClick={() =>
-                  router.push(user ? "/playground" : "/auth/signin")
+                  router.push(user ? "/studio/ailawyer/" : "/auth/signin")
                 }
               >
                 Get Started

@@ -38,7 +38,7 @@ const ShareModal: ShareModalProps = ({ open, setOpen, title, chatId }) => {
       console.log("data", data);
       if (data.isError) {
       } else {
-        const shareLink = `${window.location.origin}/playground/shared/${data.data._id}`;
+        const shareLink = `${window.location.origin}/studio/ailawyer/shared/${data.data._id}`;
         console.log("shareLink", shareLink);
         setLink(shareLink);
         navigator.clipboard.writeText(String(shareLink)).then(

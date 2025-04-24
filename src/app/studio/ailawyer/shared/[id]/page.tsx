@@ -57,7 +57,7 @@ const SharedDetail = () => {
       if (data.isError) {
         toast("Something went wrong in continuing the chat");
       } else {
-        router.push(`/playground/detail/${data.data._id}`);
+        router.push(`/studio/ailawyer/detail/${data.data._id}`);
       }
       setIsCreating(false);
     } catch (error) {
@@ -113,7 +113,9 @@ const SharedDetail = () => {
                 className="w-full rounded-2xl"
                 onClick={() => {
                   if (isUserChat) {
-                    router.push(`/playground/detail/${sharedData?.chatId}`);
+                    router.push(
+                      `/studio/ailawyer/detail/${sharedData?.chatId}`
+                    );
                   } else {
                     handleContinueChat();
                   }

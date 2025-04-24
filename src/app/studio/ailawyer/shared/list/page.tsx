@@ -139,7 +139,7 @@ const SharedCard: SharedCardProps = ({ data, setList }) => {
 
   return (
     <Card className="w-full sm:w-10/12 p-4">
-      <Link href={`/playground/shared/${_id}`}>
+      <Link href={`/studio/ailawyer/shared/${_id}`}>
         <CardTitle className="mb-2 text-[1rem]">{title}</CardTitle>
       </Link>
 
