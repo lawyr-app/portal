@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { History, Plus, Scale, Star } from "lucide-react";
+import { History, Plus, Scale, Star, HomeIcon } from "lucide-react";
 
 import {
   Sidebar,
@@ -18,9 +18,6 @@ import { NavUser } from "./nav-user";
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   return (
     <Sidebar collapsible="icon" {...props}>
-      <SidebarHeader>
-        <Scale />
-      </SidebarHeader>
       <SidebarContent>
         <NavMain />
       </SidebarContent>

@@ -37,7 +37,7 @@ const ChatResponse: ChatResponseProps = ({
     if (id && !localMessage) {
       console.log("id fetched", id);
       const eventSource = new EventSource(
-        `http://localhost:8000/api/message/get/${id}`
+        `${process.env.NEXT_PUBLIC_API_URL}/message/get/${id}`
       );
       eventSource.onmessage = (e) => {
         const serverText = e.data;

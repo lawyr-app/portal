@@ -73,7 +73,7 @@ export default function BillingPaymentHistory() {
       <div className="flex justify-between items-center">
         <h2 className="text-2xl font-bold">Payment History</h2>
         <div className="flex space-x-2">
-          <DropdownMenu>
+          {/* <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="outline" size="sm" disabled={isLoading}>
                 <Filter className="h-4 w-4 mr-2" />
@@ -86,7 +86,7 @@ export default function BillingPaymentHistory() {
               <DropdownMenuItem>Last 6 Months</DropdownMenuItem>
               <DropdownMenuItem>Last Year</DropdownMenuItem>
             </DropdownMenuContent>
-          </DropdownMenu>
+          </DropdownMenu> */}
           {/* <Button variant="outline" size="sm" disabled={isLoading}>
             <Download className="h-4 w-4 mr-2" />
             Export
