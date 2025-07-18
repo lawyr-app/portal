@@ -50,6 +50,11 @@ const Detail = () => {
   console.log("allMessages", allMessages);
 
   const getChatById = async (id: string) => {
+    const handleError = () => {
+      toast.error("Looks like Chat doesnt exists.");
+      router.push("/studio/ailawyer");
+    };
+
     try {
       setIsLoading(true);
       const { data } = await axios.get(`/chat/${id}`, {
@@ -59,8 +64,7 @@ const Detail = () => {
         },
       });
       if (data.isError) {
-        toast("Looks like Chat doesnt exists.");
-        router.back();
+        handleError();
       } else {
         setChatData(data.data);
         const messages = data?.data?.messages;
@@ -69,6 +73,7 @@ const Detail = () => {
       }
       setIsLoading(false);
     } catch (error) {
+      handleError();
       setIsLoading(false);
     }
   };
@@ -93,6 +98,16 @@ const Detail = () => {
   };
 
   const sendMessage = async ({ question, chatId }: sendMessageProps) => {
+    const handleDefaultError = () => {
+      toast.error("Something went wrong. Please try again later.");
+    };
+    if (question.length < 4) {
+      toast.error("Qurestion is too small");
+      return;
+    }
+    if (isMessageLoading) {
+      return;
+    }
     try {
       setAllMessages((prev) => [
         ...prev,
@@ -107,6 +122,17 @@ const Detail = () => {
       });
       console.log("data", data);
       if (data.isError) {
+        if (data.message === "MESSAGES_LIMIT_EXCEED") {
+          toast.error("Message limit exceeded");
+          setAllMessages((prev) => {
+            const changedMessage = prev?.filter(
+              (m) => m?.question !== question
+            );
+            return changedMessage;
+          });
+        } else {
+          handleDefaultError();
+        }
       } else {
         setAllMessages((prev) => {
           const changedMessage = prev?.map((m) => {
@@ -122,6 +148,7 @@ const Detail = () => {
       }
       setIsMessageLoading(false);
     } catch (error) {
+      handleDefaultError();
       setIsMessageLoading(false);
       console.error(`Something went wrong in sendMessage due to `, error);
     }
@@ -192,6 +219,7 @@ const Detail = () => {
               classname="w-full"
               setMessage={setMessage}
               message={message}
+              isLoading={isMessageLoading}
               sendMessage={() => {
                 sendMessage({ question: message, chatId: id });
               }}
