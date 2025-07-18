@@ -6,6 +6,7 @@ import ChatInput from "@/components/ChatInput";
 import { TextHoverEffect } from "@/components/ui/text-hover-effect";
 import { Badge } from "@/components/ui/badge";
 import { CircleArrowOutUpRight } from "lucide-react";
+import { useUser } from "@/context/userContext";
 
 const questions = [
   {
@@ -24,6 +25,7 @@ const questions = [
 
 const Playground = () => {
   const [selected, setSelected] = useState("");
+  const { removeUser, user } = useUser();
 
   return (
     <div className="flex flex-col w-full h-full">
@@ -34,9 +36,10 @@ const Playground = () => {
         <span className="absolute top-0 right-0 bottom-0 left-0 flex flex-row items-center justify-center  opacity-50">
           <TextHoverEffect text="LAWYR" />
         </span>
-        <h1 className="text-[26px] sm:text-[30px] md:text-[35px] lg:text-[44px] font-bold z-10">
-          What can i help you with?
+        <h1 className="text-[16px] sm:text-[20px] md:text-[25px] lg:text-[34px] font-bold z-10">
+          Welcome to LawyrHub
         </h1>
+        <p>Ask anything related to constitution,laws,acts and amendments</p>
         <ChatInput
           classname="w-full sm:w-5/6 md:w-1/2 mt-4 z-10"
           isPlayground

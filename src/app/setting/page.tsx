@@ -55,23 +55,26 @@ export default function GeneralSetting() {
   return (
     <div className="flex flex-col gap-y-4">
       <Card>
-        <CardContent className="flex items-center space-x-4 py-4">
-          <Google />
-          <div className="flex-grow">
+        <CardContent className="flex flex-col sm:flex-row sm:items-center sm:space-x-4 space-y-4 sm:space-y-0 py-4">
+          <span className="self-center sm:self-auto">
+            <Google />
+          </span>
+          <div className="flex-grow text-center sm:text-left">
             <p className="text-sm font-semibold">Google Account</p>
             <p className="text-sm text-muted-foreground">{user?.email}</p>
           </div>
-          <Button
-            variant="outline"
-            size="sm"
-            disabled
-            className="opacity-50 cursor-not-allowed"
-          >
-            Connected
-          </Button>
+          <div className="self-center sm:self-auto">
+            <Button
+              variant="outline"
+              size="sm"
+              disabled
+              className="opacity-50 cursor-not-allowed"
+            >
+              Connected
+            </Button>
+          </div>
         </CardContent>
       </Card>
-
       <Card>
         <CardHeader>
           <CardTitle className="text-sm font-semibold">ID</CardTitle>
