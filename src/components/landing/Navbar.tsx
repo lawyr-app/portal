@@ -16,8 +16,8 @@ export function Navbar() {
 
   const navItems = [
     { href: "/", label: "Home" },
-    { href: "/info/pricing", label: "Pricing" },
-    { href: "/info/contact", label: "Contact" },
+    // { href: "/info/pricing", label: "Pricing" },
+    // { href: "/info/contact", label: "Contact" },
   ];
 
   const handleGetStarted = () => {
@@ -35,7 +35,7 @@ export function Navbar() {
                 href="/"
                 className="text-xl font-bold text-black dark:text-white"
               >
-                LegalAI
+                lawyrhub
               </Link>
             </div>
             <div className="hidden md:block">
@@ -72,7 +72,7 @@ export function Navbar() {
                 <SheetContent side="bottom" className="h-[80vh] rounded-t-3xl">
                   <nav className="flex flex-col h-full">
                     <div className="flex items-center justify-between mb-8">
-                      <span className="text-xl font-bold">LegalAI</span>
+                      <span className="text-xl font-bold">lawyrhub</span>
                     </div>
                     {navItems.map((item) => (
                       <Link

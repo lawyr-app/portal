@@ -5,27 +5,27 @@ import { ChevronDown } from "lucide-react";
 
 const faqItems = [
   {
-    question: "What is LegalAI?",
+    question: "What is lawyrhub?",
     answer:
-      "LegalAI is an AI-powered legal assistant that provides instant answers to legal queries based on Indian laws and constitution. It's designed to help individuals and businesses quickly access legal information and guidance.",
+      "lawyrhub is an AI-powered legal assistant that provides instant answers to legal queries based on Indian laws and constitution. It's designed to help individuals and businesses quickly access legal information and guidance.",
   },
   {
-    question: "How accurate is the legal information provided by LegalAI?",
+    question: "How accurate is the legal information provided by lawyrhub?",
     answer:
-      "LegalAI uses advanced AI algorithms trained on up-to-date Indian legal databases. While it provides highly accurate information, it's always recommended to consult with a qualified legal professional for complex legal matters or official advice.",
+      "lawyrhub uses advanced AI algorithms trained on up-to-date Indian legal databases. While it provides highly accurate information, it's always recommended to consult with a qualified legal professional for complex legal matters or official advice.",
   },
   {
-    question: "Is my data secure when using LegalAI?",
+    question: "Is my data secure when using lawyrhub?",
     answer:
       "Yes, we take data security very seriously. All queries and personal information are encrypted and protected using state-of-the-art security measures. We do not share your data with third parties.",
   },
   {
-    question: "Can LegalAI handle complex legal questions?",
+    question: "Can lawyrhub handle complex legal questions?",
     answer:
-      "LegalAI is capable of handling a wide range of legal questions, from simple to complex. However, for highly specialized or intricate legal matters, it's advisable to seek personalized advice from a legal professional.",
+      "lawyrhub is capable of handling a wide range of legal questions, from simple to complex. However, for highly specialized or intricate legal matters, it's advisable to seek personalized advice from a legal professional.",
   },
   {
-    question: "How often is LegalAI's database updated?",
+    question: "How often is lawyrhub's database updated?",
     answer:
       "We update our legal database regularly to ensure that the information provided is current and accurate. This includes updates to reflect new laws, amendments, and significant court rulings.",
   },
