@@ -69,6 +69,7 @@ export default function SignUpPage() {
       <div className="space-y-6">
         {!isLoading ? (
           <GoogleLogin
+            width="100%"
             onSuccess={(s) => handleSignup(s)}
             onError={() => {
               console.error(`Somethign went wrong in google login`);
