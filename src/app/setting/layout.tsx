@@ -2,7 +2,7 @@
 
 import Navbar from "@/components/app/Navbar";
 import SettingNavbar from "@/components/app/SettingNavbar";
-import { BadgeInfo ,ShieldCheck} from "lucide-react";
+import { BadgeInfo, ShieldCheck, House } from "lucide-react";
 
 const baseUrl = "/setting";
 
@@ -23,10 +23,16 @@ export default function ProfileLayout({
             href: `${baseUrl}`,
           },
           {
-            id: 1,
+            id: 2,
             name: "Advanced",
             icon: ShieldCheck,
             href: `${baseUrl}/advanced`,
+          },
+          {
+            id: 3,
+            name: "Home",
+            icon: House,
+            href: `/studio/ailawyer`,
           },
         ]}
       />

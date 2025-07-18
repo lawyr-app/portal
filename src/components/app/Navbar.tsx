@@ -96,7 +96,7 @@ const Navbar = ({ className = "" }) => {
         <div>
           <b className="text-[18px]">{COMPANY_NAME}</b>
         </div>
-        <div className="flex flex-row gap-8 list-none">
+        {/* <div className="flex flex-row gap-8 list-none">
           {links.map((link) => {
             const Icon = link.icon;
             return (
@@ -111,7 +111,7 @@ const Navbar = ({ className = "" }) => {
               </li>
             );
           })}
-        </div>
+        </div> */}
         <ProfileDropdown isMobile removeUser={removeUser} user={user}>
           <Avatar className="h-8 w-8 rounded-full cursor-pointer">
             <AvatarImage src={user?.profileImageUrl} alt={user?.name} />

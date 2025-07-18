@@ -63,6 +63,8 @@ const ChatInput: ChatInputProps = ({
         console.log("data", data);
         if (data.message === "CHAT_LIMIT_EXCEED") {
           toast.error("Chat Limit Exceeded");
+        } else if (data.message === "MESSAGES_LIMIT_EXCEED") {
+          toast.error("Message limit exceeded");
         } else {
           toast.error("Failed to initiate Chat", {
             description: "Please try again",

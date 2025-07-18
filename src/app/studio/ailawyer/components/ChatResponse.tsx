@@ -8,6 +8,7 @@ import { Clipboard, ThumbsDown, ThumbsUp } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import MessageLoading from "./MessageLoading";
 import Markdown from "react-markdown";
+import { copyToClipboard } from "@/lib/utils";
 
 type ChatResponseProps = React.FC<{
   isLoading?: boolean;
@@ -84,11 +85,18 @@ const ChatResponse: ChatResponseProps = ({
             {showOptions && (
               <Card className="flex shadow-sm flex-row items-center justify-end gap-1 mt-2 absolute bottom-[-20px] right-[10px]">
                 <PopoverButton text="Copy">
-                  <Button variant="ghost" size="icon" className="h-7 w-7">
+                  <Button
+                    variant="ghost"
+                    onClick={() => {
+                      copyToClipboard(localMessage);
+                    }}
+                    size="icon"
+                    className="h-7 w-7"
+                  >
                     <Clipboard />
                   </Button>
                 </PopoverButton>
-                <PopoverButton text="Like">
+                {/* <PopoverButton text="Like">
                   <Button variant="ghost" size="icon" className="h-7 w-7">
                     <ThumbsUp />
                   </Button>
@@ -97,7 +105,7 @@ const ChatResponse: ChatResponseProps = ({
                   <Button variant="ghost" size="icon" className="h-7 w-7">
                     <ThumbsDown />
                   </Button>
-                </PopoverButton>
+                </PopoverButton> */}
               </Card>
             )}
           </>

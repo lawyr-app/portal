@@ -30,6 +30,7 @@ const Detail = () => {
   const [fetchingOlderMessages, setFetchingOlderMessages] = useState(false);
   const limit = 10;
   const [skip, setSkip] = useState(0);
+  const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const updateContainerHeight = () => {
@@ -97,6 +98,14 @@ const Detail = () => {
     }
   };
 
+  const scrollToBottom = () => {
+    setTimeout(() => {
+      if (scrollRef.current) {
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      }
+    }, 100); // Delay ensures DOM has updated
+  };
+
   const sendMessage = async ({ question, chatId }: sendMessageProps) => {
     const handleDefaultError = () => {
       toast.error("Something went wrong. Please try again later.");
@@ -145,6 +154,7 @@ const Detail = () => {
           return changedMessage;
         });
         localStorage.removeItem(NEW_CHAT);
+        scrollToBottom();
       }
       setIsMessageLoading(false);
     } catch (error) {
@@ -193,7 +203,8 @@ const Detail = () => {
       <div className="flex h-[calc(100%-3.5rem)] flex-col gap-4 px-4 ">
         <div className="mx-auto h-full w-full max-w-3xl relative">
           <div
-            className="overflow-y-scroll scrollbar-hide pt-2"
+            className="overflow-y-scroll scrollbar-hide pt-2 pb-4"
+            ref={scrollRef}
             style={{
               height: containerHeight,
             }}

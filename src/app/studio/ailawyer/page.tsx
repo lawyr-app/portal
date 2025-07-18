@@ -10,18 +10,15 @@ import { CircleArrowOutUpRight } from "lucide-react";
 const questions = [
   {
     id: 1,
-    question:
-      "Someone is blackmailing me with explicit photos. What can I do legally?",
+    question: "How judge is appointed ?",
   },
   {
     id: 2,
-    question:
-      "I’m receiving threats via messages. How can I stop this legally?",
+    question: "How president is selected?",
   },
   {
     id: 3,
-    question:
-      "Someone is spreading false accusations about me. What are my options?",
+    question: "Who appoints the governer",
   },
 ];
 

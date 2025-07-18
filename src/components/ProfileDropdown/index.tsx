@@ -62,12 +62,12 @@ const ProfileDropdown: ProfileDropdownProps = ({
               Setting
             </DropdownMenuItem>
           </Link>
-          <Link href="/info/pricing">
+          {/* <Link href="/info/pricing">
             <DropdownMenuItem>
               <CreditCard />
               Pricing
             </DropdownMenuItem>
-          </Link>
+          </Link> */}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem onClick={removeUser}>

@@ -1,11 +1,11 @@
 import { History, Plus, Share2, Star, HomeIcon } from "lucide-react";
 
 export const navMain = [
-  {
-    title: "Home",
-    url: "/home",
-    icon: HomeIcon,
-  },
+  // {
+  //   title: "Home",
+  //   url: "/home",
+  //   icon: HomeIcon,
+  // },
   {
     title: "New",
     url: "/studio/ailawyer/",
