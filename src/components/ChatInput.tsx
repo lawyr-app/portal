@@ -92,9 +92,9 @@ const ChatInput: ChatInputProps = ({
           {/* <Button variant="outline" size="icon">
             <Paperclip className="h-4 w-4" />
           </Button> */}
-          {isPlayground && (
+          {/* {isPlayground && (
             <SelectRegion region={region} setRegion={setRegion} />
-          )}
+          )} */}
         </div>
         <Button size="icon" onClick={handleClick}>
           <SendHorizontal className="h-4 w-4" />

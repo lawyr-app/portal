@@ -17,7 +17,7 @@ export default function BillingGeneral() {
   return (
     <div className="space-y-8">
       <UsageSummary />
-      <UsageBarChart />
+      {/* <UsageBarChart /> */}
       {/* <ServiceUsageDetails /> */}
     </div>
   );

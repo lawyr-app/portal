@@ -20,6 +20,11 @@ export function Navbar() {
     { href: "/info/contact", label: "Contact" },
   ];
 
+  const handleGetStarted = () => {
+    router.push(user ? "/studio/ailawyer/" : "/auth/signin");
+    setIsOpen(false);
+  };
+
   return (
     <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-11/12 max-w-5xl">
       <nav className="bg-white dark:bg-black rounded-full shadow-lg backdrop-blur-sm bg-opacity-80 dark:bg-opacity-80">
@@ -48,14 +53,14 @@ export function Navbar() {
             </div>
             <div className="hidden md:flex items-center space-x-4">
               <ThemeToggle className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white" />
-              {/* <Button
+              <Button
                 className="bg-black rounded-full text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
-                onClick={() =>
-                  router.push(user ? "/studio/ailawyer/" : "/auth/signin")
-                }
+                onClick={() => {
+                  handleGetStarted();
+                }}
               >
                 Get Started
-              </Button> */}
+              </Button>
             </div>
             <div className="md:hidden">
               <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -81,15 +86,14 @@ export function Navbar() {
                     ))}
                     <div className="mt-auto space-y-4">
                       <ThemeToggle className="w-full justify-start text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white" />
-                      {/* <Button
+                      <Button
                         className="w-full bg-black rounded-full text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
                         onClick={() => {
-                          router.push("/pricing");
-                          setIsOpen(false);
+                          handleGetStarted();
                         }}
                       >
                         Get Started
-                      </Button> */}
+                      </Button>
                     </div>
                   </nav>
                 </SheetContent>
