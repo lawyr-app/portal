@@ -16,7 +16,7 @@ export default function Home() {
         <HowItWorks />
         <FAQ />
       </main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 }

@@ -10,42 +10,42 @@ const testimonials = [
     role: "Small Business Owner",
     image: "/placeholder.svg?height=100&width=100",
     quote:
-      "LegalAI has been a game-changer for my business. It's like having a legal expert on call 24/7. The instant answers to my legal queries have saved me both time and money.",
+      "lawyrhub has been a game-changer for my business. It's like having a legal expert on call 24/7. The instant answers to my legal queries have saved me both time and money.",
   },
   {
     name: "Rahul Mehta",
     role: "Corporate Lawyer",
     image: "/placeholder.svg?height=100&width=100",
     quote:
-      "As a lawyer, I was skeptical at first. But LegalAI has proven to be an invaluable tool for quick reference and preliminary research. It's impressively accurate and up-to-date with Indian law.",
+      "As a lawyer, I was skeptical at first. But lawyrhub has proven to be an invaluable tool for quick reference and preliminary research. It's impressively accurate and up-to-date with Indian law.",
   },
   {
     name: "Ananya Patel",
     role: "Startup Founder",
     image: "/placeholder.svg?height=100&width=100",
     quote:
-      "Navigating legal complexities as a startup founder was daunting until I found LegalAI. It's user-friendly, comprehensive, and has become an essential part of our decision-making process.",
+      "Navigating legal complexities as a startup founder was daunting until I found lawyrhub. It's user-friendly, comprehensive, and has become an essential part of our decision-making process.",
   },
   {
     name: "Vikram Singh",
     role: "Legal Consultant",
     image: "/placeholder.svg?height=100&width=100",
     quote:
-      "LegalAI has revolutionized my consulting practice. It allows me to provide quick, accurate advice to clients on a wide range of legal matters. An indispensable tool for modern legal professionals.",
+      "lawyrhub has revolutionized my consulting practice. It allows me to provide quick, accurate advice to clients on a wide range of legal matters. An indispensable tool for modern legal professionals.",
   },
   {
     name: "Neha Gupta",
     role: "HR Manager",
     image: "/placeholder.svg?height=100&width=100",
     quote:
-      "In HR, we often encounter complex legal questions. LegalAI has been a lifesaver, providing instant clarity on labor laws and company policies. It's like having a legal department at your fingertips.",
+      "In HR, we often encounter complex legal questions. lawyrhub has been a lifesaver, providing instant clarity on labor laws and company policies. It's like having a legal department at your fingertips.",
   },
   {
     name: "Arjun Reddy",
     role: "Tech Entrepreneur",
     image: "/placeholder.svg?height=100&width=100",
     quote:
-      "As we scale our startup, legal challenges evolve rapidly. LegalAI keeps us informed and compliant without the hefty legal fees. It's an essential tool for any growing business in India.",
+      "As we scale our startup, legal challenges evolve rapidly. lawyrhub keeps us informed and compliant without the hefty legal fees. It's an essential tool for any growing business in India.",
   },
 ];
 

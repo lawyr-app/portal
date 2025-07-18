@@ -19,6 +19,7 @@ type ChatInputProps = React.FC<{
   classname?: string;
   suggestedQuestion?: string;
   isPlayground?: boolean;
+  isLoading?: boolean;
   sendMessage?: () => void;
   setMessage?: React.Dispatch<React.SetStateAction<string>>;
   message?: string;
@@ -30,6 +31,7 @@ const ChatInput: ChatInputProps = ({
   message = "",
   setMessage,
   suggestedQuestion = "",
+  isLoading = false,
 }) => {
   const [isCreatingChat, setIsCreatingChat] = useState(false);
   const [question, setQuestion] = useState("");
@@ -47,6 +49,9 @@ const ChatInput: ChatInputProps = ({
 
   const handleCreateChat = async () => {
     try {
+      if (isCreatingChat) {
+        return;
+      }
       setIsCreatingChat(true);
       const payload = {
         question,
@@ -55,12 +60,17 @@ const ChatInput: ChatInputProps = ({
       const { data } = await axios.post("/chat/initiate", payload);
       const chatId = data?.data?._id;
       if (!chatId) {
-        toast.error("Failed to initiate Chat", {
-          description: "Please try again",
-        });
+        console.log("data", data);
+        if (data.message === "CHAT_LIMIT_EXCEED") {
+          toast.error("Chat Limit Exceeded");
+        } else {
+          toast.error("Failed to initiate Chat", {
+            description: "Please try again",
+          });
+        }
       } else {
         localStorage.setItem(NEW_CHAT, JSON.stringify(data?.data));
-        router.push(`/playground/detail/${chatId}`);
+        router.push(`/studio/ailawyer/detail/${chatId}`);
       }
       setIsCreatingChat(false);
     } catch (error) {
@@ -78,7 +88,10 @@ const ChatInput: ChatInputProps = ({
   };
 
   return (
-    <Card className={cn("border shadow-none p-2", classname)}>
+    <Card
+      aria-disabled={isLoading}
+      className={cn("border shadow-none p-2", classname)}
+    >
       <CustomRichTextEditor
         handleClick={handleClick}
         value={value}
@@ -92,9 +105,9 @@ const ChatInput: ChatInputProps = ({
           {/* <Button variant="outline" size="icon">
             <Paperclip className="h-4 w-4" />
           </Button> */}
-          {isPlayground && (
+          {/* {isPlayground && (
             <SelectRegion region={region} setRegion={setRegion} />
-          )}
+          )} */}
         </div>
         <Button size="icon" onClick={handleClick}>
           <SendHorizontal className="h-4 w-4" />

@@ -2,7 +2,7 @@
 
 import { useVirtualizer } from "@tanstack/react-virtual";
 import React, { useEffect, useRef, useState } from "react";
-import UserCard from "./components/UserCard";
+import UserCard from "./components/LawyerCard";
 import SearchInput from "@/components/SearchInput";
 import { Button } from "@/components/ui/button";
 import { ListFilter } from "lucide-react";
@@ -25,7 +25,7 @@ const Home = () => {
   const handleSearch = () => {};
 
   return (
-    <div className="flex flex-col mt-[70px]">
+    <div className="flex flex-col mb-4 ">
       <div className="flex flex-col w-full items-center my-4">
         <div className="flex flex-row w-3/5 items-center justify-center gap-1">
           <SearchInput
@@ -54,7 +54,7 @@ const Home = () => {
           </div>
         )}
       </div>
-      <div className="flex flex-row w-full flex-wrap gap-6 items-center justify-center mt-2">
+      <div className="flex flex-row w-full flex-wrap items-center justify-center gap-6 mt-2  scrollbar-hide">
         {new Array(20).fill("").map((m, i) => (
           <UserCard key={i} />
         ))}

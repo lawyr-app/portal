@@ -24,6 +24,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
 
   const storeUser = (data: any) => {
     localStorage.setItem(USER_DATA, JSON.stringify(data));
+    document.cookie = `userId=${data._id}; path=/`;
     setUser(data);
   };
 

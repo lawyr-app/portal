@@ -40,7 +40,7 @@ export default function SignInPage() {
           try {
             const { data } = await axios.put(`/user/signin`, payload);
             if (!data.isError) {
-              router.push("/playground");
+              router.push("/studio/ailawyer/");
               storeUser(data.data);
             } else {
               const message = data?.message;

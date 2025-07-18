@@ -56,16 +56,10 @@ const ProfileDropdown: ProfileDropdownProps = ({
         <ThemeMenu />
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <Link href="/profile/billing">
-            <DropdownMenuItem>
-              <CreditCard />
-              Billing
-            </DropdownMenuItem>
-          </Link>
-          <Link href="/profile/general">
+          <Link href="/setting">
             <DropdownMenuItem>
               <BadgeCheck />
-              Profile
+              Setting
             </DropdownMenuItem>
           </Link>
           <Link href="/info/pricing">

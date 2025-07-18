@@ -11,7 +11,7 @@ const SiteLayout: React.FC<SiteLayoutProps> = ({ children }) => {
     <div className="min-h-screen flex flex-col bg-white dark:bg-black">
       <Navbar />
       <main className="flex-grow pt-20">{children}</main>
-      <Footer />
+      {/* <Footer /> */}
     </div>
   );
 };

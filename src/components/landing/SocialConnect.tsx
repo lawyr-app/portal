@@ -13,7 +13,7 @@ export function SocialConnect() {
       <div className="flex justify-center space-x-4">
         <Button asChild>
           <a
-            href="https://twitter.com/legalai"
+            href="https://twitter.com/lawyrhub"
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-2 rounded-md flex items-center"
@@ -23,7 +23,7 @@ export function SocialConnect() {
         </Button>
         <Button asChild>
           <a
-            href="https://www.linkedin.com/company/legalai"
+            href="https://www.linkedin.com/company/lawyrhub"
             target="_blank"
             rel="noopener noreferrer"
             className="px-4 py-2 rounded-md flex items-center"

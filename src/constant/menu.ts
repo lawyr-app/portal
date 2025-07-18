@@ -1,24 +1,29 @@
-import { History, Plus, Share2, Star } from "lucide-react";
+import { History, Plus, Share2, Star, HomeIcon } from "lucide-react";
 
 export const navMain = [
   {
+    title: "Home",
+    url: "/home",
+    icon: HomeIcon,
+  },
+  {
     title: "New",
-    url: "/playground",
+    url: "/studio/ailawyer/",
     icon: Plus,
   },
   {
     title: "History",
-    url: "/playground/history",
+    url: "/studio/ailawyer/history",
     icon: History,
   },
   {
     title: "Favourites",
-    url: "/playground/favourite",
+    url: "/studio/ailawyer/favourite",
     icon: Star,
   },
   {
     title: "Shared",
-    url: "/playground/shared/list",
+    url: "/studio/ailawyer/shared/list",
     icon: Share2,
   },
 ];

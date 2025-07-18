@@ -29,7 +29,7 @@ export default function SignUpPage() {
           if (!data.isError) {
             const userExists = data.data;
             if (userExists?._id) {
-              router.push("/playground");
+              router.push("/studio/ailawyer/");
               storeUser(userExists);
             } else {
               const payload = {

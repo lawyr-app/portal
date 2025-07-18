@@ -16,9 +16,14 @@ export function Navbar() {
 
   const navItems = [
     { href: "/", label: "Home" },
-    { href: "/info/pricing", label: "Pricing" },
-    { href: "/info/contact", label: "Contact" },
+    // { href: "/info/pricing", label: "Pricing" },
+    // { href: "/info/contact", label: "Contact" },
   ];
+
+  const handleGetStarted = () => {
+    router.push(user ? "/studio/ailawyer/" : "/auth/signin");
+    setIsOpen(false);
+  };
 
   return (
     <div className="fixed top-4 left-1/2 transform -translate-x-1/2 z-50 w-11/12 max-w-5xl">
@@ -30,7 +35,7 @@ export function Navbar() {
                 href="/"
                 className="text-xl font-bold text-black dark:text-white"
               >
-                LegalAI
+                lawyrhub
               </Link>
             </div>
             <div className="hidden md:block">
@@ -48,14 +53,14 @@ export function Navbar() {
             </div>
             <div className="hidden md:flex items-center space-x-4">
               <ThemeToggle className="text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white" />
-              {/* <Button
+              <Button
                 className="bg-black rounded-full text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
-                onClick={() =>
-                  router.push(user ? "/playground" : "/auth/signin")
-                }
+                onClick={() => {
+                  handleGetStarted();
+                }}
               >
                 Get Started
-              </Button> */}
+              </Button>
             </div>
             <div className="md:hidden">
               <Sheet open={isOpen} onOpenChange={setIsOpen}>
@@ -67,7 +72,7 @@ export function Navbar() {
                 <SheetContent side="bottom" className="h-[80vh] rounded-t-3xl">
                   <nav className="flex flex-col h-full">
                     <div className="flex items-center justify-between mb-8">
-                      <span className="text-xl font-bold">LegalAI</span>
+                      <span className="text-xl font-bold">lawyrhub</span>
                     </div>
                     {navItems.map((item) => (
                       <Link
@@ -81,15 +86,14 @@ export function Navbar() {
                     ))}
                     <div className="mt-auto space-y-4">
                       <ThemeToggle className="w-full justify-start text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white" />
-                      {/* <Button
+                      <Button
                         className="w-full bg-black rounded-full text-white dark:bg-white dark:text-black hover:bg-gray-800 dark:hover:bg-gray-200"
                         onClick={() => {
-                          router.push("/pricing");
-                          setIsOpen(false);
+                          handleGetStarted();
                         }}
                       >
                         Get Started
-                      </Button> */}
+                      </Button>
                     </div>
                   </nav>
                 </SheetContent>
