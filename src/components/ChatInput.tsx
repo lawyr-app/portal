@@ -81,7 +81,12 @@ const ChatInput: ChatInputProps = ({
     }
   };
 
+  const isEmpty = !value?.trim();
+
   const handleClick = () => {
+    if (isEmpty || isLoading || isCreatingChat) {
+      return;
+    }
     if (isPlayground) {
       handleCreateChat();
     } else {
@@ -111,7 +116,11 @@ const ChatInput: ChatInputProps = ({
             <SelectRegion region={region} setRegion={setRegion} />
           )} */}
         </div>
-        <Button size="icon" onClick={handleClick}>
+        <Button
+          size="icon"
+          onClick={handleClick}
+          disabled={isEmpty || isLoading || isCreatingChat}
+        >
           <SendHorizontal className="h-4 w-4" />
         </Button>
       </div>
