@@ -29,8 +29,8 @@ export default function SignUpPage() {
           if (!data.isError) {
             const userExists = data.data;
             if (userExists?._id) {
-              router.push("/studio/ailawyer/");
               storeUser(userExists);
+              router.push("/studio/ailawyer/");
             } else {
               const payload = {
                 ...userInfo,

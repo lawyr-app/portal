@@ -1,5 +1,5 @@
-// lib/axios.js
 import { USER_DATA } from "@/constant/localKeys";
+import { getAuthTokenFromCookie } from "@/lib/auth-cookie";
 import axios from "axios";
 
 const axiosInstance = axios.create({
@@ -7,13 +7,28 @@ const axiosInstance = axios.create({
   timeout: 50000,
 });
 
+function getAccessToken() {
+  if (typeof window === "undefined") return null;
+
+  const stored = localStorage.getItem(USER_DATA);
+  if (stored) {
+    try {
+      const parsed = JSON.parse(stored);
+      const foundToken = parsed?.tokenDetails?.token;
+      if (foundToken) return foundToken;
+    } catch {
+      // fall through to cookie
+    }
+  }
+
+  return getAuthTokenFromCookie();
+}
+
 // Request Interceptor
 axiosInstance.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem(USER_DATA);
-    if (token) {
-      const parsed = JSON.parse(token);
-      const foundToken = parsed?.tokenDetails?.token;
+    const foundToken = getAccessToken();
+    if (foundToken) {
       config.headers.Authorization = `Bearer ${foundToken}`;
     }
     return config;

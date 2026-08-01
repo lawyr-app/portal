@@ -40,8 +40,8 @@ export default function SignInPage() {
           try {
             const { data } = await axios.put(`/user/signin`, payload);
             if (!data.isError) {
-              router.push("/studio/ailawyer/");
               storeUser(data.data);
+              router.push("/studio/ailawyer/");
             } else {
               const message = data?.message;
               if (message === "USER_DONT_EXISTS") {
