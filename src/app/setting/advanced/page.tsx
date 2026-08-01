@@ -24,7 +24,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Info } from "lucide-react";
 import { useUser } from "@/context/userContext";
 import { toast } from "sonner";
-import axios from "axios";
+import axios from "@/lib/axios";
 
 const AdvancedSetting = () => {
   return (
