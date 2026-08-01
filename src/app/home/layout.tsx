@@ -12,7 +12,7 @@ type HomeLayoutProps = React.FC<{
   children: React.ReactNode;
 }>;
 const HomeLayout: HomeLayoutProps = ({ children }) => {
-  const { user, storeUser } = useUser();
+  const { user, isReady, storeUser } = useUser();
   const [isLoading, setIsLoading] = useState(true);
   const userId = user?._id;
 
@@ -34,12 +34,17 @@ const HomeLayout: HomeLayoutProps = ({ children }) => {
   };
 
   useEffect(() => {
+    if (!isReady) return;
+
     if (userId) {
       fetchUserDetails();
+      return;
     }
-  }, [userId]);
 
-  if (isLoading) {
+    setIsLoading(false);
+  }, [isReady, userId]);
+
+  if (!isReady || isLoading) {
     return <HomeLoading />;
   }
 
